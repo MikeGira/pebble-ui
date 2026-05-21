@@ -9,9 +9,10 @@
   gap: var(--pb-s2);
   font-family: var(--pb-font-sans);
   font-size: var(--pb-text-sm);
-  font-weight: var(--pb-weight-semibold);
+  font-weight: var(--pb-weight-bold);
+  letter-spacing: -0.01em;
   line-height: 1;
-  border-radius: var(--pb-radius-md);
+  border-radius: var(--pb-radius-full);
   border: 1.5px solid transparent;
   padding: var(--pb-s3) var(--pb-s6);
   transition:
@@ -147,7 +148,7 @@
 .btn-lg {
   padding: var(--pb-s4) var(--pb-s8);
   font-size: var(--pb-text-base);
-  border-radius: var(--pb-radius-lg);
+  border-radius: var(--pb-radius-full);
 }
 
 .btn-circle-sm {

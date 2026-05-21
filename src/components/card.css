@@ -118,33 +118,24 @@
   gap: var(--pb-s3);
 }
 
-/* ── Card icon ── */
+/* ── Card icon — minimal, no boxy container ── */
 .card-icon {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--pb-radius-md);
-  background: var(--pb-accent-subtle);
   color: var(--pb-accent);
   margin-bottom: var(--pb-s4);
   flex-shrink: 0;
-  transition:
-    background-color var(--pb-dur-base) var(--pb-ease-out),
-    transform var(--pb-dur-base) var(--pb-ease-spring);
+  transition: color var(--pb-dur-base) var(--pb-ease-out);
 }
 
 .card-lift:hover .card-icon,
 .card-tilt:hover .card-icon {
-  background: var(--pb-accent);
-  color: #ffffff;
-  transform: scale(1.08);
+  color: var(--pb-accent-hover);
 }
 
 .card-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
 }
 
 /* ── Shimmer loading skeleton ── */

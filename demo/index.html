@@ -1076,6 +1076,45 @@
       box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
 
+    /* ── Showcase cards: remove icon boxes — orizon style (image + title + text only) ── */
+    .showcase-content .card-icon,
+    .showcase-wide-content .card-icon { display: none; }
+    .showcase-content .card-title {
+      font-size: var(--pb-text-xl);
+      font-weight: var(--pb-weight-extrabold);
+      letter-spacing: -0.025em;
+      margin-bottom: var(--pb-s3);
+    }
+    .showcase-content .card-body { font-size: var(--pb-text-sm); line-height: 1.65; }
+    /* Remove footer border from showcase cards */
+    .showcase-content .card-footer { border-top: none; padding-top: var(--pb-s3); margin-top: var(--pb-s4); }
+
+    /* ── Light mode: pure white — suppress all aurora/blob tints ── */
+    [data-theme="light"] .aurora,
+    [data-theme="light"] .aurora-blob,
+    [data-theme="light"] .hero-blob,
+    [data-theme="light"] .hero-blob-1,
+    [data-theme="light"] .hero-blob-2,
+    [data-theme="light"] .dot-grid,
+    [data-theme="light"] .hero-particles {
+      opacity: 0 !important;
+      display: none;
+    }
+    [data-theme="light"] .hero-section::after { display: none; }
+    [data-theme="light"] .hero-section {
+      background: #ffffff;
+    }
+    [data-theme="light"] .cta-section {
+      background: #f5f7ff;
+      border-top: 1px solid rgba(59,111,245,0.15);
+    }
+    [data-theme="light"] .cta-section .cta-aurora-1,
+    [data-theme="light"] .cta-section .cta-aurora-2 { display: none; }
+    [data-theme="light"] .social-cloud-section {
+      background: #1a1563;
+    }
+    [data-theme="light"] body { background: #ffffff; }
+
     /* ── Responsive ── */
     @media (max-width: 1024px) {
       .showcase-grid { grid-template-columns: repeat(2, 1fr); }

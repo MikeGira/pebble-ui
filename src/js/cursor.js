@@ -12,7 +12,8 @@
 
   var LERP_RING    = 0.1;   // ring lag
   var MAG_STRENGTH = 0.38;  // pull for free-floating elements (circle btn, decorative)
-  var MAG_INNER    = 0.18;  // pull for btn inner content — stays within button bounds
+  var MAG_INNER    = 0.09;  // pull for btn inner content — slow, stays well within bounds
+  var MAG_CAP      = 6;     // max px displacement for inner content (never touches border)
   var MAG_RANGE    = 72;    // px radius where magnetism activates
 
   var mouseX = window.innerWidth / 2;
@@ -97,7 +98,7 @@
       el.appendChild(inner);
       el._magInner = inner;
     }
-    return { node: el._magInner, strength: MAG_INNER };
+    return { node: el._magInner, strength: MAG_INNER, capped: true };
   }
 
   function bindMagnetic() {
@@ -111,13 +112,23 @@
         var rect = el.getBoundingClientRect();
         var dx   = e.clientX - (rect.left + rect.width  / 2);
         var dy   = e.clientY - (rect.top  + rect.height / 2);
-        t.node.style.transform = 'translate(' + (dx * t.strength) + 'px,' + (dy * t.strength) + 'px)';
+        var mx   = dx * t.strength;
+        var my   = dy * t.strength;
+        // Cap inner-content displacement so it never reaches the pill border
+        if (t.capped) {
+          var cap = MAG_CAP;
+          mx = Math.max(-cap, Math.min(cap, mx));
+          my = Math.max(-cap, Math.min(cap, my));
+        }
+        t.node.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
       });
 
       el.addEventListener('mouseleave', function () {
-        t.node.style.transition = 'transform 0.45s cubic-bezier(0.16,1,0.3,1)';
+        // Slower spring-back for inner content, faster for full-element
+        var dur = t.capped ? '0.65s' : '0.4s';
+        t.node.style.transition = 'transform ' + dur + ' cubic-bezier(0.16,1,0.3,1)';
         t.node.style.transform  = '';
-        setTimeout(function () { t.node.style.transition = ''; }, 480);
+        setTimeout(function () { t.node.style.transition = ''; }, t.capped ? 680 : 450);
       });
     });
   }

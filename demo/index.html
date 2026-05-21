@@ -146,9 +146,19 @@
       border-radius: var(--pb-radius-full);
       padding: 5px 5px 5px 5px;
       margin-bottom: var(--pb-s6);
-      transition: background var(--pb-dur-fast) var(--pb-ease-out);
+      cursor: pointer;
+      transition:
+        background var(--pb-dur-base) var(--pb-ease-out),
+        transform var(--pb-dur-base) var(--pb-ease-out),
+        box-shadow var(--pb-dur-base) var(--pb-ease-out);
     }
-    .proof-pill:hover { background: var(--pb-accent-subtle); }
+    .proof-pill:hover {
+      background: var(--pb-accent);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 24px rgba(59, 111, 245, 0.45);
+    }
+    .proof-pill:hover .proof-text { color: white; }
+    .proof-pill:active { transform: scale(0.97); }
     .proof-avatars {
       display: flex;
       align-items: center;
@@ -535,18 +545,45 @@
       letter-spacing: .09em;
       text-transform: uppercase;
       text-decoration: none;
-      transition: background var(--pb-dur-fast) var(--pb-ease-out), color var(--pb-dur-fast) var(--pb-ease-out);
+      position: relative;
+      overflow: hidden;
+      transition:
+        background var(--pb-dur-base) var(--pb-ease-out),
+        color var(--pb-dur-base) var(--pb-ease-out),
+        transform var(--pb-dur-base) var(--pb-ease-out),
+        box-shadow var(--pb-dur-base) var(--pb-ease-out);
     }
-    .pill-link:hover { background: var(--pb-accent); color: white; }
+    /* Shimmer sweep — same as .btn-primary */
+    .pill-link::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.14) 50%, transparent 100%);
+      transition: left 0.55s var(--pb-ease-out);
+      pointer-events: none;
+    }
+    .pill-link:hover {
+      background: var(--pb-accent);
+      color: white;
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 6px 24px rgba(59, 111, 245, 0.45);
+    }
+    .pill-link:hover::before { left: 100%; }
+    .pill-link:active { transform: scale(0.97); box-shadow: none; }
     .pill-link-arrow {
       width: 34px; height: 34px;
       border-radius: 50%;
       background: var(--pb-accent);
       display: flex; align-items: center; justify-content: center;
       color: white; flex-shrink: 0;
-      transition: transform var(--pb-dur-base) var(--pb-ease-spring);
+      transition: transform var(--pb-dur-base) var(--pb-ease-spring), background var(--pb-dur-base) var(--pb-ease-out);
     }
-    .pill-link:hover .pill-link-arrow { transform: translate(2px, -2px); }
+    .pill-link:hover .pill-link-arrow {
+      transform: translate(3px, -3px) scale(1.08);
+      background: white;
+      color: var(--pb-accent);
+    }
 
     /* ── Orizon section label (left bar) ── */
     .section-bar-label {
@@ -799,7 +836,7 @@
         <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
         <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
-      <a href="#install" class="btn btn-primary" data-magnetic>Get Started</a>
+      <a href="contact.html" class="btn btn-primary" data-magnetic>Get Started</a>
     </div>
   </nav>
 
@@ -821,7 +858,7 @@
         <div class="hero-content">
           <!-- Blue pill with avatar circles -->
           <div data-entrance="fade-in">
-            <div class="proof-pill">
+            <a href="contact.html" class="proof-pill" style="text-decoration:none">
               <div class="proof-avatars">
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&q=80&auto=format&fit=crop&crop=face" alt="" class="proof-avatar" loading="lazy">
                 <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=32&h=32&q=80&auto=format&fit=crop&crop=face" alt="" class="proof-avatar" loading="lazy">
@@ -833,7 +870,7 @@
               <span class="pill-link-arrow" aria-hidden="true">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
               </span>
-            </div>
+            </a>
           </div>
 
           <h1 class="hero-headline" data-entrance="fade-up" data-stagger="1">

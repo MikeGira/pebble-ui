@@ -32,21 +32,21 @@
 }
 
 .badge-success {
-  background: rgba(16, 185, 129, 0.12);
-  border-color: rgba(16, 185, 129, 0.3);
-  color: #10b981;
+  background: var(--pb-bg-success);
+  border-color: rgba(16, 185, 129, 0.22);
+  color: #34d399;
 }
 
 .badge-warning {
-  background: rgba(245, 158, 11, 0.12);
-  border-color: rgba(245, 158, 11, 0.3);
-  color: #f59e0b;
+  background: var(--pb-bg-warning);
+  border-color: rgba(245, 158, 11, 0.22);
+  color: #fbbf24;
 }
 
 .badge-danger {
-  background: rgba(239, 68, 68, 0.12);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #ef4444;
+  background: var(--pb-bg-danger);
+  border-color: rgba(239, 68, 68, 0.22);
+  color: #f87171;
 }
 
 /* ── Count badge (number on top of icon) ── */

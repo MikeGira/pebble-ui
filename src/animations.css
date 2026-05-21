@@ -44,6 +44,17 @@
   50%       { transform: translateY(-8px); }
 }
 
+@keyframes pb-pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(59, 111, 245, 0.6); }
+  70%  { box-shadow: 0 0 0 10px rgba(59, 111, 245, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(59, 111, 245, 0); }
+}
+
+@keyframes pb-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* ── Entrance utility classes ── */
 
 [data-entrance] {

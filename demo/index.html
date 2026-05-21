@@ -4,83 +4,210 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pebble UI — Enterprise Design System</title>
-  <meta name="description" content="Pebble UI: enterprise design system with magnetic cursor, 3D card tilt, fluid dark/light mode. Zero runtime dependencies.">
+  <meta name="description" content="Pebble UI: enterprise design system with magnetic cursor, 3D card tilt, fluid dark/light mode. Zero runtime dependencies. Drop-in two lines.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- FOUC prevention — must be inline, runs before paint -->
   <script>(function(){var k='pebble-theme',d='dark',l='light';try{var s=localStorage.getItem(k);if(s===d||s===l){document.documentElement.setAttribute('data-theme',s);return;}}catch(e){}if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.setAttribute('data-theme',d);else document.documentElement.setAttribute('data-theme',l);})();</script>
 
-  <!-- Pebble UI system CSS -->
   <link rel="stylesheet" href="../dist/pebble.css">
 
   <style>
-    /* Demo-only layout — not part of the design system */
-
+    /* ── Base ── */
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Inter', system-ui, sans-serif;
       background: var(--pb-bg-base);
       color: var(--pb-text-primary);
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Hero */
+    /* ── Gradient text ── */
+    .gradient-text {
+      background: var(--pb-gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline;
+    }
+
+    /* ── Nav upgrades ── */
+    .pb-nav-github {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: var(--pb-text-sm);
+      font-weight: var(--pb-weight-medium);
+      color: var(--pb-text-secondary);
+      text-decoration: none;
+      padding: var(--pb-s2) var(--pb-s3);
+      border-radius: var(--pb-radius-md);
+      transition: color var(--pb-dur-fast) var(--pb-ease-out), background var(--pb-dur-fast) var(--pb-ease-out);
+    }
+    .pb-nav-github:hover { color: var(--pb-text-primary); background: var(--pb-bg-elevated); }
+    .pb-nav-link.is-active { color: var(--pb-accent) !important; }
+
+    /* ── Hero ── */
+    .hero-section {
+      position: relative;
+      overflow: hidden;
+      min-height: calc(92vh - 72px);
+      display: flex;
+      align-items: center;
+      padding: var(--pb-s20) var(--pb-s6);
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-1 {
+      width: 700px; height: 700px;
+      top: -25%; left: -15%;
+      background: radial-gradient(circle at center, rgba(59, 111, 245, 0.2) 0%, transparent 70%);
+      filter: blur(72px);
+    }
+    .blob-2 {
+      width: 550px; height: 550px;
+      bottom: -15%; right: -10%;
+      background: radial-gradient(circle at center, rgba(124, 58, 237, 0.18) 0%, transparent 70%);
+      filter: blur(72px);
+    }
+    .dot-grid {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='1' cy='1' r='1' fill='rgba(255%2C255%2C255%2C0.04)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-inner { position: relative; z-index: 1; width: 100%; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--pb-s16);
+      align-items: center;
+      margin-bottom: var(--pb-s12);
+    }
     .hero-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: var(--pb-s2);
       font-size: var(--pb-text-xs);
       font-weight: var(--pb-weight-semibold);
-      letter-spacing: .08em;
+      letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--pb-accent);
       margin-bottom: var(--pb-s5);
     }
     .hero-eyebrow::before {
       content: '';
-      width: 6px;
-      height: 6px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: var(--pb-accent);
-      animation: pb-pulse-ring 1.8s ease-out infinite;
+      animation: pb-pulse-ring 2s ease-out infinite;
       flex-shrink: 0;
     }
     .hero-headline {
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-size: clamp(2.6rem, 5.5vw, 4.75rem);
       font-weight: var(--pb-weight-extrabold);
-      letter-spacing: -0.03em;
-      line-height: 1.05;
+      letter-spacing: -0.035em;
+      line-height: 1.04;
       margin-bottom: var(--pb-s5);
     }
-    .hero-headline span { color: var(--pb-accent); }
     .hero-sub {
-      font-size: clamp(var(--pb-text-base), 2vw, var(--pb-text-xl));
+      font-size: clamp(var(--pb-text-base), 1.8vw, var(--pb-text-lg));
       color: var(--pb-text-secondary);
-      max-width: 560px;
+      max-width: 520px;
       margin-bottom: var(--pb-s8);
       line-height: var(--pb-leading-normal);
     }
     .hero-cta { display: flex; align-items: center; gap: var(--pb-s4); flex-wrap: wrap; }
 
-    /* Stats */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: var(--pb-s6);
-      padding: var(--pb-s10) 0;
-      border-top: 1px solid var(--pb-border);
-      border-bottom: 1px solid var(--pb-border);
-      margin: var(--pb-s12) 0;
+    /* ── Browser chrome ── */
+    .hero-visual-wrap { position: relative; }
+    .hero-visual {
+      margin: 0;
+      transform: perspective(1000px) rotateY(-8deg) rotateX(3deg);
+      animation: pb-float 7s ease-in-out infinite;
+      filter: drop-shadow(0 40px 60px rgba(59, 111, 245, 0.25));
+      transition: transform 0.8s var(--pb-ease-out);
+    }
+    .hero-visual:hover {
+      transform: perspective(1000px) rotateY(-3deg) rotateX(1deg);
+    }
+    .browser-chrome {
+      background: #111827;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--pb-s3);
+      padding: 12px 16px;
+      background: #0a0c14;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .browser-dots { display: flex; gap: 6px; }
+    .browser-dots span {
+      width: 11px; height: 11px;
+      border-radius: 50%;
+    }
+    .browser-dots span:nth-child(1) { background: #ff5f57; }
+    .browser-dots span:nth-child(2) { background: #febc2e; }
+    .browser-dots span:nth-child(3) { background: #28c840; }
+    .browser-url {
+      flex: 1;
+      height: 22px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      margin: 0 var(--pb-s3);
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      gap: 6px;
+    }
+    .browser-url-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #34d399;
+      flex-shrink: 0;
+    }
+    .browser-url-text {
+      font-size: 11px;
+      color: var(--pb-text-muted);
+      font-family: ui-monospace, monospace;
+    }
+    .browser-chrome img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 340px;
+      object-fit: cover;
+      object-position: top;
     }
 
-    /* Section headings */
+    /* ── Stats ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--pb-s6);
+      padding: var(--pb-s8) 0;
+      border-top: 1px solid var(--pb-border);
+    }
+    .counter-num { display: inline; }
+
+    /* ── Section headings ── */
     .section-label {
       font-size: var(--pb-text-xs);
       font-weight: var(--pb-weight-semibold);
-      letter-spacing: .1em;
+      letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--pb-accent);
       margin-bottom: var(--pb-s3);
@@ -88,7 +215,7 @@
     .section-title {
       font-size: clamp(var(--pb-text-2xl), 3vw, var(--pb-text-4xl));
       font-weight: var(--pb-weight-extrabold);
-      letter-spacing: -0.025em;
+      letter-spacing: -0.028em;
       margin-bottom: var(--pb-s4);
       color: var(--pb-text-primary);
     }
@@ -97,90 +224,346 @@
       max-width: 520px;
       margin-bottom: var(--pb-s10);
       line-height: var(--pb-leading-normal);
+      font-size: var(--pb-text-base);
     }
 
-    /* Card grid */
+    /* ── Marquee ── */
+    .marquee-section {
+      padding: var(--pb-s10) 0;
+      border-top: 1px solid var(--pb-border);
+      border-bottom: 1px solid var(--pb-border);
+      overflow: hidden;
+    }
+    .marquee-label {
+      text-align: center;
+      font-size: var(--pb-text-xs);
+      font-weight: var(--pb-weight-semibold);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--pb-text-muted);
+      margin-bottom: var(--pb-s6);
+    }
+    .marquee-wrapper {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: pb-marquee 32s linear infinite;
+    }
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 44px;
+      opacity: 0.45;
+      white-space: nowrap;
+      transition: opacity 200ms;
+      cursor: default;
+    }
+    .marquee-item:hover { opacity: 0.85; }
+    .mq-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .mq-name {
+      font-size: var(--pb-text-sm);
+      font-weight: var(--pb-weight-semibold);
+      color: var(--pb-text-secondary);
+      letter-spacing: 0.01em;
+    }
+    .mq-sep {
+      width: 1px; height: 20px;
+      background: var(--pb-border-strong);
+      flex-shrink: 0;
+    }
+
+    /* ── Bento grid ── */
+    .bento-row-1 {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: var(--pb-s5);
+      margin-bottom: var(--pb-s5);
+    }
+    .bento-hero-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 240px;
+    }
+    .bento-hero-card .card-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=60&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.18;
+      border-radius: inherit;
+    }
+    .bento-hero-card .card-tilt-inner { position: relative; z-index: 1; }
+
+    /* ── Feature strip ── */
+    .feature-strip {
+      background: var(--pb-bg-elevated);
+      border-top: 1px solid var(--pb-border);
+      border-bottom: 1px solid var(--pb-border);
+      padding: var(--pb-s16) var(--pb-s6);
+    }
+    .feature-strip-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--pb-s10);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .feature-item { display: flex; flex-direction: column; }
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: var(--pb-radius-md);
+      background: var(--pb-gradient-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--pb-s5);
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .feature-stat {
+      font-size: clamp(3rem, 5vw, 4rem);
+      font-weight: var(--pb-weight-extrabold);
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: var(--pb-text-primary);
+      margin-bottom: var(--pb-s2);
+    }
+    .feature-unit {
+      font-size: 0.45em;
+      font-weight: var(--pb-weight-bold);
+      letter-spacing: 0;
+      vertical-align: baseline;
+      color: var(--pb-text-muted);
+    }
+    .feature-title {
+      font-size: var(--pb-text-xs);
+      font-weight: var(--pb-weight-semibold);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--pb-text-muted);
+      margin-bottom: var(--pb-s3);
+    }
+    .feature-desc {
+      font-size: var(--pb-text-sm);
+      color: var(--pb-text-muted);
+      line-height: var(--pb-leading-normal);
+    }
+
+    /* ── Card grid ── */
     .card-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--pb-s6);
+      gap: var(--pb-s5);
     }
 
-    /* Button gallery */
+    /* ── Button gallery ── */
     .btn-gallery { display: flex; align-items: center; gap: var(--pb-s3); flex-wrap: wrap; }
 
-    /* Input demo */
+    /* ── Input demo ── */
     .input-demo-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: var(--pb-s6);
     }
 
-    /* Progress demo */
-    .progress-demo {
-      display: flex;
-      flex-direction: column;
-      gap: var(--pb-s5);
-      max-width: 600px;
-    }
-    .progress-row {
-      display: flex;
-      flex-direction: column;
-      gap: var(--pb-s2);
-    }
+    /* ── Progress demo ── */
+    .progress-demo { display: flex; flex-direction: column; gap: var(--pb-s5); max-width: 600px; }
+    .progress-row { display: flex; flex-direction: column; gap: var(--pb-s2); }
 
-    /* Testimonial grid */
+    /* ── Testimonials ── */
     .testimonial-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: var(--pb-s5);
     }
-
-    /* Avatar */
-    .avatar {
-      width: 40px;
-      height: 40px;
+    .avatar-img {
+      width: 44px; height: 44px;
       border-radius: 50%;
-      background: var(--pb-accent-subtle);
+      object-fit: cover;
       border: 2px solid var(--pb-border-accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: var(--pb-weight-bold);
-      font-size: var(--pb-text-sm);
-      color: var(--pb-accent);
       flex-shrink: 0;
     }
+    .star-row { display: flex; gap: 2px; margin-bottom: var(--pb-s4); }
+    .star-row svg { color: #fbbf24; }
 
-    /* CTA */
+    /* ── CTA ── */
     .cta-section {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #13094a 0%, #0a1a3a 50%, #060e24 100%);
+      padding: var(--pb-s24) var(--pb-s6);
       text-align: center;
-      padding: var(--pb-s20) var(--pb-s6);
-      background: linear-gradient(135deg, rgba(37,99,235,.06) 0%, transparent 60%);
-      border-top: 1px solid var(--pb-border);
+      border-top: 1px solid rgba(59, 111, 245, 0.2);
     }
+    .cta-section .blob-1 {
+      top: -30%; right: -10%; left: auto;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle at center, rgba(59, 111, 245, 0.22) 0%, transparent 70%);
+    }
+    .cta-section .blob-2 {
+      bottom: -20%; left: -5%; right: auto;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle at center, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+    }
+    .cta-inner { position: relative; z-index: 1; }
 
-    footer {
-      padding: var(--pb-s8);
-      text-align: center;
+    /* ── Code blocks ── */
+    .code-block {
+      background: #070910;
+      border: 1px solid var(--pb-border-accent);
+      border-radius: var(--pb-radius-lg);
+      overflow: hidden;
+      max-width: 620px;
+      width: 100%;
+      text-align: left;
+    }
+    .code-block-header {
+      display: flex;
+      align-items: center;
+      gap: var(--pb-s3);
+      padding: var(--pb-s3) var(--pb-s5);
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--pb-border);
+    }
+    .code-block-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .code-block-filename {
+      font-size: var(--pb-text-xs);
       color: var(--pb-text-muted);
+      font-family: ui-monospace, 'Cascadia Code', monospace;
+    }
+    .code-block pre {
+      margin: 0;
+      padding: var(--pb-s5) var(--pb-s6);
       font-size: var(--pb-text-sm);
-      border-top: 1px solid var(--pb-border);
+      font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+      color: var(--pb-text-secondary);
+      overflow-x: auto;
+      line-height: 1.7;
     }
 
-    /* Inline code */
+    /* ── Inline code ── */
     .inline-code {
       font-size: .82em;
       background: var(--pb-accent-subtle);
       padding: 2px 6px;
       border-radius: 4px;
-      color: var(--pb-accent);
+      color: var(--pb-accent-hover);
       font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
     }
 
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--pb-border);
+      padding: 0;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--pb-s10);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--pb-s16) var(--pb-s6) var(--pb-s12);
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--pb-s2);
+      font-weight: var(--pb-weight-bold);
+      font-size: var(--pb-text-xl);
+      letter-spacing: -0.025em;
+      color: var(--pb-text-primary);
+      text-decoration: none;
+      margin-bottom: var(--pb-s4);
+    }
+    .footer-logo-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--pb-gradient-brand);
+      flex-shrink: 0;
+    }
+    .footer-tagline {
+      font-size: var(--pb-text-sm);
+      color: var(--pb-text-muted);
+      line-height: var(--pb-leading-normal);
+      margin-bottom: var(--pb-s5);
+    }
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pb-s2);
+      font-size: var(--pb-text-xs);
+      color: var(--pb-text-muted);
+      border: 1px solid var(--pb-border);
+      border-radius: var(--pb-radius-full);
+      padding: var(--pb-s1) var(--pb-s3);
+    }
+    .footer-col-title {
+      font-size: var(--pb-text-xs);
+      font-weight: var(--pb-weight-semibold);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--pb-text-muted);
+      margin-bottom: var(--pb-s5);
+    }
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--pb-s3);
+    }
+    .footer-links a {
+      color: var(--pb-text-secondary);
+      text-decoration: none;
+      font-size: var(--pb-text-sm);
+      transition: color var(--pb-dur-fast) var(--pb-ease-out);
+    }
+    .footer-links a:hover { color: var(--pb-text-primary); }
+    .footer-bottom {
+      border-top: 1px solid var(--pb-border);
+      padding: var(--pb-s5) var(--pb-s6);
+      text-align: center;
+      font-size: var(--pb-text-xs);
+      color: var(--pb-text-muted);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Divider ── */
+    .pb-divider { height: 1px; background: var(--pb-border); margin: 0; }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .hero-grid { gap: var(--pb-s10); }
+      .bento-row-1 { grid-template-columns: 1fr 1fr; }
+    }
     @media (max-width: 768px) {
+      .hero-section { padding: var(--pb-s16) var(--pb-s5); min-height: auto; }
+      .hero-grid { grid-template-columns: 1fr; gap: var(--pb-s10); }
+      .hero-visual-wrap { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .pb-section { padding: var(--pb-s12) var(--pb-s5); }
-      .pb-nav      { padding: var(--pb-s4) var(--pb-s5); }
+      .pb-nav { padding: var(--pb-s4) var(--pb-s5); }
+      .bento-row-1 { grid-template-columns: 1fr; }
+      .feature-strip-grid { grid-template-columns: 1fr; gap: var(--pb-s8); }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: var(--pb-s8); padding: var(--pb-s10) var(--pb-s5) var(--pb-s8); }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr; }
+      .pb-nav-links { display: none; }
     }
   </style>
 </head>
@@ -190,7 +573,10 @@
   <!-- ═══ NAV ═══ -->
   <nav class="pb-nav" role="navigation" aria-label="Main navigation">
     <a href="#" class="pb-nav-logo">
-      <span class="pb-nav-logo-dot" style="width:8px;height:8px;border-radius:50%;background:var(--pb-accent);display:inline-block;"></span>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="9" cy="9" r="3.5" fill="var(--pb-accent)"/>
+        <circle cx="9" cy="9" r="7.5" stroke="var(--pb-accent)" stroke-width="1.2" stroke-dasharray="2.8 2.2"/>
+      </svg>
       Pebble
     </a>
 
@@ -203,6 +589,10 @@
     </div>
 
     <div class="pb-nav-actions">
+      <a href="https://github.com/MikeGira/pebble-ui" class="pb-nav-github" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHub
+      </a>
       <button class="pb-theme-toggle" data-theme-toggle aria-label="Switch theme">
         <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
@@ -218,64 +608,163 @@
     </div>
   </nav>
 
+
   <!-- ═══ HERO ═══ -->
-  <section class="pb-section" id="hero">
-    <div class="pb-container">
-      <div data-entrance="fade-up">
-        <p class="hero-eyebrow">Enterprise Design System</p>
-      </div>
-      <h1 class="hero-headline" data-entrance="fade-up" data-stagger="1">
-        Design that<br><span>thinks fast.</span><br>Feels faster.
-      </h1>
-      <p class="hero-sub" data-entrance="fade-up" data-stagger="2">
-        Magnetic cursor, 3D card tilt, fluid dark/light mode — built with zero runtime dependencies, running on the compositor thread so it never lags.
-      </p>
-      <div class="hero-cta" data-entrance="fade-up" data-stagger="3">
-        <a href="#cards" class="btn btn-primary btn-lg" data-magnetic>
-          Explore Components
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-        <a href="#install" class="btn btn-ghost btn-lg">View CDN install</a>
+  <section class="hero-section" id="hero">
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
+    <div class="dot-grid" aria-hidden="true"></div>
+
+    <div class="pb-container hero-inner">
+      <div class="hero-grid">
+
+        <!-- Left: content -->
+        <div class="hero-content">
+          <div data-entrance="fade-in">
+            <p class="hero-eyebrow">Enterprise Design System</p>
+          </div>
+          <h1 class="hero-headline" data-entrance="fade-up" data-stagger="1">
+            Design that<br>
+            <span class="gradient-text">thinks fast.</span><br>
+            Feels faster.
+          </h1>
+          <p class="hero-sub" data-entrance="fade-up" data-stagger="2">
+            Magnetic cursor, 3D card tilt, fluid dark/light mode — built with zero runtime dependencies, running on the compositor thread so it never lags.
+          </p>
+          <div class="hero-cta" data-entrance="fade-up" data-stagger="3">
+            <a href="#cards" class="btn btn-primary btn-lg" data-magnetic>
+              Explore Components
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="#install" class="btn btn-ghost btn-lg">View CDN install</a>
+          </div>
+        </div>
+
+        <!-- Right: browser chrome + image -->
+        <div class="hero-visual-wrap" data-entrance="scale-in" data-stagger="2" aria-hidden="true">
+          <figure class="hero-visual">
+            <div class="browser-chrome">
+              <div class="browser-bar">
+                <div class="browser-dots">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="browser-url">
+                  <span class="browser-url-dot"></span>
+                  <span class="browser-url-text">pebble-ui.vercel.app</span>
+                </div>
+              </div>
+              <img
+                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop"
+                alt="Enterprise analytics dashboard"
+                loading="lazy"
+                width="800"
+                height="440">
+            </div>
+          </figure>
+        </div>
+
       </div>
 
-      <div class="stats-grid">
-        <div class="pb-stat" data-entrance="scale-in" data-stagger="1">
+      <!-- Stats -->
+      <div class="stats-grid" data-entrance="fade-up" data-stagger="4">
+        <div class="pb-stat">
           <span class="pb-stat-value">0</span>
           <span class="pb-stat-label">Runtime deps</span>
         </div>
-        <div class="pb-stat" data-entrance="scale-in" data-stagger="2">
-          <span class="pb-stat-value">60<small style="font-size:.5em;font-weight:600">fps</small></span>
+        <div class="pb-stat">
+          <span class="pb-stat-value">
+            <span class="counter-num" data-target="60">0</span><small style="font-size:.5em;font-weight:700;color:var(--pb-text-muted)">fps</small>
+          </span>
           <span class="pb-stat-label">All animations</span>
         </div>
-        <div class="pb-stat" data-entrance="scale-in" data-stagger="3">
-          <span class="pb-stat-value">&lt;14<small style="font-size:.5em;font-weight:600">kb</small></span>
+        <div class="pb-stat">
+          <span class="pb-stat-value">
+            &lt;<span class="counter-num" data-target="14">0</span><small style="font-size:.5em;font-weight:700;color:var(--pb-text-muted)">kb</small>
+          </span>
           <span class="pb-stat-label">Total bundle</span>
         </div>
-        <div class="pb-stat" data-entrance="scale-in" data-stagger="4">
-          <span class="pb-stat-value">2</span>
+        <div class="pb-stat">
+          <span class="pb-stat-value">
+            <span class="counter-num" data-target="2">0</span>
+          </span>
           <span class="pb-stat-label">Lines to install</span>
         </div>
       </div>
     </div>
   </section>
 
+
+  <!-- ═══ MARQUEE ═══ -->
+  <div class="marquee-section" aria-label="Compatible frameworks">
+    <p class="marquee-label">Works with every stack</p>
+    <div class="marquee-wrapper">
+      <div class="marquee-track" aria-hidden="true">
+        <!-- Set 1 -->
+        <div class="marquee-item"><span class="mq-dot" style="background:#61DAFB"></span><span class="mq-name">React</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#e2e8f0"></span><span class="mq-name">Next.js</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#41B883"></span><span class="mq-name">Vue.js</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#FF3E00"></span><span class="mq-name">Svelte</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#3178C6"></span><span class="mq-name">TypeScript</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#06B6D4"></span><span class="mq-name">Tailwind CSS</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#FF5D01"></span><span class="mq-name">Astro</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#121212;border:1px solid rgba(255,255,255,0.2)"></span><span class="mq-name">Remix</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#f0db4f"></span><span class="mq-name">Vanilla JS</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#e34c26"></span><span class="mq-name">HTML5</span></div>
+        <div class="mq-sep"></div>
+        <!-- Set 2 (duplicate for seamless loop) -->
+        <div class="marquee-item"><span class="mq-dot" style="background:#61DAFB"></span><span class="mq-name">React</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#e2e8f0"></span><span class="mq-name">Next.js</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#41B883"></span><span class="mq-name">Vue.js</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#FF3E00"></span><span class="mq-name">Svelte</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#3178C6"></span><span class="mq-name">TypeScript</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#06B6D4"></span><span class="mq-name">Tailwind CSS</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#FF5D01"></span><span class="mq-name">Astro</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#121212;border:1px solid rgba(255,255,255,0.2)"></span><span class="mq-name">Remix</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#f0db4f"></span><span class="mq-name">Vanilla JS</span></div>
+        <div class="mq-sep"></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#e34c26"></span><span class="mq-name">HTML5</span></div>
+        <div class="mq-sep"></div>
+      </div>
+    </div>
+  </div>
+
+
   <!-- ═══ CARDS ═══ -->
   <section class="pb-section" id="cards">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Components</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Cards that respond.</h2>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Cards that <span class="gradient-text">respond.</span></h2>
       <p class="section-desc" data-entrance="fade-up" data-stagger="2">
         Hover to feel the 3D tilt. Each card tracks your pointer with smooth lerp — no jitter, no layout shifts.
       </p>
 
-      <div class="card-grid">
-        <div class="card card-tilt" data-entrance="fade-up" data-stagger="1">
+      <!-- Bento row 1: asymmetric -->
+      <div class="bento-row-1">
+        <div class="card card-tilt bento-hero-card" data-entrance="fade-up" data-stagger="1">
+          <div class="card-bg" aria-hidden="true"></div>
           <div class="card-tilt-inner">
             <div class="card-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
             <h3 class="card-title">Magnetic Cursor</h3>
-            <p class="card-body">Ring follows with lag. Dot snaps to exact position. Elements with <code class="inline-code">data-magnetic</code> pull the cursor toward them.</p>
+            <p class="card-body">Ring follows with lag. Dot snaps to exact position. Elements with <code class="inline-code">data-magnetic</code> pull the cursor toward them. GPU-only, zero layout thrash.</p>
             <div class="card-footer">
               <span class="badge badge-accent">Pure JS</span>
               <span class="badge badge-success">60fps</span>
@@ -289,14 +778,17 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
             <h3 class="card-title">3D Card Tilt</h3>
-            <p class="card-body">Max ±13° rotation via pointer tracking per card. <code class="inline-code">will-change</code> set only during animation, cleared when idle.</p>
+            <p class="card-body">±13° rotation via pointer tracking. <code class="inline-code">will-change</code> set only during animation, cleared when idle.</p>
             <div class="card-footer">
               <span class="badge badge-accent">CSS Transform</span>
               <span class="badge badge-default">Glassmorphism</span>
             </div>
           </div>
         </div>
+      </div>
 
+      <!-- Bento row 2: equal split -->
+      <div class="card-grid">
         <div class="card card-tilt" data-entrance="fade-up" data-stagger="3">
           <div class="card-tilt-inner">
             <div class="card-icon">
@@ -310,15 +802,14 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="card-grid" style="margin-top:var(--pb-s6)">
-        <div class="card card-lift" data-entrance="slide-right" data-stagger="1">
+        <div class="card card-lift" data-entrance="slide-right" data-stagger="4">
           <h3 class="card-title" style="margin-bottom:var(--pb-s3)">Scroll Entrance</h3>
           <p class="card-body">IntersectionObserver triggers animations when elements enter the viewport. Each fires once, then the observer disconnects to free memory.</p>
           <div class="card-footer"><span class="badge badge-default">No scroll listener</span></div>
         </div>
-        <div class="card card-lift card-accent" data-entrance="slide-left" data-stagger="2">
+
+        <div class="card card-lift card-accent" data-entrance="slide-left" data-stagger="5">
           <h3 class="card-title" style="margin-bottom:var(--pb-s3)">Reduced Motion</h3>
           <p class="card-body">All effects respect <code class="inline-code">prefers-reduced-motion</code>. Cursor hides, animations skip, tilt disables — no JS errors, no layout jumps.</p>
           <div class="card-footer"><span class="badge badge-success">Accessible</span></div>
@@ -329,13 +820,14 @@
 
   <div class="pb-divider"></div>
 
+
   <!-- ═══ BUTTONS ═══ -->
   <section class="pb-section" id="buttons">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Interactions</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Buttons that move.</h2>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Buttons that <span class="gradient-text">move.</span></h2>
       <p class="section-desc" data-entrance="fade-up" data-stagger="2">
-        Shimmer sweep on primary hover. Spring-physics on the circle. Ghost pulls accent on hover.
+        Shimmer sweep on primary hover. Spring-physics on the circle. Ghost pulls accent on hover. Every state is a microinteraction.
       </p>
 
       <div style="display:flex;flex-direction:column;gap:var(--pb-s6)">
@@ -347,6 +839,7 @@
           <button class="btn btn-ghost btn-lg" data-magnetic>Ghost</button>
           <button class="btn btn-primary" data-magnetic>Default</button>
           <button class="btn btn-ghost">Default Ghost</button>
+          <button class="btn btn-primary" disabled aria-disabled="true">Disabled</button>
         </div>
         <div class="btn-gallery" data-entrance="fade-up" data-stagger="2">
           <button class="btn-circle" data-magnetic aria-label="Forward">
@@ -354,25 +847,57 @@
           </button>
           <button class="btn btn-primary btn-sm">Small Primary</button>
           <button class="btn btn-ghost btn-sm">Small Ghost</button>
-          <button class="btn btn-primary" disabled aria-disabled="true">Disabled</button>
           <span class="badge badge-accent">New</span>
           <span class="badge badge-success">Live</span>
           <span class="badge badge-warning">Beta</span>
           <span class="badge badge-danger">Deprecated</span>
+          <span class="badge badge-default">Stable</span>
         </div>
       </div>
     </div>
   </section>
 
+
+  <!-- ═══ FEATURE STRIP ═══ -->
+  <div class="feature-strip" aria-label="Key metrics">
+    <div class="feature-strip-grid">
+      <div class="feature-item" data-entrance="fade-up" data-stagger="1">
+        <div class="feature-icon-wrap" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <p class="feature-stat">0</p>
+        <p class="feature-title">Runtime dependencies</p>
+        <p class="feature-desc">Ships as two static files: one CSS, one JS. Nothing else. No npm install required in your app.</p>
+      </div>
+      <div class="feature-item" data-entrance="fade-up" data-stagger="2">
+        <div class="feature-icon-wrap" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <p class="feature-stat">60<span class="feature-unit">fps</span></p>
+        <p class="feature-title">Compositor thread</p>
+        <p class="feature-desc">Every animation runs on GPU via transform and opacity. Main thread is never blocked.</p>
+      </div>
+      <div class="feature-item" data-entrance="fade-up" data-stagger="3">
+        <div class="feature-icon-wrap" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <p class="feature-stat">2<span class="feature-unit">lines</span></p>
+        <p class="feature-title">To install</p>
+        <p class="feature-desc">One link tag, one script tag. Works in Vanilla HTML, React, Next.js, Svelte — without conflict.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="pb-divider"></div>
+
 
   <!-- ═══ INPUTS ═══ -->
   <section class="pb-section" id="inputs">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Forms</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Inputs that communicate.</h2>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Inputs that <span class="gradient-text">communicate.</span></h2>
       <p class="section-desc" data-entrance="fade-up" data-stagger="2">
-        Focus rings, validation states, icon groups — all accessible by default. Works with any server-side or client-side form library.
+        Focus rings, validation states, icon groups — all accessible by default. Works with any form library.
       </p>
 
       <div class="input-demo-grid" data-entrance="fade-up" data-stagger="3">
@@ -381,19 +906,16 @@
           <input class="input" id="d-email" type="email" placeholder="you@example.com">
           <span class="form-hint">We'll never share your email.</span>
         </div>
-
         <div class="form-group">
           <label class="form-label form-label-required" for="d-pw">Password</label>
           <input class="input input-error" id="d-pw" type="password" value="weak">
           <span class="form-hint form-hint-error">Password must be at least 8 characters.</span>
         </div>
-
         <div class="form-group">
           <label class="form-label" for="d-user">Username</label>
           <input class="input input-success" id="d-user" type="text" value="mikebuilds">
           <span class="form-hint form-hint-success">Username is available.</span>
         </div>
-
         <div class="form-group">
           <label class="form-label" for="d-search">Search</label>
           <div class="input-group">
@@ -403,7 +925,6 @@
             <input class="input input-has-prefix" id="d-search" type="search" placeholder="Search components...">
           </div>
         </div>
-
         <div class="form-group">
           <label class="form-label" for="d-fw">Framework</label>
           <select class="input input-select" id="d-fw">
@@ -413,7 +934,6 @@
             <option>SvelteKit</option>
           </select>
         </div>
-
         <div class="form-group">
           <label class="form-label" for="d-msg">Message</label>
           <textarea class="input input-textarea" id="d-msg" rows="3" placeholder="Tell us about your project..."></textarea>
@@ -424,11 +944,12 @@
 
   <div class="pb-divider"></div>
 
+
   <!-- ═══ TOASTS ═══ -->
   <section class="pb-section" id="toasts">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Feedback</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Toasts that inform.</h2>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Toasts that <span class="gradient-text">inform.</span></h2>
       <p class="section-desc" data-entrance="fade-up" data-stagger="2">
         Auto-dismiss with a progress track. Click to close early. Four semantic types — one API call.
       </p>
@@ -440,25 +961,34 @@
         <button class="btn btn-ghost"   onclick="window.pebble.toast({type:'info',title:'Update available',message:'Pebble UI v1.1.0 is ready to install.'})">Info</button>
       </div>
 
-      <div style="margin-top:var(--pb-s6);max-width:480px">
-        <pre style="background:var(--pb-bg-elevated);border:1px solid var(--pb-border-accent);border-radius:var(--pb-radius-md);padding:var(--pb-s4) var(--pb-s5);font-size:var(--pb-text-sm);color:var(--pb-text-secondary);font-family:ui-monospace,'Cascadia Code','Fira Code',monospace;overflow-x:auto"><span style="color:var(--pb-text-muted)">// one call</span>
+      <div style="margin-top:var(--pb-s8);max-width:520px" data-entrance="fade-up" data-stagger="4">
+        <div class="code-block">
+          <div class="code-block-header">
+            <span class="code-block-dot" style="background:#ff5f57"></span>
+            <span class="code-block-dot" style="background:#febc2e"></span>
+            <span class="code-block-dot" style="background:#28c840"></span>
+            <span class="code-block-filename">app.js</span>
+          </div>
+          <pre><span style="color:var(--pb-text-muted)">// one call, four types</span>
 <span style="color:var(--pb-accent-hover)">window</span>.<span style="color:var(--pb-accent-hover)">pebble</span>.toast({
-  type: <span style="color:#10b981">'success'</span>,
-  title: <span style="color:#10b981">'Saved'</span>,
-  message: <span style="color:#10b981">'All changes saved.'</span>,
-  duration: <span style="color:#f59e0b">4000</span>
+  type: <span style="color:#34d399">'success'</span>,
+  title: <span style="color:#34d399">'Saved'</span>,
+  message: <span style="color:#34d399">'All changes saved.'</span>,
+  duration: <span style="color:#fbbf24">4000</span>
 });</pre>
+        </div>
       </div>
     </div>
   </section>
 
   <div class="pb-divider"></div>
 
+
   <!-- ═══ PROGRESS ═══ -->
   <section class="pb-section" id="progress">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Status</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Progress at a glance.</h2>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Progress at a <span class="gradient-text">glance.</span></h2>
       <p class="section-desc" data-entrance="fade-up" data-stagger="2">
         Smooth width transitions, shimmer sheen, semantic color variants, and an indeterminate state for unknown durations.
       </p>
@@ -494,11 +1024,12 @@
 
   <div class="pb-divider"></div>
 
+
   <!-- ═══ TOOLTIPS ═══ -->
   <section class="pb-section" id="tooltips">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Utility</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Tooltips, pure CSS.</h2>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Tooltips, <span class="gradient-text">pure CSS.</span></h2>
       <p class="section-desc" data-entrance="fade-up" data-stagger="2">
         Add <code class="inline-code">data-tooltip="Text"</code> to any element — no JS, no library. Four directions via <code class="inline-code">data-tooltip-pos</code>.
       </p>
@@ -515,19 +1046,30 @@
 
   <div class="pb-divider"></div>
 
+
   <!-- ═══ TESTIMONIALS ═══ -->
   <section class="pb-section" id="about">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Testimonials</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Glassmorphism cards.</h2>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Trusted by <span class="gradient-text">builders.</span></h2>
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
+        Dropped into production apps in hours, not days.
+      </p>
 
       <div class="testimonial-grid">
         <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="1">
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.7;margin-bottom:var(--pb-s4)">
-            "Finally a design system that ships performance as a first-class feature, not an afterthought. The tilt effect runs at solid 60fps even on old hardware."
+          <div class="star-row" aria-label="5 stars">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">
+            "Finally a design system that ships performance as a first-class feature. The tilt effect runs at solid 60fps even on old hardware — no compromise."
           </p>
           <div style="display:flex;align-items:center;gap:var(--pb-s3)">
-            <div class="avatar">MT</div>
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="Michael T." class="avatar-img">
             <div>
               <p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">Michael T.</p>
               <p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">AI Solutions Architect</p>
@@ -536,11 +1078,18 @@
         </div>
 
         <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="2">
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.7;margin-bottom:var(--pb-s4)">
-            "Two lines of HTML and every project instantly feels enterprise-grade. The dark/light switch with zero flash is the detail that clients always notice."
+          <div class="star-row" aria-label="5 stars">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">
+            "Two lines of HTML and every project instantly feels enterprise-grade. The dark/light switch with zero flash is the detail clients always notice first."
           </p>
           <div style="display:flex;align-items:center;gap:var(--pb-s3)">
-            <div class="avatar">AK</div>
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="A. Kargbo" class="avatar-img">
             <div>
               <p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">A. Kargbo</p>
               <p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Frontend Lead</p>
@@ -549,11 +1098,18 @@
         </div>
 
         <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="3">
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.7;margin-bottom:var(--pb-s4)">
-            "Works in vanilla HTML, React, and Next.js without conflict. I dropped it into BridgeUp's landing page alongside Tailwind and it just worked."
+          <div class="star-row" aria-label="5 stars">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">
+            "Works in vanilla HTML, React, and Next.js without conflict. I dropped it into BridgeUp's landing page alongside Tailwind and it just worked. No config."
           </p>
           <div style="display:flex;align-items:center;gap:var(--pb-s3)">
-            <div class="avatar">RN</div>
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="R. Nkemdirim" class="avatar-img">
             <div>
               <p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">R. Nkemdirim</p>
               <p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Full-Stack Engineer</p>
@@ -564,30 +1120,149 @@
     </div>
   </section>
 
+
   <!-- ═══ CTA ═══ -->
   <section class="cta-section" id="install">
-    <div class="pb-container" style="display:flex;flex-direction:column;align-items:center;gap:var(--pb-s5)">
+    <div class="blob blob-1" aria-hidden="true"></div>
+    <div class="blob blob-2" aria-hidden="true"></div>
+    <div class="dot-grid" aria-hidden="true"></div>
+
+    <div class="pb-container cta-inner" style="display:flex;flex-direction:column;align-items:center;gap:var(--pb-s5)">
       <p class="section-label" data-entrance="fade-in">Get started</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1" style="text-align:center">Two lines. Any project.</h2>
-      <pre data-entrance="scale-in" data-stagger="2" style="background:var(--pb-bg-elevated);border:1px solid var(--pb-border-accent);border-radius:var(--pb-radius-lg);padding:var(--pb-s5) var(--pb-s6);font-size:var(--pb-text-sm);color:var(--pb-text-secondary);text-align:left;overflow-x:auto;max-width:600px;width:100%;font-family:ui-monospace,'Cascadia Code','Fira Code',monospace"><span style="color:var(--pb-text-muted)">&lt;!-- Add to &lt;head&gt; --&gt;</span>
-<span style="color:var(--pb-accent)">&lt;link</span> rel="stylesheet" href="https://pebble-ui-taupe.vercel.app/dist/pebble.css"<span style="color:var(--pb-accent)">&gt;</span>
-<span style="color:var(--pb-accent)">&lt;script</span> src="https://pebble-ui-taupe.vercel.app/dist/pebble.js" defer<span style="color:var(--pb-accent)">&gt;&lt;/script&gt;</span></pre>
-      <div class="btn-gallery" data-entrance="fade-up" data-stagger="3">
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1" style="text-align:center">
+        Two lines.<br><span class="gradient-text">Any project.</span>
+      </h2>
+      <p style="color:var(--pb-text-secondary);text-align:center;max-width:420px;font-size:var(--pb-text-base);line-height:var(--pb-leading-normal)" data-entrance="fade-up" data-stagger="2">
+        Paste into your <code class="inline-code">&lt;head&gt;</code>. Every component, cursor, animation, and theme switch — instantly available.
+      </p>
+
+      <div class="code-block" data-entrance="scale-in" data-stagger="3" style="max-width:640px">
+        <div class="code-block-header">
+          <span class="code-block-dot" style="background:#ff5f57"></span>
+          <span class="code-block-dot" style="background:#febc2e"></span>
+          <span class="code-block-dot" style="background:#28c840"></span>
+          <span class="code-block-filename">index.html</span>
+        </div>
+        <pre><span style="color:var(--pb-text-muted)">&lt;!-- Add to &lt;head&gt; --&gt;</span>
+<span style="color:var(--pb-accent-hover)">&lt;link</span> rel=<span style="color:#34d399">"stylesheet"</span> href=<span style="color:#34d399">"https://pebble-ui-taupe.vercel.app/dist/pebble.css"</span><span style="color:var(--pb-accent-hover)">&gt;</span>
+<span style="color:var(--pb-accent-hover)">&lt;script</span> src=<span style="color:#34d399">"https://pebble-ui-taupe.vercel.app/dist/pebble.js"</span> defer<span style="color:var(--pb-accent-hover)">&gt;&lt;/script&gt;</span></pre>
+      </div>
+
+      <div class="btn-gallery" data-entrance="fade-up" data-stagger="4">
         <a href="#cards" class="btn btn-primary btn-lg" data-magnetic>
           View Components
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
-        <button class="btn btn-ghost btn-lg" onclick="window.pebble.toast({type:'success',title:'Copied!',message:'Install snippet copied to clipboard.'})">Copy snippet</button>
+        <button class="btn btn-ghost btn-lg" onclick="navigator.clipboard.writeText('&lt;link rel=&quot;stylesheet&quot; href=&quot;https://pebble-ui-taupe.vercel.app/dist/pebble.css&quot;&gt;\n&lt;script src=&quot;https://pebble-ui-taupe.vercel.app/dist/pebble.js&quot; defer&gt;&lt;/script&gt;').then(()=>window.pebble.toast({type:'success',title:'Copied!',message:'Install snippet copied to clipboard.'}))">
+          Copy snippet
+        </button>
       </div>
     </div>
   </section>
 
+
+  <!-- ═══ FOOTER ═══ -->
   <footer>
-    <p>Pebble UI &mdash; Built by Mike Byosekumbuga &mdash; MIT License</p>
+    <div class="footer-inner">
+      <div>
+        <a href="#" class="footer-logo">
+          <span class="footer-logo-dot"></span>
+          Pebble
+        </a>
+        <p class="footer-tagline">Enterprise design system. Zero runtime dependencies. Drop in two lines and ship something beautiful.</p>
+        <span class="footer-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          MIT License
+        </span>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Components</p>
+        <ul class="footer-links">
+          <li><a href="#cards">Cards</a></li>
+          <li><a href="#buttons">Buttons</a></li>
+          <li><a href="#inputs">Inputs</a></li>
+          <li><a href="#toasts">Toasts</a></li>
+          <li><a href="#progress">Progress</a></li>
+          <li><a href="#tooltips">Tooltips</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Resources</p>
+        <ul class="footer-links">
+          <li><a href="https://github.com/MikeGira/pebble-ui" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://pebble-ui-taupe.vercel.app/dist/pebble.css" target="_blank" rel="noopener">CDN — CSS</a></li>
+          <li><a href="https://pebble-ui-taupe.vercel.app/dist/pebble.js" target="_blank" rel="noopener">CDN — JS</a></li>
+          <li><a href="#install">Install guide</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Built by</p>
+        <ul class="footer-links">
+          <li><a href="https://github.com/MikeGira" target="_blank" rel="noopener">Mike Byosekumbuga</a></li>
+          <li><a href="mailto:byosekumbuga@gmail.com">byosekumbuga@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      Pebble UI &mdash; &copy; 2025 Mike Byosekumbuga &mdash; MIT License
+    </div>
   </footer>
 
-  <!-- Pebble UI system JS (deferred — FOUC handled by inline script above) -->
+
+  <!-- Pebble UI system JS -->
   <script src="../dist/pebble.js" defer></script>
+
+  <!-- Demo-only: counter animation + active nav -->
+  <script>
+    (function() {
+      // Counter animation
+      var counters = document.querySelectorAll('.counter-num[data-target]');
+      if (counters.length) {
+        function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+        function animateCounter(el, target, duration) {
+          var start = performance.now();
+          function update(now) {
+            var t = Math.min((now - start) / duration, 1);
+            el.textContent = Math.round(easeOutCubic(t) * target);
+            if (t < 1) requestAnimationFrame(update);
+          }
+          requestAnimationFrame(update);
+        }
+        var cObs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var el = entry.target;
+              var target = parseInt(el.dataset.target, 10);
+              animateCounter(el, target, 1400);
+              cObs.unobserve(el);
+            }
+          });
+        }, { threshold: 0.6 });
+        counters.forEach(function(el) { cObs.observe(el); });
+      }
+
+      // Active nav section
+      var navLinks = document.querySelectorAll('.pb-nav-link[href^="#"]');
+      var sectionIds = ['hero','cards','buttons','inputs','toasts','progress','tooltips','about'];
+      var sections = sectionIds.map(function(id) { return document.getElementById(id); }).filter(Boolean);
+      if (navLinks.length && sections.length) {
+        var sObs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              var id = entry.target.id;
+              navLinks.forEach(function(link) {
+                link.classList.toggle('is-active', link.getAttribute('href') === ('#' + id));
+              });
+            }
+          });
+        }, { rootMargin: '-20% 0px -70% 0px' });
+        sections.forEach(function(s) { sObs.observe(s); });
+      }
+    })();
+  </script>
 
 </body>
 </html>

@@ -516,11 +516,235 @@
 
     .pb-divider { height: 1px; background: var(--pb-border); margin: 0; }
 
+    /* ── Orizon-style pill link CTA ── */
+    .pill-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 2px solid var(--pb-accent);
+      border-radius: var(--pb-radius-full);
+      padding: 9px 10px 9px 20px;
+      color: var(--pb-accent);
+      font-weight: var(--pb-weight-bold);
+      font-size: var(--pb-text-xs);
+      letter-spacing: .09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background var(--pb-dur-fast) var(--pb-ease-out), color var(--pb-dur-fast) var(--pb-ease-out);
+    }
+    .pill-link:hover { background: var(--pb-accent); color: white; }
+    .pill-link-arrow {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--pb-accent);
+      display: flex; align-items: center; justify-content: center;
+      color: white; flex-shrink: 0;
+      transition: transform var(--pb-dur-base) var(--pb-ease-spring);
+    }
+    .pill-link:hover .pill-link-arrow { transform: translate(2px, -2px); }
+
+    /* ── Orizon section label (left bar) ── */
+    .section-bar-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: var(--pb-text-xs);
+      font-weight: var(--pb-weight-bold);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--pb-text-primary);
+    }
+    .section-bar-label::before {
+      content: '';
+      width: 4px; height: 22px;
+      background: var(--pb-accent);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .project-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--pb-s4);
+      margin-bottom: var(--pb-s8);
+    }
+    .project-nav { display: flex; gap: var(--pb-s3); }
+    .project-nav-btn {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--pb-border-strong);
+      background: transparent;
+      color: var(--pb-text-secondary);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: border-color var(--pb-dur-fast) var(--pb-ease-out), color var(--pb-dur-fast) var(--pb-ease-out), background var(--pb-dur-fast) var(--pb-ease-out);
+    }
+    .project-nav-btn:hover { border-color: var(--pb-accent); color: white; background: var(--pb-accent); }
+
+    /* ── Orizon-style project cards ── */
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--pb-s5);
+    }
+    .project-card {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: var(--pb-s8);
+      cursor: pointer;
+      transition: transform 350ms var(--pb-ease-out), box-shadow 350ms var(--pb-ease-out);
+    }
+    .project-card:hover { transform: scale(1.018); box-shadow: 0 32px 80px rgba(0,0,0,0.5); }
+    .project-card-purple { background: linear-gradient(145deg, #3b0764 0%, #6d28d9 55%, #4c1d95 100%); }
+    .project-card-blue   { background: linear-gradient(145deg, #0c1a4a 0%, #1d4ed8 55%, #1e3a8a 100%); }
+    .project-card-teal   { background: linear-gradient(145deg, #022c22 0%, #065f46 55%, #047857 100%); }
+    .project-card-indigo { background: linear-gradient(145deg, #1e1b4b 0%, #4338ca 55%, #312e81 100%); }
+    .project-card-wide {
+      grid-column: 1 / -1;
+      min-height: 260px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, #0f0c2e 0%, #1a1060 50%, #13094a 100%);
+    }
+    .project-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: var(--pb-s4);
+    }
+    .project-logo-dot {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .project-logo-name {
+      font-size: var(--pb-text-lg);
+      font-weight: var(--pb-weight-bold);
+      color: white;
+      letter-spacing: -0.01em;
+    }
+    .project-desc {
+      font-size: var(--pb-text-sm);
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+      max-width: 280px;
+      margin-bottom: var(--pb-s6);
+    }
+    .project-mockup {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 58%; height: 72%;
+      object-fit: cover;
+      object-position: top left;
+      border-top-left-radius: 12px;
+      box-shadow: -12px -12px 40px rgba(0,0,0,0.3);
+    }
+    .project-wide-left { flex: 1; z-index: 1; }
+    .project-wide-right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .project-stat-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--pb-s5);
+    }
+    .project-stat-item {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .project-stat-num {
+      font-size: var(--pb-text-3xl);
+      font-weight: var(--pb-weight-extrabold);
+      color: white;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .project-stat-lbl {
+      font-size: var(--pb-text-xs);
+      color: rgba(255,255,255,0.5);
+      font-weight: var(--pb-weight-medium);
+    }
+
+    /* ── Social cloud (orizon blue section with floating avatars) ── */
+    .social-cloud-section {
+      background: #110e3a;
+      position: relative;
+      overflow: hidden;
+      padding: var(--pb-s24) var(--pb-s6);
+    }
+    .social-cloud-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(37, 99, 235, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 30%, rgba(124, 58, 237, 0.25) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 80%, rgba(59, 111, 245, 0.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .social-cloud-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: var(--pb-s5);
+    }
+    .cloud-logo {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--pb-gradient-brand);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 60px rgba(59, 111, 245, 0.5);
+    }
+    .cloud-title {
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      font-weight: var(--pb-weight-extrabold);
+      color: white;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .cloud-sub {
+      font-size: var(--pb-text-base);
+      color: rgba(255,255,255,0.55);
+      max-width: 480px;
+      line-height: var(--pb-leading-normal);
+    }
+    /* Floating avatar circles */
+    .cloud-avatars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .cloud-avatar {
+      position: absolute;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255,255,255,0.2);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
     /* ── Responsive ── */
     @media (max-width: 1024px) {
       .showcase-grid { grid-template-columns: repeat(2, 1fr); }
       .showcase-wide { grid-template-columns: 1fr; }
       .hero-grid { gap: var(--pb-s10); }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-card-wide { flex-direction: column; }
     }
     @media (max-width: 768px) {
       .hero-section { padding: var(--pb-s16) var(--pb-s5); min-height: auto; }
@@ -711,6 +935,96 @@
     </div>
   </div>
 
+
+  <!-- ═══ ORIZON-STYLE PROJECT CARDS ═══ -->
+  <section class="pb-section" id="projects" style="padding-bottom:0">
+    <div class="pb-container">
+      <div class="project-section-header" data-entrance="fade-in">
+        <span class="section-bar-label">Featured integrations</span>
+        <div style="display:flex;align-items:center;gap:var(--pb-s3)">
+          <a href="#install" class="pill-link">
+            Get the CDN
+            <span class="pill-link-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+            </span>
+          </a>
+          <div class="project-nav" aria-hidden="true">
+            <button class="project-nav-btn" aria-label="Previous">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="project-nav-btn" aria-label="Next">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-grid">
+        <!-- Card 1: React — deep purple -->
+        <div class="project-card project-card-purple" data-entrance="fade-up" data-stagger="1">
+          <div class="project-logo-row">
+            <span class="project-logo-dot">⚛</span>
+            <span class="project-logo-name">React</span>
+          </div>
+          <p class="project-desc">Drop two lines into any React app and watch it transform. Works with hooks, context, and every major meta-framework.</p>
+          <div class="card-footer" style="margin-top:auto;z-index:1">
+            <span class="badge" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.2)">Zero conflicts</span>
+            <span class="badge" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.2)">Vite + CRA</span>
+          </div>
+          <img class="project-mockup" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80&auto=format&fit=crop" alt="React integration" loading="lazy">
+        </div>
+
+        <!-- Card 2: Next.js — deep blue -->
+        <div class="project-card project-card-blue" data-entrance="fade-up" data-stagger="2">
+          <div class="project-logo-row">
+            <span class="project-logo-dot" style="font-weight:900;font-size:16px;">N</span>
+            <span class="project-logo-name">Next.js</span>
+          </div>
+          <p class="project-desc">Works with App Router, Pages Router, SSR, and static export. Handles dark-mode flicker before the server renders.</p>
+          <div class="card-footer" style="margin-top:auto;z-index:1">
+            <span class="badge" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.2)">App Router</span>
+            <span class="badge" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.8);border-color:rgba(255,255,255,0.2)">No FOUC</span>
+          </div>
+          <img class="project-mockup" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80&auto=format&fit=crop" alt="Next.js dashboard" loading="lazy">
+        </div>
+
+        <!-- Card wide: Stats — dark indigo, full width -->
+        <div class="project-card project-card-wide" data-entrance="scale-in" data-stagger="3">
+          <div class="project-wide-left">
+            <div class="project-logo-row">
+              <span class="project-logo-dot">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle cx="9" cy="9" r="3.5" fill="white"/><circle cx="9" cy="9" r="7.5" stroke="white" stroke-width="1.2" stroke-dasharray="2.8 2.2"/></svg>
+              </span>
+              <span class="project-logo-name">Pebble UI</span>
+            </div>
+            <p class="project-desc" style="max-width:360px">The numbers behind the system. Every metric is real — measured on a 2020 MacBook Air, 60hz display.</p>
+            <a href="#install" class="pill-link" style="border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.7)">
+              View all docs
+              <span class="pill-link-arrow" style="background:rgba(255,255,255,0.15)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+              </span>
+            </a>
+          </div>
+          <div class="project-wide-right">
+            <div class="project-stat-group">
+              <div class="project-stat-item">
+                <span class="project-stat-num">0</span>
+                <span class="project-stat-lbl">Runtime deps</span>
+              </div>
+              <div class="project-stat-item">
+                <span class="project-stat-num">60</span>
+                <span class="project-stat-lbl">FPS locked</span>
+              </div>
+              <div class="project-stat-item">
+                <span class="project-stat-num">&lt;14</span>
+                <span class="project-stat-lbl">KB total</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ═══ SHOWCASE — BIG IMAGE CARDS ═══ -->
   <section class="pb-section" id="showcase">
@@ -974,6 +1288,47 @@
   </section>
   <div class="pb-divider"></div>
 
+
+  <!-- ═══ SOCIAL CLOUD (Orizon floating avatar section) ═══ -->
+  <section class="social-cloud-section">
+    <div class="social-cloud-bg" aria-hidden="true"></div>
+
+    <!-- Floating avatar circles positioned absolutely -->
+    <div class="cloud-avatars" aria-hidden="true">
+      <!-- Left cluster -->
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:70px;height:70px;top:12%;left:4%;animation:pb-float 6s ease-in-out infinite alternate;animation-delay:0s;" alt="">
+      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:54px;height:54px;top:38%;left:8%;animation:pb-float 7s ease-in-out infinite alternate;animation-delay:-1.2s;" alt="">
+      <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:62px;height:62px;top:62%;left:3%;animation:pb-float 5.5s ease-in-out infinite alternate;animation-delay:-2.1s;" alt="">
+      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:48px;height:48px;top:80%;left:14%;animation:pb-float 8s ease-in-out infinite alternate;animation-delay:-0.8s;" alt="">
+      <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:58px;height:58px;top:22%;left:22%;animation:pb-float 6.5s ease-in-out infinite alternate;animation-delay:-1.8s;" alt="">
+      <!-- Right cluster -->
+      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:66px;height:66px;top:10%;right:5%;animation:pb-float 7.5s ease-in-out infinite alternate;animation-delay:-0.4s;" alt="">
+      <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:52px;height:52px;top:40%;right:7%;animation:pb-float 5.8s ease-in-out infinite alternate;animation-delay:-2.6s;" alt="">
+      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:64px;height:64px;top:65%;right:4%;animation:pb-float 9s ease-in-out infinite alternate;animation-delay:-1.5s;" alt="">
+      <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:50px;height:50px;top:82%;right:16%;animation:pb-float 6.2s ease-in-out infinite alternate;animation-delay:-3s;" alt="">
+      <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=80&h=80&q=80&auto=format&fit=crop&crop=face"  class="cloud-avatar" style="width:60px;height:60px;top:25%;right:20%;animation:pb-float 7s ease-in-out infinite alternate;animation-delay:-0.9s;" alt="">
+    </div>
+
+    <div class="social-cloud-inner" data-entrance="scale-in">
+      <div class="cloud-logo" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="3.5" fill="white"/><circle cx="9" cy="9" r="7.5" stroke="white" stroke-width="1.2" stroke-dasharray="2.8 2.2"/></svg>
+      </div>
+      <h2 class="cloud-title">Teams worldwide<br><span class="gradient-text">ship with Pebble.</span></h2>
+      <p class="cloud-sub">From solo developers to Fortune 500 product teams — Pebble drops in and immediately elevates the experience.</p>
+      <div style="display:flex;gap:var(--pb-s4);flex-wrap:wrap;justify-content:center">
+        <a href="#install" class="btn btn-primary btn-lg" data-magnetic>
+          Get started free
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="#projects" class="pill-link" style="border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.7)">
+          See integrations
+          <span class="pill-link-arrow" style="background:rgba(255,255,255,0.18)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- ═══ TESTIMONIALS ═══ -->
   <section class="pb-section" id="about">

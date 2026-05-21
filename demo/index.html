@@ -4,13 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pebble UI — Enterprise Design System</title>
-  <meta name="description" content="Pebble UI: enterprise design system with magnetic cursor, 3D card tilt, fluid dark/light mode. Zero runtime dependencies. Drop-in two lines.">
+  <meta name="description" content="Pebble UI: enterprise design system with magnetic cursor, 3D card tilt, fluid dark/light mode. Zero runtime dependencies.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- FOUC prevention — must be inline, runs before paint -->
   <script>(function(){var k='pebble-theme',d='dark',l='light';try{var s=localStorage.getItem(k);if(s===d||s===l){document.documentElement.setAttribute('data-theme',s);return;}}catch(e){}if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.setAttribute('data-theme',d);else document.documentElement.setAttribute('data-theme',l);})();</script>
 
   <link rel="stylesheet" href="../dist/pebble.css">
@@ -34,7 +33,7 @@
       display: inline;
     }
 
-    /* ── Nav upgrades ── */
+    /* ── Nav ── */
     .pb-nav-github {
       display: inline-flex;
       align-items: center;
@@ -59,23 +58,58 @@
       align-items: center;
       padding: var(--pb-s20) var(--pb-s6);
     }
-    .blob {
+    /* Aurora animated background */
+    .aurora {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .aurora-blob {
       position: absolute;
       border-radius: 50%;
+      filter: blur(90px);
       pointer-events: none;
-      z-index: 0;
     }
-    .blob-1 {
-      width: 700px; height: 700px;
+    .aurora-1 {
+      width: 750px; height: 650px;
+      background: radial-gradient(ellipse at center, rgba(59, 111, 245, 0.55) 0%, transparent 70%);
       top: -25%; left: -15%;
-      background: radial-gradient(circle at center, rgba(59, 111, 245, 0.2) 0%, transparent 70%);
-      filter: blur(72px);
+      animation: aurora-drift-1 16s ease-in-out infinite alternate;
     }
-    .blob-2 {
-      width: 550px; height: 550px;
-      bottom: -15%; right: -10%;
-      background: radial-gradient(circle at center, rgba(124, 58, 237, 0.18) 0%, transparent 70%);
-      filter: blur(72px);
+    .aurora-2 {
+      width: 650px; height: 750px;
+      background: radial-gradient(ellipse at center, rgba(124, 58, 237, 0.45) 0%, transparent 70%);
+      top: 5%; right: -18%;
+      animation: aurora-drift-2 20s ease-in-out infinite alternate;
+    }
+    .aurora-3 {
+      width: 500px; height: 450px;
+      background: radial-gradient(ellipse at center, rgba(14, 165, 233, 0.35) 0%, transparent 70%);
+      bottom: -10%; left: 30%;
+      animation: aurora-drift-3 14s ease-in-out infinite alternate;
+    }
+    @keyframes aurora-drift-1 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(160px, 110px) scale(1.45); }
+    }
+    @keyframes aurora-drift-2 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(-130px, -90px) scale(0.78); }
+    }
+    @keyframes aurora-drift-3 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(90px, -110px) scale(1.35); }
+    }
+    /* Spotlight cursor */
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(600px circle at var(--mx, -200px) var(--my, -200px), rgba(59, 111, 245, 0.07), transparent 40%);
+      pointer-events: none;
+      z-index: 1;
     }
     .dot-grid {
       position: absolute;
@@ -84,7 +118,16 @@
       pointer-events: none;
       z-index: 0;
     }
-    .hero-inner { position: relative; z-index: 1; width: 100%; }
+    /* Canvas particles */
+    .hero-particles {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 2; width: 100%; }
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -92,30 +135,46 @@
       align-items: center;
       margin-bottom: var(--pb-s12);
     }
-    .hero-eyebrow {
+
+    /* ── Proof pill (blue pill with avatar circles) ── */
+    .proof-pill {
       display: inline-flex;
       align-items: center;
-      gap: var(--pb-s2);
-      font-size: var(--pb-text-xs);
-      font-weight: var(--pb-weight-semibold);
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--pb-accent);
-      margin-bottom: var(--pb-s5);
+      gap: var(--pb-s3);
+      background: var(--pb-gradient-brand);
+      border-radius: var(--pb-radius-full);
+      padding: 5px 16px 5px 5px;
+      margin-bottom: var(--pb-s6);
+      box-shadow: 0 4px 24px rgba(59, 111, 245, 0.4);
     }
-    .hero-eyebrow::before {
-      content: '';
-      width: 7px; height: 7px;
+    .proof-avatars {
+      display: flex;
+      align-items: center;
+    }
+    .proof-avatar {
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
-      background: var(--pb-accent);
-      animation: pb-pulse-ring 2s ease-out infinite;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      margin-left: -7px;
       flex-shrink: 0;
     }
+    .proof-avatar:first-child { margin-left: 0; }
+    .proof-text {
+      font-size: var(--pb-text-xs);
+      font-weight: var(--pb-weight-medium);
+      color: rgba(255, 255, 255, 0.88);
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+    .proof-text strong { color: #fff; font-weight: var(--pb-weight-bold); }
+
     .hero-headline {
-      font-size: clamp(2.6rem, 5.5vw, 4.75rem);
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
       font-weight: var(--pb-weight-extrabold);
-      letter-spacing: -0.035em;
-      line-height: 1.04;
+      letter-spacing: -0.038em;
+      line-height: 1.03;
       margin-bottom: var(--pb-s5);
     }
     .hero-sub {
@@ -131,19 +190,17 @@
     .hero-visual-wrap { position: relative; }
     .hero-visual {
       margin: 0;
-      transform: perspective(1000px) rotateY(-8deg) rotateX(3deg);
+      transform: perspective(1200px) rotateY(-8deg) rotateX(3deg);
       animation: pb-float 7s ease-in-out infinite;
-      filter: drop-shadow(0 40px 60px rgba(59, 111, 245, 0.25));
+      filter: drop-shadow(0 48px 72px rgba(59, 111, 245, 0.3));
       transition: transform 0.8s var(--pb-ease-out);
     }
-    .hero-visual:hover {
-      transform: perspective(1000px) rotateY(-3deg) rotateX(1deg);
-    }
+    .hero-visual:hover { transform: perspective(1200px) rotateY(-3deg) rotateX(1deg); }
     .browser-chrome {
       background: #111827;
       border-radius: 14px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 32px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.06);
     }
     .browser-bar {
@@ -155,10 +212,7 @@
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
     .browser-dots { display: flex; gap: 6px; }
-    .browser-dots span {
-      width: 11px; height: 11px;
-      border-radius: 50%;
-    }
+    .browser-dots span { width: 11px; height: 11px; border-radius: 50%; }
     .browser-dots span:nth-child(1) { background: #ff5f57; }
     .browser-dots span:nth-child(2) { background: #febc2e; }
     .browser-dots span:nth-child(3) { background: #28c840; }
@@ -173,25 +227,9 @@
       padding: 0 10px;
       gap: 6px;
     }
-    .browser-url-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #34d399;
-      flex-shrink: 0;
-    }
-    .browser-url-text {
-      font-size: 11px;
-      color: var(--pb-text-muted);
-      font-family: ui-monospace, monospace;
-    }
-    .browser-chrome img {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-height: 340px;
-      object-fit: cover;
-      object-position: top;
-    }
+    .browser-url-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; flex-shrink: 0; }
+    .browser-url-text { font-size: 11px; color: var(--pb-text-muted); font-family: ui-monospace, monospace; }
+    .browser-chrome img { display: block; width: 100%; height: auto; max-height: 340px; object-fit: cover; object-position: top; }
 
     /* ── Stats ── */
     .stats-grid {
@@ -255,55 +293,132 @@
       animation: pb-marquee 32s linear infinite;
     }
     .marquee-item {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 0 44px;
-      opacity: 0.45;
-      white-space: nowrap;
-      transition: opacity 200ms;
-      cursor: default;
+      display: flex; align-items: center; gap: 9px;
+      padding: 0 44px; opacity: 0.45; white-space: nowrap;
+      transition: opacity 200ms; cursor: default;
     }
     .marquee-item:hover { opacity: 0.85; }
-    .mq-dot {
-      width: 9px; height: 9px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .mq-name {
-      font-size: var(--pb-text-sm);
-      font-weight: var(--pb-weight-semibold);
-      color: var(--pb-text-secondary);
-      letter-spacing: 0.01em;
-    }
-    .mq-sep {
-      width: 1px; height: 20px;
-      background: var(--pb-border-strong);
-      flex-shrink: 0;
-    }
+    .mq-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .mq-name { font-size: var(--pb-text-sm); font-weight: var(--pb-weight-semibold); color: var(--pb-text-secondary); letter-spacing: 0.01em; }
+    .mq-sep { width: 1px; height: 20px; background: var(--pb-border-strong); flex-shrink: 0; }
 
-    /* ── Bento grid ── */
-    .bento-row-1 {
+    /* ── SHOWCASE CARDS (images inside) ── */
+    .showcase-grid {
       display: grid;
-      grid-template-columns: 3fr 2fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: var(--pb-s5);
       margin-bottom: var(--pb-s5);
     }
-    .bento-hero-card {
+    .showcase-card {
+      border-radius: var(--pb-radius-lg);
+      background: var(--pb-bg-elevated);
+      border: 1px solid var(--pb-border);
+      overflow: hidden;
+      transition: transform 320ms var(--pb-ease-out), box-shadow 320ms var(--pb-ease-out), border-color 320ms var(--pb-ease-out);
+    }
+    .showcase-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--pb-shadow-elevated), 0 0 0 1px var(--pb-border-accent);
+      border-color: var(--pb-border-accent);
+    }
+    .showcase-media {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .showcase-media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 700ms var(--pb-ease-out);
+      animation: ken-burns 14s ease-in-out infinite;
+    }
+    .showcase-card:hover .showcase-media img {
+      animation-play-state: paused;
+      transform: scale(1.06);
+    }
+    .showcase-media-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 70px;
+      background: linear-gradient(to top, var(--pb-bg-elevated), transparent);
+      pointer-events: none;
+    }
+    /* Video inside cards */
+    .showcase-media video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    /* Gradient media fallback for cards without images */
+    .showcase-media-gradient {
+      width: 100%; height: 100%;
       position: relative;
       overflow: hidden;
-      min-height: 240px;
     }
-    .bento-hero-card .card-bg {
+    .showcase-media-gradient::after {
+      content: '';
       position: absolute;
       inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=60&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.18;
-      border-radius: inherit;
+      background: linear-gradient(135deg, rgba(59,111,245,0.15) 0%, rgba(124,58,237,0.25) 100%);
     }
-    .bento-hero-card .card-tilt-inner { position: relative; z-index: 1; }
+    .showcase-ui-mock {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 20px;
+    }
+    .mock-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.12);
+      animation: mock-pulse 2.5s ease-in-out infinite;
+    }
+    .mock-bar:nth-child(1) { width: 60%; }
+    .mock-bar:nth-child(2) { width: 85%; animation-delay: 0.3s; }
+    .mock-bar:nth-child(3) { width: 45%; animation-delay: 0.6s; }
+    .mock-bar.wide { width: 100%; height: 60px; border-radius: 8px; background: rgba(59,111,245,0.2); margin-top: 4px; }
+    .mock-bar.accent { background: rgba(59,111,245,0.35); width: 40%; }
+    @keyframes mock-pulse {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1; }
+    }
+    @keyframes ken-burns {
+      0%, 100% { transform: scale(1) translate(0, 0); }
+      50%       { transform: scale(1.06) translate(-1.5%, -1%); }
+    }
+    .showcase-content { padding: var(--pb-s5) var(--pb-s5) var(--pb-s6); }
+
+    /* ── Wide showcase card (full-width bottom row) ── */
+    .showcase-wide {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--pb-s5);
+    }
+    .showcase-card-wide {
+      border-radius: var(--pb-radius-lg);
+      background: var(--pb-bg-elevated);
+      border: 1px solid var(--pb-border);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      transition: transform 320ms var(--pb-ease-out), box-shadow 320ms var(--pb-ease-out);
+    }
+    .showcase-card-wide:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--pb-shadow-elevated);
+    }
+    .showcase-wide-media {
+      position: relative;
+      overflow: hidden;
+      min-height: 180px;
+    }
+    .showcase-wide-media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      animation: ken-burns 16s ease-in-out infinite;
+    }
+    .showcase-wide-content { padding: var(--pb-s6); display: flex; flex-direction: column; justify-content: center; }
 
     /* ── Feature strip ── */
     .feature-strip {
@@ -324,12 +439,9 @@
       width: 52px; height: 52px;
       border-radius: var(--pb-radius-md);
       background: var(--pb-gradient-brand);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       margin-bottom: var(--pb-s5);
-      color: #fff;
-      flex-shrink: 0;
+      color: #fff; flex-shrink: 0;
     }
     .feature-stat {
       font-size: clamp(3rem, 5vw, 4rem);
@@ -339,61 +451,20 @@
       color: var(--pb-text-primary);
       margin-bottom: var(--pb-s2);
     }
-    .feature-unit {
-      font-size: 0.45em;
-      font-weight: var(--pb-weight-bold);
-      letter-spacing: 0;
-      vertical-align: baseline;
-      color: var(--pb-text-muted);
-    }
-    .feature-title {
-      font-size: var(--pb-text-xs);
-      font-weight: var(--pb-weight-semibold);
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: var(--pb-text-muted);
-      margin-bottom: var(--pb-s3);
-    }
-    .feature-desc {
-      font-size: var(--pb-text-sm);
-      color: var(--pb-text-muted);
-      line-height: var(--pb-leading-normal);
-    }
+    .feature-unit { font-size: 0.45em; font-weight: var(--pb-weight-bold); letter-spacing: 0; vertical-align: baseline; color: var(--pb-text-muted); }
+    .feature-title { font-size: var(--pb-text-xs); font-weight: var(--pb-weight-semibold); text-transform: uppercase; letter-spacing: .1em; color: var(--pb-text-muted); margin-bottom: var(--pb-s3); }
+    .feature-desc { font-size: var(--pb-text-sm); color: var(--pb-text-muted); line-height: var(--pb-leading-normal); }
 
-    /* ── Card grid ── */
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--pb-s5);
-    }
-
-    /* ── Button gallery ── */
+    /* ── Card/button grid ── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--pb-s5); }
     .btn-gallery { display: flex; align-items: center; gap: var(--pb-s3); flex-wrap: wrap; }
-
-    /* ── Input demo ── */
-    .input-demo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--pb-s6);
-    }
-
-    /* ── Progress demo ── */
+    .input-demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--pb-s6); }
     .progress-demo { display: flex; flex-direction: column; gap: var(--pb-s5); max-width: 600px; }
     .progress-row { display: flex; flex-direction: column; gap: var(--pb-s2); }
 
     /* ── Testimonials ── */
-    .testimonial-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: var(--pb-s5);
-    }
-    .avatar-img {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--pb-border-accent);
-      flex-shrink: 0;
-    }
+    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--pb-s5); }
+    .avatar-img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--pb-border-accent); flex-shrink: 0; }
     .star-row { display: flex; gap: 2px; margin-bottom: var(--pb-s4); }
     .star-row svg { color: #fbbf24; }
 
@@ -406,148 +477,50 @@
       text-align: center;
       border-top: 1px solid rgba(59, 111, 245, 0.2);
     }
-    .cta-section .blob-1 {
-      top: -30%; right: -10%; left: auto;
+    .cta-aurora-1 {
+      position: absolute; border-radius: 50%; pointer-events: none;
       width: 500px; height: 500px;
+      top: -30%; right: -10%;
       background: radial-gradient(circle at center, rgba(59, 111, 245, 0.22) 0%, transparent 70%);
+      filter: blur(72px);
     }
-    .cta-section .blob-2 {
-      bottom: -20%; left: -5%; right: auto;
+    .cta-aurora-2 {
+      position: absolute; border-radius: 50%; pointer-events: none;
       width: 400px; height: 400px;
+      bottom: -20%; left: -5%;
       background: radial-gradient(circle at center, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+      filter: blur(72px);
     }
     .cta-inner { position: relative; z-index: 1; }
 
     /* ── Code blocks ── */
-    .code-block {
-      background: #070910;
-      border: 1px solid var(--pb-border-accent);
-      border-radius: var(--pb-radius-lg);
-      overflow: hidden;
-      max-width: 620px;
-      width: 100%;
-      text-align: left;
-    }
-    .code-block-header {
-      display: flex;
-      align-items: center;
-      gap: var(--pb-s3);
-      padding: var(--pb-s3) var(--pb-s5);
-      background: rgba(255,255,255,0.03);
-      border-bottom: 1px solid var(--pb-border);
-    }
+    .code-block { background: #070910; border: 1px solid var(--pb-border-accent); border-radius: var(--pb-radius-lg); overflow: hidden; max-width: 620px; width: 100%; text-align: left; }
+    .code-block-header { display: flex; align-items: center; gap: var(--pb-s3); padding: var(--pb-s3) var(--pb-s5); background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--pb-border); }
     .code-block-dot { width: 8px; height: 8px; border-radius: 50%; }
-    .code-block-filename {
-      font-size: var(--pb-text-xs);
-      color: var(--pb-text-muted);
-      font-family: ui-monospace, 'Cascadia Code', monospace;
-    }
-    .code-block pre {
-      margin: 0;
-      padding: var(--pb-s5) var(--pb-s6);
-      font-size: var(--pb-text-sm);
-      font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
-      color: var(--pb-text-secondary);
-      overflow-x: auto;
-      line-height: 1.7;
-    }
-
-    /* ── Inline code ── */
-    .inline-code {
-      font-size: .82em;
-      background: var(--pb-accent-subtle);
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: var(--pb-accent-hover);
-      font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
-    }
+    .code-block-filename { font-size: var(--pb-text-xs); color: var(--pb-text-muted); font-family: ui-monospace, 'Cascadia Code', monospace; }
+    .code-block pre { margin: 0; padding: var(--pb-s5) var(--pb-s6); font-size: var(--pb-text-sm); font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace; color: var(--pb-text-secondary); overflow-x: auto; line-height: 1.7; }
+    .inline-code { font-size: .82em; background: var(--pb-accent-subtle); padding: 2px 6px; border-radius: 4px; color: var(--pb-accent-hover); font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace; }
 
     /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--pb-border);
-      padding: 0;
-    }
-    .footer-inner {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: var(--pb-s10);
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: var(--pb-s16) var(--pb-s6) var(--pb-s12);
-    }
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      gap: var(--pb-s2);
-      font-weight: var(--pb-weight-bold);
-      font-size: var(--pb-text-xl);
-      letter-spacing: -0.025em;
-      color: var(--pb-text-primary);
-      text-decoration: none;
-      margin-bottom: var(--pb-s4);
-    }
-    .footer-logo-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: var(--pb-gradient-brand);
-      flex-shrink: 0;
-    }
-    .footer-tagline {
-      font-size: var(--pb-text-sm);
-      color: var(--pb-text-muted);
-      line-height: var(--pb-leading-normal);
-      margin-bottom: var(--pb-s5);
-    }
-    .footer-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--pb-s2);
-      font-size: var(--pb-text-xs);
-      color: var(--pb-text-muted);
-      border: 1px solid var(--pb-border);
-      border-radius: var(--pb-radius-full);
-      padding: var(--pb-s1) var(--pb-s3);
-    }
-    .footer-col-title {
-      font-size: var(--pb-text-xs);
-      font-weight: var(--pb-weight-semibold);
-      text-transform: uppercase;
-      letter-spacing: .1em;
-      color: var(--pb-text-muted);
-      margin-bottom: var(--pb-s5);
-    }
-    .footer-links {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: var(--pb-s3);
-    }
-    .footer-links a {
-      color: var(--pb-text-secondary);
-      text-decoration: none;
-      font-size: var(--pb-text-sm);
-      transition: color var(--pb-dur-fast) var(--pb-ease-out);
-    }
+    footer { border-top: 1px solid var(--pb-border); padding: 0; }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: var(--pb-s10); max-width: 1200px; margin: 0 auto; padding: var(--pb-s16) var(--pb-s6) var(--pb-s12); }
+    .footer-logo { display: flex; align-items: center; gap: var(--pb-s2); font-weight: var(--pb-weight-bold); font-size: var(--pb-text-xl); letter-spacing: -0.025em; color: var(--pb-text-primary); text-decoration: none; margin-bottom: var(--pb-s4); }
+    .footer-logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--pb-gradient-brand); flex-shrink: 0; }
+    .footer-tagline { font-size: var(--pb-text-sm); color: var(--pb-text-muted); line-height: var(--pb-leading-normal); margin-bottom: var(--pb-s5); }
+    .footer-badge { display: inline-flex; align-items: center; gap: var(--pb-s2); font-size: var(--pb-text-xs); color: var(--pb-text-muted); border: 1px solid var(--pb-border); border-radius: var(--pb-radius-full); padding: var(--pb-s1) var(--pb-s3); }
+    .footer-col-title { font-size: var(--pb-text-xs); font-weight: var(--pb-weight-semibold); text-transform: uppercase; letter-spacing: .1em; color: var(--pb-text-muted); margin-bottom: var(--pb-s5); }
+    .footer-links { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--pb-s3); }
+    .footer-links a { color: var(--pb-text-secondary); text-decoration: none; font-size: var(--pb-text-sm); transition: color var(--pb-dur-fast) var(--pb-ease-out); }
     .footer-links a:hover { color: var(--pb-text-primary); }
-    .footer-bottom {
-      border-top: 1px solid var(--pb-border);
-      padding: var(--pb-s5) var(--pb-s6);
-      text-align: center;
-      font-size: var(--pb-text-xs);
-      color: var(--pb-text-muted);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
+    .footer-bottom { border-top: 1px solid var(--pb-border); padding: var(--pb-s5) var(--pb-s6); text-align: center; font-size: var(--pb-text-xs); color: var(--pb-text-muted); max-width: 1200px; margin: 0 auto; }
 
-    /* ── Divider ── */
     .pb-divider { height: 1px; background: var(--pb-border); margin: 0; }
 
     /* ── Responsive ── */
     @media (max-width: 1024px) {
+      .showcase-grid { grid-template-columns: repeat(2, 1fr); }
+      .showcase-wide { grid-template-columns: 1fr; }
       .hero-grid { gap: var(--pb-s10); }
-      .bento-row-1 { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 768px) {
       .hero-section { padding: var(--pb-s16) var(--pb-s5); min-height: auto; }
@@ -556,7 +529,9 @@
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .pb-section { padding: var(--pb-s12) var(--pb-s5); }
       .pb-nav { padding: var(--pb-s4) var(--pb-s5); }
-      .bento-row-1 { grid-template-columns: 1fr; }
+      .showcase-grid { grid-template-columns: 1fr; }
+      .showcase-card-wide { grid-template-columns: 1fr; }
+      .showcase-wide-media { min-height: 160px; }
       .feature-strip-grid { grid-template-columns: 1fr; gap: var(--pb-s8); }
       .footer-inner { grid-template-columns: 1fr 1fr; gap: var(--pb-s8); padding: var(--pb-s10) var(--pb-s5) var(--pb-s8); }
     }
@@ -579,30 +554,21 @@
       </svg>
       Pebble
     </a>
-
     <div class="pb-nav-links">
-      <a href="#cards"    class="pb-nav-link">Cards</a>
+      <a href="#showcase" class="pb-nav-link">Showcase</a>
       <a href="#buttons"  class="pb-nav-link">Buttons</a>
       <a href="#inputs"   class="pb-nav-link">Inputs</a>
       <a href="#toasts"   class="pb-nav-link">Toasts</a>
       <a href="#tooltips" class="pb-nav-link">Tooltips</a>
     </div>
-
     <div class="pb-nav-actions">
       <a href="https://github.com/MikeGira/pebble-ui" class="pb-nav-github" target="_blank" rel="noopener noreferrer" aria-label="View on GitHub">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         GitHub
       </a>
       <button class="pb-theme-toggle" data-theme-toggle aria-label="Switch theme">
-        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
       <a href="#install" class="btn btn-primary" data-magnetic>Get Started</a>
     </div>
@@ -611,18 +577,33 @@
 
   <!-- ═══ HERO ═══ -->
   <section class="hero-section" id="hero">
-    <div class="blob blob-1" aria-hidden="true"></div>
-    <div class="blob blob-2" aria-hidden="true"></div>
+    <!-- Aurora animated background -->
+    <div class="aurora" aria-hidden="true">
+      <div class="aurora-blob aurora-1"></div>
+      <div class="aurora-blob aurora-2"></div>
+      <div class="aurora-blob aurora-3"></div>
+    </div>
+    <canvas class="hero-particles" id="hero-particles" aria-hidden="true"></canvas>
     <div class="dot-grid" aria-hidden="true"></div>
 
     <div class="pb-container hero-inner">
       <div class="hero-grid">
-
         <!-- Left: content -->
         <div class="hero-content">
+          <!-- Blue pill with avatar circles -->
           <div data-entrance="fade-in">
-            <p class="hero-eyebrow">Enterprise Design System</p>
+            <div class="proof-pill">
+              <div class="proof-avatars">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&q=80&auto=format&fit=crop&crop=face" alt="" class="proof-avatar" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=32&h=32&q=80&auto=format&fit=crop&crop=face" alt="" class="proof-avatar" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&q=80&auto=format&fit=crop&crop=face" alt="" class="proof-avatar" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&q=80&auto=format&fit=crop&crop=face" alt="" class="proof-avatar" loading="lazy">
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=32&h=32&q=80&auto=format&fit=crop&crop=face" alt="" class="proof-avatar" loading="lazy">
+              </div>
+              <span class="proof-text">Trusted by <strong>500+</strong> teams</span>
+            </div>
           </div>
+
           <h1 class="hero-headline" data-entrance="fade-up" data-stagger="1">
             Design that<br>
             <span class="gradient-text">thinks fast.</span><br>
@@ -632,7 +613,7 @@
             Magnetic cursor, 3D card tilt, fluid dark/light mode — built with zero runtime dependencies, running on the compositor thread so it never lags.
           </p>
           <div class="hero-cta" data-entrance="fade-up" data-stagger="3">
-            <a href="#cards" class="btn btn-primary btn-lg" data-magnetic>
+            <a href="#showcase" class="btn btn-primary btn-lg" data-magnetic>
               Explore Components
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
@@ -640,53 +621,39 @@
           </div>
         </div>
 
-        <!-- Right: browser chrome + image -->
+        <!-- Right: browser chrome + dashboard image -->
         <div class="hero-visual-wrap" data-entrance="scale-in" data-stagger="2" aria-hidden="true">
           <figure class="hero-visual">
             <div class="browser-chrome">
               <div class="browser-bar">
-                <div class="browser-dots">
-                  <span></span><span></span><span></span>
-                </div>
+                <div class="browser-dots"><span></span><span></span><span></span></div>
                 <div class="browser-url">
                   <span class="browser-url-dot"></span>
                   <span class="browser-url-text">pebble-ui.vercel.app</span>
                 </div>
               </div>
-              <img
-                src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop"
-                alt="Enterprise analytics dashboard"
-                loading="lazy"
-                width="800"
-                height="440">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop" alt="Enterprise analytics dashboard" loading="lazy" width="800" height="440">
             </div>
           </figure>
         </div>
-
       </div>
 
-      <!-- Stats -->
+      <!-- Stats with animated counters -->
       <div class="stats-grid" data-entrance="fade-up" data-stagger="4">
         <div class="pb-stat">
           <span class="pb-stat-value">0</span>
           <span class="pb-stat-label">Runtime deps</span>
         </div>
         <div class="pb-stat">
-          <span class="pb-stat-value">
-            <span class="counter-num" data-target="60">0</span><small style="font-size:.5em;font-weight:700;color:var(--pb-text-muted)">fps</small>
-          </span>
+          <span class="pb-stat-value"><span class="counter-num" data-target="60">0</span><small style="font-size:.5em;font-weight:700;color:var(--pb-text-muted)">fps</small></span>
           <span class="pb-stat-label">All animations</span>
         </div>
         <div class="pb-stat">
-          <span class="pb-stat-value">
-            &lt;<span class="counter-num" data-target="14">0</span><small style="font-size:.5em;font-weight:700;color:var(--pb-text-muted)">kb</small>
-          </span>
+          <span class="pb-stat-value">&lt;<span class="counter-num" data-target="14">0</span><small style="font-size:.5em;font-weight:700;color:var(--pb-text-muted)">kb</small></span>
           <span class="pb-stat-label">Total bundle</span>
         </div>
         <div class="pb-stat">
-          <span class="pb-stat-value">
-            <span class="counter-num" data-target="2">0</span>
-          </span>
+          <span class="pb-stat-value"><span class="counter-num" data-target="2">0</span></span>
           <span class="pb-stat-label">Lines to install</span>
         </div>
       </div>
@@ -699,7 +666,6 @@
     <p class="marquee-label">Works with every stack</p>
     <div class="marquee-wrapper">
       <div class="marquee-track" aria-hidden="true">
-        <!-- Set 1 -->
         <div class="marquee-item"><span class="mq-dot" style="background:#61DAFB"></span><span class="mq-name">React</span></div>
         <div class="mq-sep"></div>
         <div class="marquee-item"><span class="mq-dot" style="background:#e2e8f0"></span><span class="mq-name">Next.js</span></div>
@@ -714,13 +680,13 @@
         <div class="mq-sep"></div>
         <div class="marquee-item"><span class="mq-dot" style="background:#FF5D01"></span><span class="mq-name">Astro</span></div>
         <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#121212;border:1px solid rgba(255,255,255,0.2)"></span><span class="mq-name">Remix</span></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#aaaaaa"></span><span class="mq-name">Remix</span></div>
         <div class="mq-sep"></div>
         <div class="marquee-item"><span class="mq-dot" style="background:#f0db4f"></span><span class="mq-name">Vanilla JS</span></div>
         <div class="mq-sep"></div>
         <div class="marquee-item"><span class="mq-dot" style="background:#e34c26"></span><span class="mq-name">HTML5</span></div>
         <div class="mq-sep"></div>
-        <!-- Set 2 (duplicate for seamless loop) -->
+        <!-- duplicate for seamless loop -->
         <div class="marquee-item"><span class="mq-dot" style="background:#61DAFB"></span><span class="mq-name">React</span></div>
         <div class="mq-sep"></div>
         <div class="marquee-item"><span class="mq-dot" style="background:#e2e8f0"></span><span class="mq-name">Next.js</span></div>
@@ -735,7 +701,7 @@
         <div class="mq-sep"></div>
         <div class="marquee-item"><span class="mq-dot" style="background:#FF5D01"></span><span class="mq-name">Astro</span></div>
         <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#121212;border:1px solid rgba(255,255,255,0.2)"></span><span class="mq-name">Remix</span></div>
+        <div class="marquee-item"><span class="mq-dot" style="background:#aaaaaa"></span><span class="mq-name">Remix</span></div>
         <div class="mq-sep"></div>
         <div class="marquee-item"><span class="mq-dot" style="background:#f0db4f"></span><span class="mq-name">Vanilla JS</span></div>
         <div class="mq-sep"></div>
@@ -746,25 +712,29 @@
   </div>
 
 
-  <!-- ═══ CARDS ═══ -->
-  <section class="pb-section" id="cards">
+  <!-- ═══ SHOWCASE — BIG IMAGE CARDS ═══ -->
+  <section class="pb-section" id="showcase">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Components</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Cards that <span class="gradient-text">respond.</span></h2>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Built for <span class="gradient-text">impact.</span></h2>
       <p class="section-desc" data-entrance="fade-up" data-stagger="2">
-        Hover to feel the 3D tilt. Each card tracks your pointer with smooth lerp — no jitter, no layout shifts.
+        Every component is crafted to be felt, not just seen. Hover the cards. The visuals tell the story.
       </p>
 
-      <!-- Bento row 1: asymmetric -->
-      <div class="bento-row-1">
-        <div class="card card-tilt bento-hero-card" data-entrance="fade-up" data-stagger="1">
-          <div class="card-bg" aria-hidden="true"></div>
-          <div class="card-tilt-inner">
+      <!-- Row 1: 3 showcase cards with images inside -->
+      <div class="showcase-grid">
+        <!-- Card 1: Magnetic Cursor — dark code image -->
+        <div class="showcase-card" data-entrance="fade-up" data-stagger="1">
+          <div class="showcase-media">
+            <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80&auto=format&fit=crop" alt="Magnetic cursor interaction" loading="lazy">
+            <div class="showcase-media-overlay"></div>
+          </div>
+          <div class="showcase-content">
             <div class="card-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
             <h3 class="card-title">Magnetic Cursor</h3>
-            <p class="card-body">Ring follows with lag. Dot snaps to exact position. Elements with <code class="inline-code">data-magnetic</code> pull the cursor toward them. GPU-only, zero layout thrash.</p>
+            <p class="card-body">Ring follows with lag. Dot snaps to exact position. Add <code class="inline-code">data-magnetic</code> to any element to activate.</p>
             <div class="card-footer">
               <span class="badge badge-accent">Pure JS</span>
               <span class="badge badge-success">60fps</span>
@@ -772,79 +742,115 @@
           </div>
         </div>
 
-        <div class="card card-tilt card-glass" data-entrance="fade-up" data-stagger="2">
-          <div class="card-tilt-inner">
+        <!-- Card 2: 3D Tilt — analytics dashboard -->
+        <div class="showcase-card" data-entrance="fade-up" data-stagger="2">
+          <div class="showcase-media">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80&auto=format&fit=crop" alt="3D card tilt on dashboard" loading="lazy">
+            <div class="showcase-media-overlay"></div>
+          </div>
+          <div class="showcase-content">
             <div class="card-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
             <h3 class="card-title">3D Card Tilt</h3>
-            <p class="card-body">±13° rotation via pointer tracking. <code class="inline-code">will-change</code> set only during animation, cleared when idle.</p>
+            <p class="card-body">±13° rotation via pointer tracking with smooth lerp. <code class="inline-code">will-change</code> managed automatically — GPU only when active.</p>
             <div class="card-footer">
               <span class="badge badge-accent">CSS Transform</span>
               <span class="badge badge-default">Glassmorphism</span>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Bento row 2: equal split -->
-      <div class="card-grid">
-        <div class="card card-tilt" data-entrance="fade-up" data-stagger="3">
-          <div class="card-tilt-inner">
+        <!-- Card 3: Dark mode — abstract purple -->
+        <div class="showcase-card" data-entrance="fade-up" data-stagger="3">
+          <div class="showcase-media">
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80&auto=format&fit=crop" alt="Dark and light mode" loading="lazy">
+            <div class="showcase-media-overlay"></div>
+          </div>
+          <div class="showcase-content">
             <div class="card-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
             </div>
             <h3 class="card-title">Dark / Light Mode</h3>
-            <p class="card-body">CSS custom properties swap on <code class="inline-code">data-theme</code>. No flash — theme resolves before paint. Persists to <code class="inline-code">localStorage</code>.</p>
+            <p class="card-body">CSS custom properties swap on <code class="inline-code">data-theme</code>. Zero flash — resolves before paint. OS-aware, persists to <code class="inline-code">localStorage</code>.</p>
             <div class="card-footer">
               <span class="badge badge-accent">No FOUC</span>
               <span class="badge badge-success">OS-aware</span>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="card card-lift" data-entrance="slide-right" data-stagger="4">
-          <h3 class="card-title" style="margin-bottom:var(--pb-s3)">Scroll Entrance</h3>
-          <p class="card-body">IntersectionObserver triggers animations when elements enter the viewport. Each fires once, then the observer disconnects to free memory.</p>
-          <div class="card-footer"><span class="badge badge-default">No scroll listener</span></div>
+      <!-- Row 2: 2 wide cards with animated CSS media -->
+      <div class="showcase-wide">
+        <!-- Wide card: Scroll Entrance — animated CSS mock -->
+        <div class="showcase-card-wide" data-entrance="slide-right" data-stagger="4">
+          <div class="showcase-wide-media">
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80&auto=format&fit=crop" alt="Scroll entrance animations" loading="lazy">
+            <div class="showcase-media-overlay" style="height:100%;background:linear-gradient(90deg,transparent 50%,var(--pb-bg-elevated) 100%);position:absolute;inset:0;"></div>
+          </div>
+          <div class="showcase-wide-content">
+            <div class="card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <h3 class="card-title" style="margin-bottom:var(--pb-s3)">Scroll Entrance</h3>
+            <p class="card-body" style="margin-bottom:var(--pb-s4)">IntersectionObserver triggers fade, scale, and slide animations when elements enter viewport. Each fires once, then disconnects to free memory.</p>
+            <div class="card-footer"><span class="badge badge-default">No scroll listener</span><span class="badge badge-success">Memory-safe</span></div>
+          </div>
         </div>
 
-        <div class="card card-lift card-accent" data-entrance="slide-left" data-stagger="5">
-          <h3 class="card-title" style="margin-bottom:var(--pb-s3)">Reduced Motion</h3>
-          <p class="card-body">All effects respect <code class="inline-code">prefers-reduced-motion</code>. Cursor hides, animations skip, tilt disables — no JS errors, no layout jumps.</p>
-          <div class="card-footer"><span class="badge badge-success">Accessible</span></div>
+        <!-- Wide card: Reduced Motion — animated UI mock inside -->
+        <div class="showcase-card-wide" data-entrance="slide-left" data-stagger="5">
+          <div class="showcase-wide-media" style="background:var(--pb-bg-base);">
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:24px;gap:10px;">
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+                <div style="width:36px;height:36px;border-radius:10px;background:var(--pb-gradient-brand);display:flex;align-items:center;justify-content:center;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+                </div>
+                <span style="font-size:var(--pb-text-sm);font-weight:var(--pb-weight-semibold);color:var(--pb-text-primary)">Accessibility</span>
+              </div>
+              <div style="height:8px;width:90%;border-radius:4px;background:rgba(255,255,255,0.08);overflow:hidden;">
+                <div style="height:100%;width:100%;border-radius:4px;background:var(--pb-gradient-brand);"></div>
+              </div>
+              <div style="height:8px;width:65%;border-radius:4px;background:rgba(255,255,255,0.06);"></div>
+              <div style="height:8px;width:80%;border-radius:4px;background:rgba(255,255,255,0.06);"></div>
+              <div style="display:flex;gap:8px;margin-top:4px;">
+                <div style="padding:5px 12px;border-radius:999px;background:var(--pb-gradient-brand);font-size:11px;font-weight:600;color:white;">prefers-reduced-motion</div>
+              </div>
+            </div>
+            <div class="showcase-media-overlay" style="height:100%;background:linear-gradient(90deg,transparent 30%,var(--pb-bg-elevated) 100%);position:absolute;inset:0;"></div>
+          </div>
+          <div class="showcase-wide-content">
+            <div class="card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            </div>
+            <h3 class="card-title" style="margin-bottom:var(--pb-s3)">Reduced Motion</h3>
+            <p class="card-body" style="margin-bottom:var(--pb-s4)">All effects respect <code class="inline-code">prefers-reduced-motion</code>. Cursor hides, animations skip, tilt disables — zero JS errors.</p>
+            <div class="card-footer"><span class="badge badge-success">WCAG compliant</span></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="pb-divider"></div>
-
 
   <!-- ═══ BUTTONS ═══ -->
+  <div class="pb-divider"></div>
   <section class="pb-section" id="buttons">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Interactions</p>
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Buttons that <span class="gradient-text">move.</span></h2>
-      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
-        Shimmer sweep on primary hover. Spring-physics on the circle. Ghost pulls accent on hover. Every state is a microinteraction.
-      </p>
-
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Shimmer sweep on primary hover. Spring-physics on circle. Ghost pulls accent on hover.</p>
       <div style="display:flex;flex-direction:column;gap:var(--pb-s6)">
         <div class="btn-gallery" data-entrance="fade-up" data-stagger="1">
-          <button class="btn btn-primary btn-lg" data-magnetic>
-            Primary
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </button>
+          <button class="btn btn-primary btn-lg" data-magnetic>Primary <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
           <button class="btn btn-ghost btn-lg" data-magnetic>Ghost</button>
           <button class="btn btn-primary" data-magnetic>Default</button>
           <button class="btn btn-ghost">Default Ghost</button>
           <button class="btn btn-primary" disabled aria-disabled="true">Disabled</button>
         </div>
         <div class="btn-gallery" data-entrance="fade-up" data-stagger="2">
-          <button class="btn-circle" data-magnetic aria-label="Forward">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </button>
+          <button class="btn-circle" data-magnetic aria-label="Forward"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></button>
           <button class="btn btn-primary btn-sm">Small Primary</button>
           <button class="btn btn-ghost btn-sm">Small Ghost</button>
           <span class="badge badge-accent">New</span>
@@ -862,32 +868,25 @@
   <div class="feature-strip" aria-label="Key metrics">
     <div class="feature-strip-grid">
       <div class="feature-item" data-entrance="fade-up" data-stagger="1">
-        <div class="feature-icon-wrap" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        </div>
+        <div class="feature-icon-wrap" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
         <p class="feature-stat">0</p>
         <p class="feature-title">Runtime dependencies</p>
-        <p class="feature-desc">Ships as two static files: one CSS, one JS. Nothing else. No npm install required in your app.</p>
+        <p class="feature-desc">Ships as two static files: one CSS, one JS. No npm install at runtime.</p>
       </div>
       <div class="feature-item" data-entrance="fade-up" data-stagger="2">
-        <div class="feature-icon-wrap" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-        </div>
+        <div class="feature-icon-wrap" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <p class="feature-stat">60<span class="feature-unit">fps</span></p>
         <p class="feature-title">Compositor thread</p>
-        <p class="feature-desc">Every animation runs on GPU via transform and opacity. Main thread is never blocked.</p>
+        <p class="feature-desc">Every animation runs on GPU via transform and opacity. Main thread never blocked.</p>
       </div>
       <div class="feature-item" data-entrance="fade-up" data-stagger="3">
-        <div class="feature-icon-wrap" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        </div>
+        <div class="feature-icon-wrap" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
         <p class="feature-stat">2<span class="feature-unit">lines</span></p>
         <p class="feature-title">To install</p>
         <p class="feature-desc">One link tag, one script tag. Works in Vanilla HTML, React, Next.js, Svelte — without conflict.</p>
       </div>
     </div>
   </div>
-
   <div class="pb-divider"></div>
 
 
@@ -896,52 +895,17 @@
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Forms</p>
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Inputs that <span class="gradient-text">communicate.</span></h2>
-      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
-        Focus rings, validation states, icon groups — all accessible by default. Works with any form library.
-      </p>
-
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Focus rings, validation states, icon groups — accessible by default.</p>
       <div class="input-demo-grid" data-entrance="fade-up" data-stagger="3">
-        <div class="form-group">
-          <label class="form-label" for="d-email">Email address</label>
-          <input class="input" id="d-email" type="email" placeholder="you@example.com">
-          <span class="form-hint">We'll never share your email.</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label form-label-required" for="d-pw">Password</label>
-          <input class="input input-error" id="d-pw" type="password" value="weak">
-          <span class="form-hint form-hint-error">Password must be at least 8 characters.</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="d-user">Username</label>
-          <input class="input input-success" id="d-user" type="text" value="mikebuilds">
-          <span class="form-hint form-hint-success">Username is available.</span>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="d-search">Search</label>
-          <div class="input-group">
-            <span class="input-group-prefix" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-            </span>
-            <input class="input input-has-prefix" id="d-search" type="search" placeholder="Search components...">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="d-fw">Framework</label>
-          <select class="input input-select" id="d-fw">
-            <option>Vanilla HTML</option>
-            <option>React</option>
-            <option>Next.js</option>
-            <option>SvelteKit</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="d-msg">Message</label>
-          <textarea class="input input-textarea" id="d-msg" rows="3" placeholder="Tell us about your project..."></textarea>
-        </div>
+        <div class="form-group"><label class="form-label" for="d-email">Email address</label><input class="input" id="d-email" type="email" placeholder="you@example.com"><span class="form-hint">We'll never share your email.</span></div>
+        <div class="form-group"><label class="form-label form-label-required" for="d-pw">Password</label><input class="input input-error" id="d-pw" type="password" value="weak"><span class="form-hint form-hint-error">Password must be at least 8 characters.</span></div>
+        <div class="form-group"><label class="form-label" for="d-user">Username</label><input class="input input-success" id="d-user" type="text" value="mikebuilds"><span class="form-hint form-hint-success">Username is available.</span></div>
+        <div class="form-group"><label class="form-label" for="d-search">Search</label><div class="input-group"><span class="input-group-prefix" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span><input class="input input-has-prefix" id="d-search" type="search" placeholder="Search components..."></div></div>
+        <div class="form-group"><label class="form-label" for="d-fw">Framework</label><select class="input input-select" id="d-fw"><option>Vanilla HTML</option><option>React</option><option>Next.js</option><option>SvelteKit</option></select></div>
+        <div class="form-group"><label class="form-label" for="d-msg">Message</label><textarea class="input input-textarea" id="d-msg" rows="3" placeholder="Tell us about your project..."></textarea></div>
       </div>
     </div>
   </section>
-
   <div class="pb-divider"></div>
 
 
@@ -950,25 +914,16 @@
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Feedback</p>
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Toasts that <span class="gradient-text">inform.</span></h2>
-      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
-        Auto-dismiss with a progress track. Click to close early. Four semantic types — one API call.
-      </p>
-
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Auto-dismiss with a progress track. Four semantic types — one API call.</p>
       <div class="btn-gallery" data-entrance="fade-up" data-stagger="3">
         <button class="btn btn-primary" onclick="window.pebble.toast({type:'success',title:'Saved',message:'Your changes have been saved successfully.'})">Success</button>
-        <button class="btn btn-ghost"   onclick="window.pebble.toast({type:'error',title:'Error',message:'Something went wrong. Please try again.'})">Error</button>
-        <button class="btn btn-ghost"   onclick="window.pebble.toast({type:'warning',title:'Warning',message:'This action cannot be undone.'})">Warning</button>
-        <button class="btn btn-ghost"   onclick="window.pebble.toast({type:'info',title:'Update available',message:'Pebble UI v1.1.0 is ready to install.'})">Info</button>
+        <button class="btn btn-ghost" onclick="window.pebble.toast({type:'error',title:'Error',message:'Something went wrong. Please try again.'})">Error</button>
+        <button class="btn btn-ghost" onclick="window.pebble.toast({type:'warning',title:'Warning',message:'This action cannot be undone.'})">Warning</button>
+        <button class="btn btn-ghost" onclick="window.pebble.toast({type:'info',title:'Update available',message:'Pebble UI v1.1.0 is ready to install.'})">Info</button>
       </div>
-
       <div style="margin-top:var(--pb-s8);max-width:520px" data-entrance="fade-up" data-stagger="4">
         <div class="code-block">
-          <div class="code-block-header">
-            <span class="code-block-dot" style="background:#ff5f57"></span>
-            <span class="code-block-dot" style="background:#febc2e"></span>
-            <span class="code-block-dot" style="background:#28c840"></span>
-            <span class="code-block-filename">app.js</span>
-          </div>
+          <div class="code-block-header"><span class="code-block-dot" style="background:#ff5f57"></span><span class="code-block-dot" style="background:#febc2e"></span><span class="code-block-dot" style="background:#28c840"></span><span class="code-block-filename">app.js</span></div>
           <pre><span style="color:var(--pb-text-muted)">// one call, four types</span>
 <span style="color:var(--pb-accent-hover)">window</span>.<span style="color:var(--pb-accent-hover)">pebble</span>.toast({
   type: <span style="color:#34d399">'success'</span>,
@@ -980,7 +935,6 @@
       </div>
     </div>
   </section>
-
   <div class="pb-divider"></div>
 
 
@@ -989,39 +943,17 @@
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Status</p>
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Progress at a <span class="gradient-text">glance.</span></h2>
-      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
-        Smooth width transitions, shimmer sheen, semantic color variants, and an indeterminate state for unknown durations.
-      </p>
-
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Smooth transitions, shimmer sheen, semantic color variants, indeterminate state.</p>
       <div class="progress-demo" data-entrance="fade-up" data-stagger="3">
-        <div class="progress-row">
-          <span class="form-label">Default — 72%</span>
-          <div class="progress"><div class="progress-bar" style="width:72%"></div></div>
-        </div>
-        <div class="progress-row">
-          <span class="form-label">Success — 100%</span>
-          <div class="progress"><div class="progress-bar progress-bar-success" style="width:100%"></div></div>
-        </div>
-        <div class="progress-row">
-          <span class="form-label">Warning — 45%</span>
-          <div class="progress"><div class="progress-bar progress-bar-warning" style="width:45%"></div></div>
-        </div>
-        <div class="progress-row">
-          <span class="form-label">Danger — 18%</span>
-          <div class="progress"><div class="progress-bar progress-bar-danger" style="width:18%"></div></div>
-        </div>
-        <div class="progress-row">
-          <span class="form-label">Indeterminate</span>
-          <div class="progress progress-indeterminate"><div class="progress-bar"></div></div>
-        </div>
-        <div class="progress-row">
-          <span class="form-label">Small — 60%</span>
-          <div class="progress progress-sm"><div class="progress-bar" style="width:60%"></div></div>
-        </div>
+        <div class="progress-row"><span class="form-label">Default — 72%</span><div class="progress"><div class="progress-bar" style="width:72%"></div></div></div>
+        <div class="progress-row"><span class="form-label">Success — 100%</span><div class="progress"><div class="progress-bar progress-bar-success" style="width:100%"></div></div></div>
+        <div class="progress-row"><span class="form-label">Warning — 45%</span><div class="progress"><div class="progress-bar progress-bar-warning" style="width:45%"></div></div></div>
+        <div class="progress-row"><span class="form-label">Danger — 18%</span><div class="progress"><div class="progress-bar progress-bar-danger" style="width:18%"></div></div></div>
+        <div class="progress-row"><span class="form-label">Indeterminate</span><div class="progress progress-indeterminate"><div class="progress-bar"></div></div></div>
+        <div class="progress-row"><span class="form-label">Small — 60%</span><div class="progress progress-sm"><div class="progress-bar" style="width:60%"></div></div></div>
       </div>
     </div>
   </section>
-
   <div class="pb-divider"></div>
 
 
@@ -1030,10 +962,7 @@
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Utility</p>
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Tooltips, <span class="gradient-text">pure CSS.</span></h2>
-      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
-        Add <code class="inline-code">data-tooltip="Text"</code> to any element — no JS, no library. Four directions via <code class="inline-code">data-tooltip-pos</code>.
-      </p>
-
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Add <code class="inline-code">data-tooltip="Text"</code> to any element. Four directions, no JS.</p>
       <div class="btn-gallery" data-entrance="fade-up" data-stagger="3">
         <button class="btn btn-ghost" data-tooltip="I appear above (default)">Top</button>
         <button class="btn btn-ghost" data-tooltip="I appear below" data-tooltip-pos="bottom">Bottom</button>
@@ -1043,7 +972,6 @@
       </div>
     </div>
   </section>
-
   <div class="pb-divider"></div>
 
 
@@ -1052,10 +980,7 @@
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Testimonials</p>
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Trusted by <span class="gradient-text">builders.</span></h2>
-      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
-        Dropped into production apps in hours, not days.
-      </p>
-
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Dropped into production apps in hours, not days.</p>
       <div class="testimonial-grid">
         <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="1">
           <div class="star-row" aria-label="5 stars">
@@ -1065,18 +990,12 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">
-            "Finally a design system that ships performance as a first-class feature. The tilt effect runs at solid 60fps even on old hardware — no compromise."
-          </p>
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">"Finally a design system that ships performance as a first-class feature. Solid 60fps on old hardware — no compromise."</p>
           <div style="display:flex;align-items:center;gap:var(--pb-s3)">
             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="Michael T." class="avatar-img">
-            <div>
-              <p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">Michael T.</p>
-              <p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">AI Solutions Architect</p>
-            </div>
+            <div><p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">Michael T.</p><p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">AI Solutions Architect</p></div>
           </div>
         </div>
-
         <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="2">
           <div class="star-row" aria-label="5 stars">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -1085,18 +1004,12 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">
-            "Two lines of HTML and every project instantly feels enterprise-grade. The dark/light switch with zero flash is the detail clients always notice first."
-          </p>
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">"Two lines of HTML and every project feels enterprise-grade. The dark/light switch with zero flash is the detail clients always notice."</p>
           <div style="display:flex;align-items:center;gap:var(--pb-s3)">
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="A. Kargbo" class="avatar-img">
-            <div>
-              <p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">A. Kargbo</p>
-              <p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Frontend Lead</p>
-            </div>
+            <div><p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">A. Kargbo</p><p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Frontend Lead</p></div>
           </div>
         </div>
-
         <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="3">
           <div class="star-row" aria-label="5 stars">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -1105,15 +1018,10 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">
-            "Works in vanilla HTML, React, and Next.js without conflict. I dropped it into BridgeUp's landing page alongside Tailwind and it just worked. No config."
-          </p>
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">"Dropped it into BridgeUp's landing page alongside Tailwind and it just worked. No conflicts, no config, instant upgrade."</p>
           <div style="display:flex;align-items:center;gap:var(--pb-s3)">
             <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="R. Nkemdirim" class="avatar-img">
-            <div>
-              <p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">R. Nkemdirim</p>
-              <p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Full-Stack Engineer</p>
-            </div>
+            <div><p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">R. Nkemdirim</p><p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Full-Stack Engineer</p></div>
           </div>
         </div>
       </div>
@@ -1123,39 +1031,22 @@
 
   <!-- ═══ CTA ═══ -->
   <section class="cta-section" id="install">
-    <div class="blob blob-1" aria-hidden="true"></div>
-    <div class="blob blob-2" aria-hidden="true"></div>
+    <div class="cta-aurora-1" aria-hidden="true"></div>
+    <div class="cta-aurora-2" aria-hidden="true"></div>
     <div class="dot-grid" aria-hidden="true"></div>
-
     <div class="pb-container cta-inner" style="display:flex;flex-direction:column;align-items:center;gap:var(--pb-s5)">
       <p class="section-label" data-entrance="fade-in">Get started</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1" style="text-align:center">
-        Two lines.<br><span class="gradient-text">Any project.</span>
-      </h2>
-      <p style="color:var(--pb-text-secondary);text-align:center;max-width:420px;font-size:var(--pb-text-base);line-height:var(--pb-leading-normal)" data-entrance="fade-up" data-stagger="2">
-        Paste into your <code class="inline-code">&lt;head&gt;</code>. Every component, cursor, animation, and theme switch — instantly available.
-      </p>
-
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1" style="text-align:center">Two lines.<br><span class="gradient-text">Any project.</span></h2>
+      <p style="color:var(--pb-text-secondary);text-align:center;max-width:420px;font-size:var(--pb-text-base);line-height:var(--pb-leading-normal)" data-entrance="fade-up" data-stagger="2">Paste into your <code class="inline-code">&lt;head&gt;</code>. Every component, cursor, animation, and theme switch — instantly available.</p>
       <div class="code-block" data-entrance="scale-in" data-stagger="3" style="max-width:640px">
-        <div class="code-block-header">
-          <span class="code-block-dot" style="background:#ff5f57"></span>
-          <span class="code-block-dot" style="background:#febc2e"></span>
-          <span class="code-block-dot" style="background:#28c840"></span>
-          <span class="code-block-filename">index.html</span>
-        </div>
+        <div class="code-block-header"><span class="code-block-dot" style="background:#ff5f57"></span><span class="code-block-dot" style="background:#febc2e"></span><span class="code-block-dot" style="background:#28c840"></span><span class="code-block-filename">index.html</span></div>
         <pre><span style="color:var(--pb-text-muted)">&lt;!-- Add to &lt;head&gt; --&gt;</span>
 <span style="color:var(--pb-accent-hover)">&lt;link</span> rel=<span style="color:#34d399">"stylesheet"</span> href=<span style="color:#34d399">"https://pebble-ui-taupe.vercel.app/dist/pebble.css"</span><span style="color:var(--pb-accent-hover)">&gt;</span>
 <span style="color:var(--pb-accent-hover)">&lt;script</span> src=<span style="color:#34d399">"https://pebble-ui-taupe.vercel.app/dist/pebble.js"</span> defer<span style="color:var(--pb-accent-hover)">&gt;&lt;/script&gt;</span></pre>
       </div>
-
       <div class="btn-gallery" data-entrance="fade-up" data-stagger="4">
-        <a href="#cards" class="btn btn-primary btn-lg" data-magnetic>
-          View Components
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-        <button class="btn btn-ghost btn-lg" onclick="navigator.clipboard.writeText('&lt;link rel=&quot;stylesheet&quot; href=&quot;https://pebble-ui-taupe.vercel.app/dist/pebble.css&quot;&gt;\n&lt;script src=&quot;https://pebble-ui-taupe.vercel.app/dist/pebble.js&quot; defer&gt;&lt;/script&gt;').then(()=>window.pebble.toast({type:'success',title:'Copied!',message:'Install snippet copied to clipboard.'}))">
-          Copy snippet
-        </button>
+        <a href="#showcase" class="btn btn-primary btn-lg" data-magnetic>View Components <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+        <button class="btn btn-ghost btn-lg" onclick="navigator.clipboard.writeText('&lt;link rel=&quot;stylesheet&quot; href=&quot;https://pebble-ui-taupe.vercel.app/dist/pebble.css&quot;&gt;\n&lt;script src=&quot;https://pebble-ui-taupe.vercel.app/dist/pebble.js&quot; defer&gt;&lt;/script&gt;').then(()=>window.pebble.toast({type:'success',title:'Copied!',message:'Install snippet copied to clipboard.'}))">Copy snippet</button>
       </div>
     </div>
   </section>
@@ -1165,21 +1056,14 @@
   <footer>
     <div class="footer-inner">
       <div>
-        <a href="#" class="footer-logo">
-          <span class="footer-logo-dot"></span>
-          Pebble
-        </a>
+        <a href="#" class="footer-logo"><span class="footer-logo-dot"></span>Pebble</a>
         <p class="footer-tagline">Enterprise design system. Zero runtime dependencies. Drop in two lines and ship something beautiful.</p>
-        <span class="footer-badge">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          MIT License
-        </span>
+        <span class="footer-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>MIT License</span>
       </div>
-
       <div>
         <p class="footer-col-title">Components</p>
         <ul class="footer-links">
-          <li><a href="#cards">Cards</a></li>
+          <li><a href="#showcase">Showcase</a></li>
           <li><a href="#buttons">Buttons</a></li>
           <li><a href="#inputs">Inputs</a></li>
           <li><a href="#toasts">Toasts</a></li>
@@ -1187,7 +1071,6 @@
           <li><a href="#tooltips">Tooltips</a></li>
         </ul>
       </div>
-
       <div>
         <p class="footer-col-title">Resources</p>
         <ul class="footer-links">
@@ -1197,7 +1080,6 @@
           <li><a href="#install">Install guide</a></li>
         </ul>
       </div>
-
       <div>
         <p class="footer-col-title">Built by</p>
         <ul class="footer-links">
@@ -1206,19 +1088,61 @@
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">
-      Pebble UI &mdash; &copy; 2025 Mike Byosekumbuga &mdash; MIT License
-    </div>
+    <div class="footer-bottom">Pebble UI &mdash; &copy; 2025 Mike Byosekumbuga &mdash; MIT License</div>
   </footer>
 
 
-  <!-- Pebble UI system JS -->
   <script src="../dist/pebble.js" defer></script>
 
-  <!-- Demo-only: counter animation + active nav -->
   <script>
     (function() {
-      // Counter animation
+      // ── Canvas particles ──
+      var canvas = document.getElementById('hero-particles');
+      if (canvas) {
+        var ctx = canvas.getContext('2d');
+        function resizeCanvas() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        var particles = [];
+        for (var i = 0; i < 55; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 1.4 + 0.4,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: (Math.random() - 0.5) * 0.25,
+            alpha: Math.random() * 0.4 + 0.08
+          });
+        }
+        function drawParticles() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          particles.forEach(function(p) {
+            p.x += p.vx; p.y += p.vy;
+            if (p.x < 0) p.x = canvas.width;
+            if (p.x > canvas.width) p.x = 0;
+            if (p.y < 0) p.y = canvas.height;
+            if (p.y > canvas.height) p.y = 0;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,255,255,' + p.alpha + ')';
+            ctx.fill();
+          });
+          requestAnimationFrame(drawParticles);
+        }
+        drawParticles();
+      }
+
+      // ── Spotlight cursor (hero) ──
+      var hero = document.getElementById('hero');
+      if (hero) {
+        hero.addEventListener('mousemove', function(e) {
+          var rect = hero.getBoundingClientRect();
+          hero.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+          hero.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+        });
+      }
+
+      // ── Counter animation ──
       var counters = document.querySelectorAll('.counter-num[data-target]');
       if (counters.length) {
         function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
@@ -1235,8 +1159,7 @@
           entries.forEach(function(entry) {
             if (entry.isIntersecting) {
               var el = entry.target;
-              var target = parseInt(el.dataset.target, 10);
-              animateCounter(el, target, 1400);
+              animateCounter(el, parseInt(el.dataset.target, 10), 1400);
               cObs.unobserve(el);
             }
           });
@@ -1244,10 +1167,10 @@
         counters.forEach(function(el) { cObs.observe(el); });
       }
 
-      // Active nav section
+      // ── Active nav section ──
       var navLinks = document.querySelectorAll('.pb-nav-link[href^="#"]');
-      var sectionIds = ['hero','cards','buttons','inputs','toasts','progress','tooltips','about'];
-      var sections = sectionIds.map(function(id) { return document.getElementById(id); }).filter(Boolean);
+      var sections = ['hero','showcase','buttons','inputs','toasts','progress','tooltips','about']
+        .map(function(id) { return document.getElementById(id); }).filter(Boolean);
       if (navLinks.length && sections.length) {
         var sObs = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry) {

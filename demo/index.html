@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pebble UI — Enterprise Design System</title>
+  <title>Pebble UI   Enterprise Design System</title>
   <meta name="description" content="Pebble UI: enterprise design system with magnetic cursor, 3D card tilt, fluid dark/light mode. Zero runtime dependencies.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -133,7 +133,7 @@
       margin-bottom: var(--pb-s12);
     }
 
-    /* ── Proof pill — matches pill-link style exactly ── */
+    /* ── Proof pill   matches pill-link style exactly ── */
     .proof-pill {
       display: inline-flex;
       align-items: center;
@@ -355,42 +355,56 @@
       font-size: var(--pb-text-base);
     }
 
-    /* ── Marquee ── */
-    .marquee-section {
-      padding: var(--pb-s10) 0;
+    /* ── Orizon-style static logo strip ── */
+    .logo-section {
+      padding: var(--pb-s10) 0 var(--pb-s8);
       border-top: 1px solid var(--pb-border);
       border-bottom: 1px solid var(--pb-border);
-      overflow: hidden;
     }
-    .marquee-label {
+    .logo-section-label {
       text-align: center;
       font-size: var(--pb-text-xs);
       font-weight: var(--pb-weight-semibold);
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--pb-text-muted);
-      margin-bottom: var(--pb-s6);
+      margin-bottom: var(--pb-s8);
     }
-    .marquee-wrapper {
-      overflow: hidden;
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-      mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
-    }
-    .marquee-track {
+    .logo-strip {
       display: flex;
       align-items: center;
-      width: max-content;
-      animation: pb-marquee 32s linear infinite;
+      justify-content: center;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--pb-s6);
+      row-gap: var(--pb-s3);
     }
-    .marquee-item {
-      display: flex; align-items: center; gap: 9px;
-      padding: 0 44px; opacity: 0.45; white-space: nowrap;
-      transition: opacity 200ms; cursor: default;
+    .logo-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: var(--pb-s3) var(--pb-s7);
+      color: var(--pb-text-secondary);
+      transition: color 200ms var(--pb-ease-out), opacity 200ms var(--pb-ease-out);
+      opacity: 1;
+      cursor: default;
     }
-    .marquee-item:hover { opacity: 0.85; }
-    .mq-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-    .mq-name { font-size: var(--pb-text-sm); font-weight: var(--pb-weight-semibold); color: var(--pb-text-secondary); letter-spacing: 0.01em; }
-    .mq-sep { width: 1px; height: 20px; background: var(--pb-border-strong); flex-shrink: 0; }
+    .logo-item:hover { color: var(--pb-text-primary); }
+    .logo-name {
+      font-size: var(--pb-text-base);
+      font-weight: var(--pb-weight-semibold);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+    .logo-divider {
+      width: 1px;
+      height: 36px;
+      background: var(--pb-border-strong);
+      flex-shrink: 0;
+    }
+    [data-theme="light"] .logo-item { color: #6b7280; }
+    [data-theme="light"] .logo-item:hover { color: #111827; }
 
     /* ── SHOWCASE CARDS (images inside) ── */
     .showcase-grid {
@@ -628,7 +642,7 @@
         transform var(--pb-dur-base) var(--pb-ease-out),
         box-shadow var(--pb-dur-base) var(--pb-ease-out);
     }
-    /* Shimmer sweep — same as .btn-primary */
+    /* Shimmer sweep   same as .btn-primary */
     .pill-link::before {
       content: '';
       position: absolute;
@@ -953,7 +967,7 @@
             Feels faster.
           </h1>
           <p class="hero-sub" data-entrance="fade-up" data-stagger="2">
-            Magnetic cursor, 3D card tilt, fluid dark/light mode — built with zero runtime dependencies, running on the compositor thread so it never lags.
+            Magnetic cursor, 3D card tilt, fluid dark/light mode   built with zero runtime dependencies, running on the compositor thread so it never lags.
           </p>
           <div class="hero-cta" data-entrance="fade-up" data-stagger="3">
             <a href="#showcase" class="btn btn-primary btn-lg" data-magnetic>
@@ -1009,7 +1023,7 @@
     <div class="hero-feature-card" aria-hidden="true">
       <div class="hero-feature-card-bg"></div>
 
-      <!-- Top label strip — "LIVE DEMO" tag like orizon's card header -->
+      <!-- Top label strip   "LIVE DEMO" tag like orizon's card header -->
       <div style="position:absolute;top:20px;left:28px;z-index:10;display:flex;align-items:center;gap:10px;">
         <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.14);border-radius:999px;padding:5px 12px 5px 8px;backdrop-filter:blur(8px)">
           <span style="width:7px;height:7px;border-radius:50%;background:#34d399;flex-shrink:0;animation:pb-pulse-ring 2s ease-out infinite"></span>
@@ -1039,9 +1053,9 @@
         </video>
       </div>
 
-      <!-- Floating card 1 — metrics -->
+      <!-- Floating card 1   metrics -->
       <div class="hero-feature-float-1">
-        <p class="fcard-label">Pebble UI — Metrics</p>
+        <p class="fcard-label">Pebble UI   Metrics</p>
         <p class="fcard-title">Bundle size</p>
         <div class="fcard-bar"><div class="fcard-bar-fill" style="width:14%"></div></div>
         <p class="fcard-title" style="margin-top:var(--pb-s3)">Animation score</p>
@@ -1054,7 +1068,7 @@
         </div>
       </div>
 
-      <!-- Floating card 2 — badge stack -->
+      <!-- Floating card 2   badge stack -->
       <div class="hero-feature-float-2">
         <p class="fcard-label" style="color:rgba(255,255,255,0.5)">Components</p>
         <div style="display:flex;flex-direction:column;gap:6px;margin-top:var(--pb-s2)">
@@ -1066,52 +1080,72 @@
     </div>
   </div>
 
-  <!-- ═══ MARQUEE ═══ -->
-  <div class="marquee-section" aria-label="Compatible frameworks">
-    <p class="marquee-label">Works with every stack</p>
-    <div class="marquee-wrapper">
-      <div class="marquee-track" aria-hidden="true">
-        <div class="marquee-item"><span class="mq-dot" style="background:#61DAFB"></span><span class="mq-name">React</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#e2e8f0"></span><span class="mq-name">Next.js</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#41B883"></span><span class="mq-name">Vue.js</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#FF3E00"></span><span class="mq-name">Svelte</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#3178C6"></span><span class="mq-name">TypeScript</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#06B6D4"></span><span class="mq-name">Tailwind CSS</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#FF5D01"></span><span class="mq-name">Astro</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#aaaaaa"></span><span class="mq-name">Remix</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#f0db4f"></span><span class="mq-name">Vanilla JS</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#e34c26"></span><span class="mq-name">HTML5</span></div>
-        <div class="mq-sep"></div>
-        <!-- duplicate for seamless loop -->
-        <div class="marquee-item"><span class="mq-dot" style="background:#61DAFB"></span><span class="mq-name">React</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#e2e8f0"></span><span class="mq-name">Next.js</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#41B883"></span><span class="mq-name">Vue.js</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#FF3E00"></span><span class="mq-name">Svelte</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#3178C6"></span><span class="mq-name">TypeScript</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#06B6D4"></span><span class="mq-name">Tailwind CSS</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#FF5D01"></span><span class="mq-name">Astro</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#aaaaaa"></span><span class="mq-name">Remix</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#f0db4f"></span><span class="mq-name">Vanilla JS</span></div>
-        <div class="mq-sep"></div>
-        <div class="marquee-item"><span class="mq-dot" style="background:#e34c26"></span><span class="mq-name">HTML5</span></div>
-        <div class="mq-sep"></div>
+  <!-- ═══ LOGO STRIP (orizon-style: static, full opacity, dividers) ═══ -->
+  <div class="logo-section" aria-label="Compatible frameworks">
+    <p class="logo-section-label">Works with every stack</p>
+    <div class="logo-strip">
+      <div class="logo-item">
+        <!-- React atom -->
+        <svg width="20" height="20" viewBox="-11.5 -10.23 23 20.46" fill="none" aria-hidden="true">
+          <circle r="2.05" fill="currentColor"/>
+          <ellipse rx="11" ry="4.2" stroke="currentColor" stroke-width="1"/>
+          <ellipse rx="11" ry="4.2" stroke="currentColor" stroke-width="1" transform="rotate(60)"/>
+          <ellipse rx="11" ry="4.2" stroke="currentColor" stroke-width="1" transform="rotate(120)"/>
+        </svg>
+        <span class="logo-name">React</span>
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <span style="font-size:17px;font-weight:900;letter-spacing:-0.06em;line-height:1" aria-hidden="true">N↗</span>
+        <span class="logo-name">Next.js</span>
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <!-- Vue V mark -->
+        <svg width="20" height="18" viewBox="0 0 32 28" fill="currentColor" aria-hidden="true">
+          <polygon points="16,28 0,0 5.5,0 16,20.5 26.5,0 32,0"/>
+        </svg>
+        <span class="logo-name">Vue.js</span>
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <!-- TypeScript TS mark -->
+        <svg width="20" height="20" viewBox="0 0 28 28" aria-hidden="true">
+          <rect width="28" height="28" rx="4" fill="currentColor" opacity="0.15"/>
+          <path d="M6 10h16M12 10v10M16 14h6M16 14c0 0 0 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-name">TypeScript</span>
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <!-- Tailwind waves -->
+        <svg width="24" height="16" viewBox="0 0 54 33" fill="currentColor" aria-hidden="true">
+          <path d="M27 0C19.8 0 15.3 3.6 13.5 10.8c2.7-3.6 5.85-4.95 9.45-4.05 2.054.506 3.514 1.98 5.127 3.6C30.744 13.163 33.98 16.5 40.5 16.5c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.506-3.514-1.98-5.127-3.6C36.756 3.337 33.52 0 27 0zM13.5 16.5C6.3 16.5 1.8 20.1 0 27.3c2.7-3.6 5.85-4.95 9.45-4.05 2.054.506 3.514 1.98 5.127 3.6C17.244 29.663 20.48 33 27 33c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.506-3.514-1.98-5.127-3.6C23.256 19.837 20.02 16.5 13.5 16.5z"/>
+        </svg>
+        <span class="logo-name">Tailwind CSS</span>
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <!-- Svelte S flame simplified -->
+        <svg width="18" height="22" viewBox="0 0 98 122" fill="currentColor" aria-hidden="true">
+          <path d="M91.4 21.9C82.1 8.3 63.9 4.2 50.3 13.1L22.7 31.2c-6.6 4.3-11.2 10.9-12.9 18.5-1.5 6.5-.7 13.4 2.3 19.4-4.7 7.2-6.3 16-4.4 24.4 3.5 14.9 17 25.1 32.1 25.1 3.1 0 6.2-.4 9.2-1.2l27.6-18.1c6.6-4.3 11.2-10.9 12.9-18.5 1.5-6.5.7-13.4-2.3-19.4 4.7-7.2 6.3-16 4.4-24.4a28.3 28.3 0 0 0-10.2-15.1z"/>
+        </svg>
+        <span class="logo-name">Svelte</span>
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2L2 19.5h20L12 2zm0 4.5l6.5 11.5H5.5L12 6.5z"/></svg>
+        <span class="logo-name">Astro</span>
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        <span class="logo-name">Vanilla HTML</span>
+      </div>
+      <div class="logo-divider"></div>
+      <div class="logo-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
+        <span class="logo-name">SvelteKit</span>
       </div>
     </div>
   </div>
@@ -1141,7 +1175,7 @@
       </div>
 
       <div class="project-grid">
-        <!-- Card 1: React — deep purple -->
+        <!-- Card 1: React   deep purple -->
         <div class="project-card project-card-purple" data-entrance="fade-up" data-stagger="1">
           <div class="project-logo-row">
             <span class="project-logo-dot">⚛</span>
@@ -1155,7 +1189,7 @@
           <img class="project-mockup" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80&auto=format&fit=crop" alt="React integration" loading="lazy">
         </div>
 
-        <!-- Card 2: Next.js — deep blue -->
+        <!-- Card 2: Next.js   deep blue -->
         <div class="project-card project-card-blue" data-entrance="fade-up" data-stagger="2">
           <div class="project-logo-row">
             <span class="project-logo-dot" style="font-weight:900;font-size:16px;">N</span>
@@ -1169,7 +1203,7 @@
           <img class="project-mockup" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80&auto=format&fit=crop" alt="Next.js dashboard" loading="lazy">
         </div>
 
-        <!-- Card wide: Stats — dark indigo, full width -->
+        <!-- Card wide: Stats   dark indigo, full width -->
         <div class="project-card project-card-wide" data-entrance="scale-in" data-stagger="3">
           <div class="project-wide-left">
             <div class="project-logo-row">
@@ -1178,7 +1212,7 @@
               </span>
               <span class="project-logo-name">Pebble UI</span>
             </div>
-            <p class="project-desc" style="max-width:360px">The numbers behind the system. Every metric is real — measured on a 2020 MacBook Air, 60hz display.</p>
+            <p class="project-desc" style="max-width:360px">The numbers behind the system. Every metric is real   measured on a 2020 MacBook Air, 60hz display.</p>
             <a href="#install" class="pill-link" style="border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.7)">
               View all docs
               <span class="pill-link-arrow" style="background:rgba(255,255,255,0.15)">
@@ -1207,7 +1241,7 @@
     </div>
   </section>
 
-  <!-- ═══ SHOWCASE — BIG IMAGE CARDS ═══ -->
+  <!-- ═══ SHOWCASE   BIG IMAGE CARDS ═══ -->
   <section class="pb-section" id="showcase">
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Components</p>
@@ -1218,7 +1252,7 @@
 
       <!-- Row 1: 3 showcase cards with images inside -->
       <div class="showcase-grid">
-        <!-- Card 1: Magnetic Cursor — dark code image -->
+        <!-- Card 1: Magnetic Cursor   dark code image -->
         <div class="showcase-card" data-entrance="fade-up" data-stagger="1">
           <div class="showcase-media">
             <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&q=80&auto=format&fit=crop" alt="Magnetic cursor interaction" loading="lazy">
@@ -1237,7 +1271,7 @@
           </div>
         </div>
 
-        <!-- Card 2: 3D Tilt — analytics dashboard -->
+        <!-- Card 2: 3D Tilt   analytics dashboard -->
         <div class="showcase-card" data-entrance="fade-up" data-stagger="2">
           <div class="showcase-media">
             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80&auto=format&fit=crop" alt="3D card tilt on dashboard" loading="lazy">
@@ -1248,7 +1282,7 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
             <h3 class="card-title">3D Card Tilt</h3>
-            <p class="card-body">±13° rotation via pointer tracking with smooth lerp. <code class="inline-code">will-change</code> managed automatically — GPU only when active.</p>
+            <p class="card-body">±13° rotation via pointer tracking with smooth lerp. <code class="inline-code">will-change</code> managed automatically   GPU only when active.</p>
             <div class="card-footer">
               <span class="badge badge-accent">CSS Transform</span>
               <span class="badge badge-default">Glassmorphism</span>
@@ -1256,7 +1290,7 @@
           </div>
         </div>
 
-        <!-- Card 3: Dark mode — abstract purple -->
+        <!-- Card 3: Dark mode   abstract purple -->
         <div class="showcase-card" data-entrance="fade-up" data-stagger="3">
           <div class="showcase-media">
             <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&q=80&auto=format&fit=crop" alt="Dark and light mode" loading="lazy">
@@ -1267,7 +1301,7 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
             </div>
             <h3 class="card-title">Dark / Light Mode</h3>
-            <p class="card-body">CSS custom properties swap on <code class="inline-code">data-theme</code>. Zero flash — resolves before paint. OS-aware, persists to <code class="inline-code">localStorage</code>.</p>
+            <p class="card-body">CSS custom properties swap on <code class="inline-code">data-theme</code>. Zero flash   resolves before paint. OS-aware, persists to <code class="inline-code">localStorage</code>.</p>
             <div class="card-footer">
               <span class="badge badge-accent">No FOUC</span>
               <span class="badge badge-success">OS-aware</span>
@@ -1278,7 +1312,7 @@
 
       <!-- Row 2: 2 wide cards with animated CSS media -->
       <div class="showcase-wide">
-        <!-- Wide card: Scroll Entrance — animated CSS mock -->
+        <!-- Wide card: Scroll Entrance   animated CSS mock -->
         <div class="showcase-card-wide" data-entrance="slide-right" data-stagger="4">
           <div class="showcase-wide-media">
             <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&q=80&auto=format&fit=crop" alt="Scroll entrance animations" loading="lazy">
@@ -1294,7 +1328,7 @@
           </div>
         </div>
 
-        <!-- Wide card: Reduced Motion — animated UI mock inside -->
+        <!-- Wide card: Reduced Motion   animated UI mock inside -->
         <div class="showcase-card-wide" data-entrance="slide-left" data-stagger="5">
           <div class="showcase-wide-media" style="background:var(--pb-bg-base);">
             <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:24px;gap:10px;">
@@ -1320,7 +1354,7 @@
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
             </div>
             <h3 class="card-title" style="margin-bottom:var(--pb-s3)">Reduced Motion</h3>
-            <p class="card-body" style="margin-bottom:var(--pb-s4)">All effects respect <code class="inline-code">prefers-reduced-motion</code>. Cursor hides, animations skip, tilt disables — zero JS errors.</p>
+            <p class="card-body" style="margin-bottom:var(--pb-s4)">All effects respect <code class="inline-code">prefers-reduced-motion</code>. Cursor hides, animations skip, tilt disables   zero JS errors.</p>
             <div class="card-footer"><span class="badge badge-success">WCAG compliant</span></div>
           </div>
         </div>
@@ -1378,7 +1412,7 @@
         <div class="feature-icon-wrap" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
         <p class="feature-stat">2<span class="feature-unit">lines</span></p>
         <p class="feature-title">To install</p>
-        <p class="feature-desc">One link tag, one script tag. Works in Vanilla HTML, React, Next.js, Svelte — without conflict.</p>
+        <p class="feature-desc">One link tag, one script tag. Works in Vanilla HTML, React, Next.js, Svelte   without conflict.</p>
       </div>
     </div>
   </div>
@@ -1390,7 +1424,7 @@
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Forms</p>
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Inputs that <span class="gradient-text">communicate.</span></h2>
-      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Focus rings, validation states, icon groups — accessible by default.</p>
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Focus rings, validation states, icon groups   accessible by default.</p>
       <div class="input-demo-grid" data-entrance="fade-up" data-stagger="3">
         <div class="form-group"><label class="form-label" for="d-email">Email address</label><input class="input" id="d-email" type="email" placeholder="you@example.com"><span class="form-hint">We'll never share your email.</span></div>
         <div class="form-group"><label class="form-label form-label-required" for="d-pw">Password</label><input class="input input-error" id="d-pw" type="password" value="weak"><span class="form-hint form-hint-error">Password must be at least 8 characters.</span></div>
@@ -1409,7 +1443,7 @@
     <div class="pb-container">
       <p class="section-label" data-entrance="fade-in">Feedback</p>
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Toasts that <span class="gradient-text">inform.</span></h2>
-      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Auto-dismiss with a progress track. Four semantic types — one API call.</p>
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Auto-dismiss with a progress track. Four semantic types   one API call.</p>
       <div class="btn-gallery" data-entrance="fade-up" data-stagger="3">
         <button class="btn btn-primary" onclick="window.pebble.toast({type:'success',title:'Saved',message:'Your changes have been saved successfully.'})">Success</button>
         <button class="btn btn-ghost" onclick="window.pebble.toast({type:'error',title:'Error',message:'Something went wrong. Please try again.'})">Error</button>
@@ -1440,12 +1474,12 @@
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Progress at a <span class="gradient-text">glance.</span></h2>
       <p class="section-desc" data-entrance="fade-up" data-stagger="2">Smooth transitions, shimmer sheen, semantic color variants, indeterminate state.</p>
       <div class="progress-demo" data-entrance="fade-up" data-stagger="3">
-        <div class="progress-row"><span class="form-label">Default — 72%</span><div class="progress"><div class="progress-bar" style="width:72%"></div></div></div>
-        <div class="progress-row"><span class="form-label">Success — 100%</span><div class="progress"><div class="progress-bar progress-bar-success" style="width:100%"></div></div></div>
-        <div class="progress-row"><span class="form-label">Warning — 45%</span><div class="progress"><div class="progress-bar progress-bar-warning" style="width:45%"></div></div></div>
-        <div class="progress-row"><span class="form-label">Danger — 18%</span><div class="progress"><div class="progress-bar progress-bar-danger" style="width:18%"></div></div></div>
+        <div class="progress-row"><span class="form-label">Default   72%</span><div class="progress"><div class="progress-bar" style="width:72%"></div></div></div>
+        <div class="progress-row"><span class="form-label">Success   100%</span><div class="progress"><div class="progress-bar progress-bar-success" style="width:100%"></div></div></div>
+        <div class="progress-row"><span class="form-label">Warning   45%</span><div class="progress"><div class="progress-bar progress-bar-warning" style="width:45%"></div></div></div>
+        <div class="progress-row"><span class="form-label">Danger   18%</span><div class="progress"><div class="progress-bar progress-bar-danger" style="width:18%"></div></div></div>
         <div class="progress-row"><span class="form-label">Indeterminate</span><div class="progress progress-indeterminate"><div class="progress-bar"></div></div></div>
-        <div class="progress-row"><span class="form-label">Small — 60%</span><div class="progress progress-sm"><div class="progress-bar" style="width:60%"></div></div></div>
+        <div class="progress-row"><span class="form-label">Small   60%</span><div class="progress progress-sm"><div class="progress-bar" style="width:60%"></div></div></div>
       </div>
     </div>
   </section>
@@ -1495,7 +1529,7 @@
         <svg width="36" height="36" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="9" cy="9" r="3.5" fill="white"/><circle cx="9" cy="9" r="7.5" stroke="white" stroke-width="1.2" stroke-dasharray="2.8 2.2"/></svg>
       </div>
       <h2 class="cloud-title">Teams worldwide<br><span class="gradient-text">ship with Pebble.</span></h2>
-      <p class="cloud-sub">From solo developers to Fortune 500 product teams — Pebble drops in and immediately elevates the experience.</p>
+      <p class="cloud-sub">From solo developers to Fortune 500 product teams   Pebble drops in and immediately elevates the experience.</p>
       <div style="display:flex;gap:var(--pb-s4);flex-wrap:wrap;justify-content:center">
         <a href="#install" class="btn btn-primary btn-lg" data-magnetic>
           Get started free
@@ -1526,7 +1560,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">"Finally a design system that ships performance as a first-class feature. Solid 60fps on old hardware — no compromise."</p>
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">"Finally a design system that ships performance as a first-class feature. Solid 60fps on old hardware   no compromise."</p>
           <div style="display:flex;align-items:center;gap:var(--pb-s3)">
             <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="Michael T." class="avatar-img">
             <div><p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">Michael T.</p><p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">AI Solutions Architect</p></div>
@@ -1573,7 +1607,7 @@
     <div class="pb-container cta-inner" style="display:flex;flex-direction:column;align-items:center;gap:var(--pb-s5)">
       <p class="section-label" data-entrance="fade-in">Get started</p>
       <h2 class="section-title" data-entrance="fade-up" data-stagger="1" style="text-align:center">Two lines.<br><span class="gradient-text">Any project.</span></h2>
-      <p style="color:var(--pb-text-secondary);text-align:center;max-width:420px;font-size:var(--pb-text-base);line-height:var(--pb-leading-normal)" data-entrance="fade-up" data-stagger="2">Paste into your <code class="inline-code">&lt;head&gt;</code>. Every component, cursor, animation, and theme switch — instantly available.</p>
+      <p style="color:var(--pb-text-secondary);text-align:center;max-width:420px;font-size:var(--pb-text-base);line-height:var(--pb-leading-normal)" data-entrance="fade-up" data-stagger="2">Paste into your <code class="inline-code">&lt;head&gt;</code>. Every component, cursor, animation, and theme switch   instantly available.</p>
       <div class="code-block" data-entrance="scale-in" data-stagger="3" style="max-width:640px">
         <div class="code-block-header"><span class="code-block-dot" style="background:#ff5f57"></span><span class="code-block-dot" style="background:#febc2e"></span><span class="code-block-dot" style="background:#28c840"></span><span class="code-block-filename">index.html</span></div>
         <pre><span style="color:var(--pb-text-muted)">&lt;!-- Add to &lt;head&gt; --&gt;</span>
@@ -1611,8 +1645,8 @@
         <p class="footer-col-title">Resources</p>
         <ul class="footer-links">
           <li><a href="https://github.com/MikeGira/pebble-ui" target="_blank" rel="noopener">GitHub</a></li>
-          <li><a href="https://pebble-ui-taupe.vercel.app/dist/pebble.css" target="_blank" rel="noopener">CDN — CSS</a></li>
-          <li><a href="https://pebble-ui-taupe.vercel.app/dist/pebble.js" target="_blank" rel="noopener">CDN — JS</a></li>
+          <li><a href="https://pebble-ui-taupe.vercel.app/dist/pebble.css" target="_blank" rel="noopener">CDN   CSS</a></li>
+          <li><a href="https://pebble-ui-taupe.vercel.app/dist/pebble.js" target="_blank" rel="noopener">CDN   JS</a></li>
           <li><a href="#install">Install guide</a></li>
         </ul>
       </div>
@@ -1624,7 +1658,7 @@
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">Pebble UI &mdash; &copy; 2025 Mike Byosekumbuga &mdash; MIT License</div>
+    <div class="footer-bottom">Pebble UI   &copy; 2025 Mike Byosekumbuga   MIT License</div>
   </footer>
 
 

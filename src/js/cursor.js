@@ -72,11 +72,13 @@
 
   var magneticEls = [];
 
-  /* For .btn elements: wrap children in an inner span so the container
-     never moves — only the text/icon content floats inside the pill.
+  /* For .btn / .pill-link / .proof-pill: wrap children so the container
+     never moves — only the inner content floats.
      For .btn-circle and bare data-magnetic: translate the element itself. */
   function getTarget(el) {
-    var isBtn = el.classList.contains('btn') && !el.classList.contains('btn-circle');
+    var isBtn = (el.classList.contains('btn') && !el.classList.contains('btn-circle'))
+             || el.classList.contains('pill-link')
+             || el.classList.contains('proof-pill');
     if (!isBtn) return { node: el, strength: MAG_STRENGTH };
 
     if (!el._magInner) {
@@ -99,7 +101,7 @@
   }
 
   function bindMagnetic() {
-    document.querySelectorAll('[data-magnetic]').forEach(function (el) {
+    document.querySelectorAll('[data-magnetic], .pill-link, .proof-pill').forEach(function (el) {
       if (magneticEls.indexOf(el) !== -1) return;
       magneticEls.push(el);
 

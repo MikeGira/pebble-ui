@@ -356,11 +356,12 @@
       font-size: var(--pb-text-base);
     }
 
-    /* ── Orizon-style static logo strip ── */
+    /* ── Logo strip (orizon "Trusted by" style — scrolling marquee) ── */
     .logo-section {
-      padding: var(--pb-s10) 0 var(--pb-s8);
+      padding: var(--pb-s10) 0;
       border-top: 1px solid var(--pb-border);
       border-bottom: 1px solid var(--pb-border);
+      overflow: hidden;
     }
     .logo-section-label {
       text-align: center;
@@ -369,43 +370,57 @@
       letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--pb-text-muted);
-      margin-bottom: var(--pb-s8);
+      margin-bottom: var(--pb-s7);
     }
-    .logo-strip {
+    /* Fade edges — orizon style */
+    .logo-track-outer {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+    }
+    /* Scrolling track — smooth auto-marquee */
+    .logo-track {
       display: flex;
       align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 var(--pb-s6);
-      row-gap: var(--pb-s3);
+      width: max-content;
+      animation: pb-marquee 36s linear infinite;
     }
+    .logo-track:hover { animation-play-state: paused; }
+    /* Each logo item — full opacity, generous padding, clean text */
     .logo-item {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: var(--pb-s3) var(--pb-s7);
+      padding: 0 52px;
+      white-space: nowrap;
       color: var(--pb-text-secondary);
-      transition: color 200ms var(--pb-ease-out), opacity 200ms var(--pb-ease-out);
-      opacity: 1;
       cursor: default;
+      transition: color 250ms var(--pb-ease-out);
     }
     .logo-item:hover { color: var(--pb-text-primary); }
-    .logo-name {
-      font-size: var(--pb-text-base);
-      font-weight: var(--pb-weight-semibold);
-      letter-spacing: -0.01em;
-      white-space: nowrap;
+    /* Brand dot — small colored accent circle */
+    .logo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      opacity: 0.9;
     }
-    .logo-divider {
+    /* Brand name wordmark */
+    .logo-name {
+      font-size: var(--pb-text-lg);
+      font-weight: var(--pb-weight-bold);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    /* Vertical separator — solid, clearly visible */
+    .logo-sep {
       width: 1px;
-      height: 36px;
+      height: 28px;
       background: var(--pb-border-strong);
       flex-shrink: 0;
+      opacity: 0.6;
     }
-    [data-theme="light"] .logo-item { color: #6b7280; }
-    [data-theme="light"] .logo-item:hover { color: #111827; }
 
     /* ── SHOWCASE CARDS (images inside) ── */
     .showcase-grid {
@@ -1280,72 +1295,56 @@
     </div>
   </div>
 
-  <!-- ═══ LOGO STRIP (orizon-style: static, full opacity, dividers) ═══ -->
+  <!-- ═══ LOGO STRIP — smooth scrolling marquee, orizon "Trusted by" style ═══ -->
   <div class="logo-section" aria-label="Compatible frameworks">
     <p class="logo-section-label">Works with every stack</p>
-    <div class="logo-strip">
-      <div class="logo-item">
-        <!-- React atom -->
-        <svg width="20" height="20" viewBox="-11.5 -10.23 23 20.46" fill="none" aria-hidden="true">
-          <circle r="2.05" fill="currentColor"/>
-          <ellipse rx="11" ry="4.2" stroke="currentColor" stroke-width="1"/>
-          <ellipse rx="11" ry="4.2" stroke="currentColor" stroke-width="1" transform="rotate(60)"/>
-          <ellipse rx="11" ry="4.2" stroke="currentColor" stroke-width="1" transform="rotate(120)"/>
-        </svg>
-        <span class="logo-name">React</span>
-      </div>
-      <div class="logo-divider"></div>
-      <div class="logo-item">
-        <span style="font-size:17px;font-weight:900;letter-spacing:-0.06em;line-height:1" aria-hidden="true">N↗</span>
-        <span class="logo-name">Next.js</span>
-      </div>
-      <div class="logo-divider"></div>
-      <div class="logo-item">
-        <!-- Vue V mark -->
-        <svg width="20" height="18" viewBox="0 0 32 28" fill="currentColor" aria-hidden="true">
-          <polygon points="16,28 0,0 5.5,0 16,20.5 26.5,0 32,0"/>
-        </svg>
-        <span class="logo-name">Vue.js</span>
-      </div>
-      <div class="logo-divider"></div>
-      <div class="logo-item">
-        <!-- TypeScript TS mark -->
-        <svg width="20" height="20" viewBox="0 0 28 28" aria-hidden="true">
-          <rect width="28" height="28" rx="4" fill="currentColor" opacity="0.15"/>
-          <path d="M6 10h16M12 10v10M16 14h6M16 14c0 0 0 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <span class="logo-name">TypeScript</span>
-      </div>
-      <div class="logo-divider"></div>
-      <div class="logo-item">
-        <!-- Tailwind waves -->
-        <svg width="24" height="16" viewBox="0 0 54 33" fill="currentColor" aria-hidden="true">
-          <path d="M27 0C19.8 0 15.3 3.6 13.5 10.8c2.7-3.6 5.85-4.95 9.45-4.05 2.054.506 3.514 1.98 5.127 3.6C30.744 13.163 33.98 16.5 40.5 16.5c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.506-3.514-1.98-5.127-3.6C36.756 3.337 33.52 0 27 0zM13.5 16.5C6.3 16.5 1.8 20.1 0 27.3c2.7-3.6 5.85-4.95 9.45-4.05 2.054.506 3.514 1.98 5.127 3.6C17.244 29.663 20.48 33 27 33c7.2 0 11.7-3.6 13.5-10.8-2.7 3.6-5.85 4.95-9.45 4.05-2.054-.506-3.514-1.98-5.127-3.6C23.256 19.837 20.02 16.5 13.5 16.5z"/>
-        </svg>
-        <span class="logo-name">Tailwind CSS</span>
-      </div>
-      <div class="logo-divider"></div>
-      <div class="logo-item">
-        <!-- Svelte S flame simplified -->
-        <svg width="18" height="22" viewBox="0 0 98 122" fill="currentColor" aria-hidden="true">
-          <path d="M91.4 21.9C82.1 8.3 63.9 4.2 50.3 13.1L22.7 31.2c-6.6 4.3-11.2 10.9-12.9 18.5-1.5 6.5-.7 13.4 2.3 19.4-4.7 7.2-6.3 16-4.4 24.4 3.5 14.9 17 25.1 32.1 25.1 3.1 0 6.2-.4 9.2-1.2l27.6-18.1c6.6-4.3 11.2-10.9 12.9-18.5 1.5-6.5.7-13.4-2.3-19.4 4.7-7.2 6.3-16 4.4-24.4a28.3 28.3 0 0 0-10.2-15.1z"/>
-        </svg>
-        <span class="logo-name">Svelte</span>
-      </div>
-      <div class="logo-divider"></div>
-      <div class="logo-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2L2 19.5h20L12 2zm0 4.5l6.5 11.5H5.5L12 6.5z"/></svg>
-        <span class="logo-name">Astro</span>
-      </div>
-      <div class="logo-divider"></div>
-      <div class="logo-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-        <span class="logo-name">Vanilla HTML</span>
-      </div>
-      <div class="logo-divider"></div>
-      <div class="logo-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 12h8M12 8v8"/></svg>
-        <span class="logo-name">SvelteKit</span>
+    <div class="logo-track-outer">
+      <div class="logo-track" aria-hidden="true">
+
+        <!-- Set 1 -->
+        <div class="logo-item"><span class="logo-dot" style="background:#61DAFB"></span><span class="logo-name">React</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#ffffff"></span><span class="logo-name">Next.js</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#41B883"></span><span class="logo-name">Vue.js</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#3178C6"></span><span class="logo-name">TypeScript</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#06B6D4"></span><span class="logo-name">Tailwind CSS</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#FF3E00"></span><span class="logo-name">Svelte</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#FF5D01"></span><span class="logo-name">Astro</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#f0db4f"></span><span class="logo-name">Vanilla JS</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#e34c26"></span><span class="logo-name">HTML5</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#aaaaaa"></span><span class="logo-name">Remix</span></div>
+        <div class="logo-sep"></div>
+
+        <!-- Set 2 — duplicate for seamless infinite loop -->
+        <div class="logo-item"><span class="logo-dot" style="background:#61DAFB"></span><span class="logo-name">React</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#ffffff"></span><span class="logo-name">Next.js</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#41B883"></span><span class="logo-name">Vue.js</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#3178C6"></span><span class="logo-name">TypeScript</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#06B6D4"></span><span class="logo-name">Tailwind CSS</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#FF3E00"></span><span class="logo-name">Svelte</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#FF5D01"></span><span class="logo-name">Astro</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#f0db4f"></span><span class="logo-name">Vanilla JS</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#e34c26"></span><span class="logo-name">HTML5</span></div>
+        <div class="logo-sep"></div>
+        <div class="logo-item"><span class="logo-dot" style="background:#aaaaaa"></span><span class="logo-name">Remix</span></div>
+        <div class="logo-sep"></div>
+
       </div>
     </div>
   </div>

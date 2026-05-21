@@ -567,8 +567,121 @@
     .progress-demo { display: flex; flex-direction: column; gap: var(--pb-s5); max-width: 600px; }
     .progress-row { display: flex; flex-direction: column; gap: var(--pb-s2); }
 
-    /* ── Testimonials ── */
-    .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--pb-s5); }
+    /* ── Orizon "Word on the Street" testimonial carousel ── */
+    .wots-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--pb-s8);
+      flex-wrap: wrap;
+      gap: var(--pb-s4);
+    }
+    .wots-nav { display: flex; gap: var(--pb-s3); }
+    .wots-outer { overflow: hidden; }
+    .wots-track {
+      display: flex;
+      transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+    /* Each slide: full width — one testimonial at a time */
+    .wots-slide {
+      flex: 0 0 100%;
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: var(--pb-s10);
+      align-items: center;
+      min-height: 420px;
+    }
+    /* Portrait photo with play button overlay */
+    .wots-photo-wrap {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      max-height: 440px;
+    }
+    .wots-photo {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+      filter: grayscale(10%) contrast(1.05);
+    }
+    /* Blue play button exactly like orizon */
+    .wots-play {
+      position: absolute;
+      bottom: 20px; left: 20px;
+      width: 54px; height: 54px;
+      border-radius: 12px;
+      background: var(--pb-accent);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(59,111,245,0.5);
+      cursor: pointer;
+      transition: transform 200ms var(--pb-ease-spring), box-shadow 200ms var(--pb-ease-out);
+    }
+    .wots-play:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(59,111,245,0.65); }
+    /* Right: quote content */
+    .wots-content {
+      position: relative;
+      padding: var(--pb-s5) 0;
+    }
+    /* Giant decorative quotation marks — orizon's ghost quotes */
+    .wots-content::before {
+      content: '"';
+      position: absolute;
+      top: -20px; left: -10px;
+      font-size: 160px;
+      line-height: 1;
+      font-family: Georgia, 'Times New Roman', serif;
+      color: var(--pb-border);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+    .wots-name {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: var(--pb-weight-extrabold);
+      letter-spacing: -0.03em;
+      color: var(--pb-text-primary);
+      margin-bottom: var(--pb-s2);
+      position: relative; z-index: 1;
+    }
+    .wots-role {
+      display: flex;
+      align-items: center;
+      gap: var(--pb-s3);
+      font-size: var(--pb-text-sm);
+      color: var(--pb-text-muted);
+      margin-bottom: var(--pb-s6);
+      position: relative; z-index: 1;
+    }
+    .wots-role-company {
+      font-weight: var(--pb-weight-semibold);
+      color: var(--pb-text-secondary);
+      background: var(--pb-bg-elevated);
+      border: 1px solid var(--pb-border);
+      border-radius: var(--pb-radius-full);
+      padding: 4px 12px;
+      font-size: var(--pb-text-xs);
+    }
+    .wots-quote {
+      font-size: clamp(var(--pb-text-base), 2vw, var(--pb-text-xl));
+      color: var(--pb-text-secondary);
+      line-height: 1.65;
+      position: relative; z-index: 1;
+    }
+    /* Slide counter */
+    .wots-counter {
+      font-size: var(--pb-text-xs);
+      font-weight: var(--pb-weight-semibold);
+      color: var(--pb-text-muted);
+      letter-spacing: .05em;
+    }
+    @media(max-width:768px){
+      .wots-slide { grid-template-columns: 1fr; min-height: auto; }
+      .wots-photo-wrap { max-height: 260px; aspect-ratio: auto; }
+    }
+    /* Legacy avatar (kept for any remaining uses) */
     .avatar-img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--pb-border-accent); flex-shrink: 0; }
     .star-row { display: flex; gap: 2px; margin-bottom: var(--pb-s4); }
     .star-row svg { color: #fbbf24; }
@@ -1694,54 +1807,103 @@
     </div>
   </section>
 
-  <!-- ═══ TESTIMONIALS ═══ -->
+  <!-- ═══ WORD ON THE STREET (Orizon testimonial carousel) ═══ -->
   <section class="pb-section" id="about">
     <div class="pb-container">
-      <p class="section-label" data-entrance="fade-in">Testimonials</p>
-      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Trusted by <span class="gradient-text">builders.</span></h2>
-      <p class="section-desc" data-entrance="fade-up" data-stagger="2">Dropped into production apps in hours, not days.</p>
-      <div class="testimonial-grid">
-        <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="1">
-          <div class="star-row" aria-label="5 stars">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">"Finally a design system that ships performance as a first-class feature. Solid 60fps on old hardware   no compromise."</p>
-          <div style="display:flex;align-items:center;gap:var(--pb-s3)">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="Michael T." class="avatar-img">
-            <div><p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">Michael T.</p><p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">AI Solutions Architect</p></div>
+
+      <!-- Header: bar label + counter + nav — exact orizon pattern -->
+      <div class="wots-header" data-entrance="fade-in">
+        <span class="section-bar-label">Word on the street</span>
+        <div style="display:flex;align-items:center;gap:var(--pb-s4)">
+          <span class="wots-counter" id="wots-counter">1 / 4</span>
+          <div style="width:1px;height:32px;background:var(--pb-border-strong)"></div>
+          <div class="wots-nav">
+            <button class="project-nav-btn" id="wots-prev" aria-label="Previous testimonial" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <button class="project-nav-btn" id="wots-next" aria-label="Next testimonial">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
           </div>
         </div>
-        <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="2">
-          <div class="star-row" aria-label="5 stars">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </div>
+
+      <!-- Track: one slide = one full testimonial card -->
+      <div class="wots-outer">
+        <div class="wots-track" id="wots-track">
+
+          <!-- Slide 1: Michael T. -->
+          <div class="wots-slide">
+            <div class="wots-photo-wrap">
+              <img class="wots-photo" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&q=80&auto=format&fit=crop&crop=face" alt="Michael T.">
+              <div class="wots-play" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+            <div class="wots-content">
+              <h3 class="wots-name">Michael T.</h3>
+              <div class="wots-role">
+                <span>Lead at</span>
+                <span class="wots-role-company">AI Solutions</span>
+              </div>
+              <p class="wots-quote">"Finally a design system that ships performance as a first-class feature. The tilt effect runs at solid 60fps even on old hardware — absolutely no compromise."</p>
+            </div>
           </div>
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">"Two lines of HTML and every project feels enterprise-grade. The dark/light switch with zero flash is the detail clients always notice."</p>
-          <div style="display:flex;align-items:center;gap:var(--pb-s3)">
-            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="A. Kargbo" class="avatar-img">
-            <div><p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">A. Kargbo</p><p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Frontend Lead</p></div>
+
+          <!-- Slide 2: A. Kargbo -->
+          <div class="wots-slide">
+            <div class="wots-photo-wrap">
+              <img class="wots-photo" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=800&q=80&auto=format&fit=crop&crop=face" alt="A. Kargbo">
+              <div class="wots-play" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+            <div class="wots-content">
+              <h3 class="wots-name">A. Kargbo</h3>
+              <div class="wots-role">
+                <span>Lead at</span>
+                <span class="wots-role-company">Frontend</span>
+              </div>
+              <p class="wots-quote">"Two lines of HTML and every project instantly feels enterprise-grade. The dark/light switch with zero flash is the detail that clients always notice first."</p>
+            </div>
           </div>
-        </div>
-        <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="3">
-          <div class="star-row" aria-label="5 stars">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+
+          <!-- Slide 3: R. Nkemdirim -->
+          <div class="wots-slide">
+            <div class="wots-photo-wrap">
+              <img class="wots-photo" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=800&q=80&auto=format&fit=crop&crop=face" alt="R. Nkemdirim">
+              <div class="wots-play" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+            <div class="wots-content">
+              <h3 class="wots-name">R. Nkemdirim</h3>
+              <div class="wots-role">
+                <span>Engineer at</span>
+                <span class="wots-role-company">Full-Stack</span>
+              </div>
+              <p class="wots-quote">"Dropped it into BridgeUp's landing page alongside Tailwind and it just worked. No conflicts, no configuration, instant upgrade to every element on the page."</p>
+            </div>
           </div>
-          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.75;margin-bottom:var(--pb-s5)">"Dropped it into BridgeUp's landing page alongside Tailwind and it just worked. No conflicts, no config, instant upgrade."</p>
-          <div style="display:flex;align-items:center;gap:var(--pb-s3)">
-            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&q=80&auto=format&fit=crop&crop=face" alt="R. Nkemdirim" class="avatar-img">
-            <div><p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">R. Nkemdirim</p><p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Full-Stack Engineer</p></div>
+
+          <!-- Slide 4: S. Mensah -->
+          <div class="wots-slide">
+            <div class="wots-photo-wrap">
+              <img class="wots-photo" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&q=80&auto=format&fit=crop&crop=face" alt="S. Mensah">
+              <div class="wots-play" aria-hidden="true">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+            </div>
+            <div class="wots-content">
+              <h3 class="wots-name">S. Mensah</h3>
+              <div class="wots-role">
+                <span>Designer at</span>
+                <span class="wots-role-company">Product</span>
+              </div>
+              <p class="wots-quote">"The magnetic cursor and 3D card tilt are the kinds of details that make clients ask 'how did you do that?' — and the answer is just two lines of HTML. That's the magic."</p>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -1936,6 +2098,42 @@
           projUpdate();
         });
         projUpdate();
+      }
+
+      // ── Word on the Street carousel ──
+      var wotsTrack   = document.getElementById('wots-track');
+      var wotsPrev    = document.getElementById('wots-prev');
+      var wotsNext    = document.getElementById('wots-next');
+      var wotsCounter = document.getElementById('wots-counter');
+      if (wotsTrack && wotsPrev && wotsNext) {
+        var wotsCurrent = 0;
+        var wotsSlides  = wotsTrack.querySelectorAll('.wots-slide');
+        var wotsTotal   = wotsSlides.length;
+        function wotsUpdate() {
+          var w = wotsTrack.parentElement.offsetWidth;
+          wotsTrack.style.transform = 'translateX(-' + (wotsCurrent * w) + 'px)';
+          wotsPrev.disabled = wotsCurrent === 0;
+          wotsNext.disabled = wotsCurrent >= wotsTotal - 1;
+          if (wotsCounter) wotsCounter.textContent = (wotsCurrent + 1) + ' / ' + wotsTotal;
+        }
+        wotsPrev.addEventListener('click', function() {
+          if (wotsCurrent > 0) { wotsCurrent--; wotsUpdate(); }
+        });
+        wotsNext.addEventListener('click', function() {
+          if (wotsCurrent < wotsTotal - 1) { wotsCurrent++; wotsUpdate(); }
+        });
+        var wotsTouchX = 0;
+        wotsTrack.addEventListener('touchstart', function(e) { wotsTouchX = e.touches[0].clientX; }, {passive:true});
+        wotsTrack.addEventListener('touchend', function(e) {
+          var dx = e.changedTouches[0].clientX - wotsTouchX;
+          if (Math.abs(dx) > 50) {
+            if (dx < 0 && wotsCurrent < wotsTotal - 1) wotsCurrent++;
+            else if (dx > 0 && wotsCurrent > 0) wotsCurrent--;
+            wotsUpdate();
+          }
+        }, {passive:true});
+        window.addEventListener('resize', wotsUpdate);
+        wotsUpdate();
       }
 
       // ── Active nav section ──

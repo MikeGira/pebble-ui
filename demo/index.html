@@ -53,10 +53,7 @@
     .hero-section {
       position: relative;
       overflow: hidden;
-      min-height: calc(92vh - 72px);
-      display: flex;
-      align-items: center;
-      padding: var(--pb-s20) var(--pb-s6);
+      padding: var(--pb-s16) var(--pb-s6) var(--pb-s10);
     }
     /* Aurora animated background */
     .aurora {
@@ -252,11 +249,11 @@
     }
     .hero-feature-card {
       width: 100%;
-      background: #080b18;
+      background: #060810;
       border-radius: 28px 28px 0 0;
       overflow: hidden;
       position: relative;
-      min-height: 460px;
+      min-height: 500px;
       display: flex;
       align-items: flex-end;
     }
@@ -286,7 +283,14 @@
     .hero-feature-main-frame .browser-dots span:nth-child(1) { background: #ff5f57; }
     .hero-feature-main-frame .browser-dots span:nth-child(2) { background: #febc2e; }
     .hero-feature-main-frame .browser-dots span:nth-child(3) { background: #28c840; }
-    .hero-feature-main-frame img { display: block; width: 100%; height: 260px; object-fit: cover; object-position: top; }
+    .hero-feature-main-frame img,
+    .hero-feature-main-frame video {
+      display: block;
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      object-position: top center;
+    }
     /* Floating component card overlay */
     .hero-feature-float-1 {
       position: absolute;
@@ -1005,6 +1009,14 @@
     <div class="hero-feature-card" aria-hidden="true">
       <div class="hero-feature-card-bg"></div>
 
+      <!-- Top label strip — "LIVE DEMO" tag like orizon's card header -->
+      <div style="position:absolute;top:20px;left:28px;z-index:10;display:flex;align-items:center;gap:10px;">
+        <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.14);border-radius:999px;padding:5px 12px 5px 8px;backdrop-filter:blur(8px)">
+          <span style="width:7px;height:7px;border-radius:50%;background:#34d399;flex-shrink:0;animation:pb-pulse-ring 2s ease-out infinite"></span>
+          <span style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,0.8)">Live preview</span>
+        </span>
+      </div>
+
       <!-- Main browser chrome frame -->
       <div class="hero-feature-main-frame">
         <div class="browser-bar">
@@ -1014,7 +1026,17 @@
             <span style="font-size:10px;color:var(--pb-text-muted);font-family:monospace">pebble-ui-taupe.vercel.app</span>
           </div>
         </div>
-        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=85&auto=format&fit=crop" alt="Pebble UI dashboard preview" loading="lazy">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          poster="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=85&auto=format&fit=crop"
+        >
+          <source src="https://videos.pexels.com/video-files/3843434/3843434-hd_1920_1080_25fps.mp4" type="video/mp4">
+          <source src="https://videos.pexels.com/video-files/3141214/3141214-hd_1920_1080_25fps.mp4" type="video/mp4">
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=85&auto=format&fit=crop" alt="Pebble UI dashboard preview">
+        </video>
       </div>
 
       <!-- Floating card 1 — metrics -->

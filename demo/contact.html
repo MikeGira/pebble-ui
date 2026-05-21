@@ -259,11 +259,10 @@
     .pill-link:hover {
       background: var(--pb-accent);
       color: white;
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 6px 24px rgba(59, 111, 245, 0.45);
+      box-shadow: 0 0 0 1px var(--pb-accent), 0 4px 20px rgba(59, 111, 245, 0.35);
     }
     .pill-link:hover::before { left: 100%; }
-    .pill-link:active { transform: scale(0.97); }
+    .pill-link:active { opacity: 0.85; }
     .pill-link-arrow {
       width: 34px; height: 34px;
       border-radius: 50%;

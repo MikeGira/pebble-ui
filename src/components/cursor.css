@@ -1,6 +1,6 @@
 /* Pebble UI — Custom Cursor
-   Injected elements: .pebble-cursor (ring) and .pebble-cursor-dot (dot).
-   pointer-events: none ensures they never intercept mouse events. */
+   Transparent glass ring + small dot. pointer-events: none so they
+   never intercept mouse events. */
 
 .pebble-cursor,
 .pebble-cursor-dot {
@@ -10,77 +10,88 @@
   left: 0;
   z-index: 99999;
   border-radius: 50%;
-  /* transform is set by JS — not in transition list to avoid fighting RAF */
-  transition-property: width, height, background-color, border-color, opacity;
+  transition-property: width, height, background-color, border-color, opacity, backdrop-filter;
   transition-timing-function: var(--pb-ease-out);
   will-change: transform;
 }
 
-/* Lagging ring */
+/* Lagging ring — transparent glass, no blue */
 .pebble-cursor {
   width: 36px;
   height: 36px;
-  border: 1.5px solid rgba(37, 99, 235, 0.55);
-  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   transition-duration: var(--pb-dur-base);
   margin-left: -18px;
   margin-top: -18px;
 }
 
-/* Exact-position dot */
+/* Exact-position dot — small white */
 .pebble-cursor-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--pb-accent);
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.85);
   transition-duration: var(--pb-dur-fast);
-  margin-left: -3px;
-  margin-top: -3px;
+  margin-left: -2.5px;
+  margin-top: -2.5px;
 }
 
-/* Hover state — expanded ring */
+/* Hover state — slightly expanded, brighter ring */
 .pebble-cursor--hover {
-  width: 56px;
-  height: 56px;
-  background: rgba(37, 99, 235, 0.08);
-  border-color: rgba(37, 99, 235, 0.85);
-  margin-left: -28px;
-  margin-top: -28px;
+  width: 52px;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.38);
+  margin-left: -26px;
+  margin-top: -26px;
 }
 
-/* Press state */
+/* Press state — contracted, brighter */
 .pebble-cursor--pressed {
-  width: 28px;
-  height: 28px;
-  margin-left: -14px;
-  margin-top: -14px;
-  background: rgba(37, 99, 235, 0.18);
-  border-color: var(--pb-accent);
+  width: 26px;
+  height: 26px;
+  margin-left: -13px;
+  margin-top: -13px;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
-/* Text cursor state — slim vertical bar look */
+/* Text cursor state — slim vertical bar */
 .pebble-cursor--text {
   width: 2px;
-  height: 28px;
+  height: 26px;
   border-radius: 2px;
   border: none;
-  background: var(--pb-accent);
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: none;
   margin-left: -1px;
-  margin-top: -14px;
+  margin-top: -13px;
 }
 
-/* Hidden on touch or when JS disables cursor */
+/* Hidden */
 .pebble-cursor--hidden,
 .pebble-cursor-dot--hidden {
   opacity: 0;
   transition-duration: var(--pb-dur-fast);
 }
 
-/* Light mode adjustments */
+/* Light mode — slightly darker glass so it's visible on white */
 [data-theme="light"] .pebble-cursor {
-  border-color: rgba(37, 99, 235, 0.45);
+  border-color: rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .pebble-cursor-dot {
+  background: rgba(0, 0, 0, 0.7);
 }
 
 [data-theme="light"] .pebble-cursor--hover {
-  background: rgba(37, 99, 235, 0.06);
-  border-color: rgba(37, 99, 235, 0.7);
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .pebble-cursor--text {
+  background: rgba(0, 0, 0, 0.65);
 }

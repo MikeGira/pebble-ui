@@ -54,8 +54,13 @@
 .btn-primary:hover {
   background: var(--pb-accent-hover);
   border-color: var(--pb-accent-hover);
-  transform: translateY(-2px) scale(1.02);
   box-shadow: var(--pb-shadow-glow), var(--pb-shadow-btn);
+}
+
+/* Icon inside moves right — button container stays still */
+.btn-primary:hover svg,
+.btn-primary:hover .pb-icon {
+  transform: translateX(4px);
 }
 
 /* Shimmer sweep on hover */
@@ -90,7 +95,11 @@
   background: var(--pb-accent-subtle);
   border-color: var(--pb-border-accent);
   color: var(--pb-accent-hover);
-  transform: translateY(-2px);
+}
+
+.btn-ghost:hover svg,
+.btn-ghost:hover .pb-icon {
+  transform: translateX(4px);
 }
 
 /* ── Circle arrow button ── */
@@ -113,7 +122,6 @@
 
 .btn-circle:hover {
   background: var(--pb-accent-hover);
-  transform: scale(1.12) rotate(-5deg);
   box-shadow: var(--pb-shadow-glow), var(--pb-shadow-btn);
 }
 

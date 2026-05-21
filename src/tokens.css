@@ -2,16 +2,16 @@
    All values use the pb- prefix to avoid collisions with host project styles. */
 
 :root {
-  /* ── Surfaces ── */
-  --pb-bg-base:     #0a0c14;
-  --pb-bg-elevated: #111827;
-  --pb-bg-glass:    rgba(17, 24, 39, 0.65);
-  --pb-bg-overlay:  rgba(10, 12, 20, 0.88);
+  /* ── Surfaces — pure black base ── */
+  --pb-bg-base:     #000000;
+  --pb-bg-elevated: #111111;
+  --pb-bg-glass:    rgba(0, 0, 0, 0.82);
+  --pb-bg-overlay:  rgba(0, 0, 0, 0.92);
 
-  /* ── Semantic surfaces (solid) ── */
-  --pb-bg-success: #022c22;
-  --pb-bg-warning: #1a1200;
-  --pb-bg-danger:  #200e0e;
+  /* ── Semantic surfaces (solid, deep) ── */
+  --pb-bg-success: #071a10;
+  --pb-bg-warning: #160d00;
+  --pb-bg-danger:  #160606;
 
   /* ── Brand ── */
   --pb-accent:        #3b6ff5;
@@ -29,10 +29,10 @@
   --pb-text-secondary: #9ca3af;
   --pb-text-muted:     #6b7280;
 
-  /* ── Borders ── */
-  --pb-border:        rgba(255, 255, 255, 0.08);
-  --pb-border-strong: rgba(255, 255, 255, 0.16);
-  --pb-border-accent: rgba(59, 111, 245, 0.4);
+  /* ── Borders — more visible on pure black ── */
+  --pb-border:        rgba(255, 255, 255, 0.12);
+  --pb-border-strong: rgba(255, 255, 255, 0.22);
+  --pb-border-accent: rgba(59, 111, 245, 0.55);
 
   /* ── Shadows ── */
   --pb-shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.32);
@@ -100,12 +100,12 @@
   --pb-blur-sm:    blur(8px);
 }
 
-/* Light mode token overrides */
+/* Light mode token overrides — pure white base */
 [data-theme="light"] {
-  --pb-bg-base:     #f8fafc;
-  --pb-bg-elevated: #ffffff;
-  --pb-bg-glass:    rgba(255, 255, 255, 0.78);
-  --pb-bg-overlay:  rgba(248, 250, 252, 0.92);
+  --pb-bg-base:     #ffffff;
+  --pb-bg-elevated: #f5f5f5;
+  --pb-bg-glass:    rgba(255, 255, 255, 0.92);
+  --pb-bg-overlay:  rgba(255, 255, 255, 0.96);
 
   --pb-bg-success: #ecfdf5;
   --pb-bg-warning: #fffbeb;
@@ -120,9 +120,9 @@
   --pb-text-secondary: #475569;
   --pb-text-muted:     #94a3b8;
 
-  --pb-border:        rgba(0, 0, 0, 0.08);
-  --pb-border-strong: rgba(0, 0, 0, 0.14);
-  --pb-border-accent: rgba(59, 111, 245, 0.32);
+  --pb-border:        rgba(0, 0, 0, 0.12);
+  --pb-border-strong: rgba(0, 0, 0, 0.2);
+  --pb-border-accent: rgba(59, 111, 245, 0.45);
 
   --pb-shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.08);
   --pb-shadow-card:     0 4px 24px rgba(0, 0, 0, 0.08);

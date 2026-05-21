@@ -246,6 +246,75 @@
     .browser-url-text { font-size: 11px; color: var(--pb-text-muted); font-family: ui-monospace, monospace; }
     .browser-chrome img { display: block; width: 100%; height: auto; max-height: 340px; object-fit: cover; object-position: top; }
 
+    /* ── Big featured video card (full-bleed) ── */
+    .hero-feature-card {
+      width: calc(100% + var(--pb-s12));
+      margin: var(--pb-s10) calc(-1 * var(--pb-s6)) 0;
+      background: #080b18;
+      border-radius: 24px 24px 0 0;
+      overflow: hidden;
+      position: relative;
+      min-height: 420px;
+      display: flex;
+      align-items: flex-end;
+    }
+    .hero-feature-card-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 60%, rgba(59,111,245,0.18) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 20%, rgba(124,58,237,0.15) 0%, transparent 50%);
+    }
+    .hero-feature-main-frame {
+      position: absolute;
+      top: 32px;
+      left: 5%;
+      width: 65%;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .hero-feature-main-frame .browser-bar {
+      display: flex; align-items: center; gap: var(--pb-s3);
+      padding: 10px 14px; background: #0d1117;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hero-feature-main-frame .browser-dots { display: flex; gap: 5px; }
+    .hero-feature-main-frame .browser-dots span { width: 10px; height: 10px; border-radius: 50%; }
+    .hero-feature-main-frame .browser-dots span:nth-child(1) { background: #ff5f57; }
+    .hero-feature-main-frame .browser-dots span:nth-child(2) { background: #febc2e; }
+    .hero-feature-main-frame .browser-dots span:nth-child(3) { background: #28c840; }
+    .hero-feature-main-frame img { display: block; width: 100%; height: 260px; object-fit: cover; object-position: top; }
+    /* Floating component card overlay */
+    .hero-feature-float-1 {
+      position: absolute;
+      bottom: 40px;
+      right: 4%;
+      width: 260px;
+      background: #111827;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: var(--pb-s5);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+      animation: pb-float 8s ease-in-out infinite;
+    }
+    .hero-feature-float-2 {
+      position: absolute;
+      top: 28px;
+      right: 28%;
+      width: 180px;
+      background: linear-gradient(135deg, #1e1b4b, #3730a3);
+      border-radius: 14px;
+      padding: var(--pb-s4);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      animation: pb-float 6s ease-in-out infinite;
+      animation-delay: -2s;
+    }
+    .fcard-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--pb-text-muted); margin-bottom: var(--pb-s2); }
+    .fcard-title { font-size: var(--pb-text-sm); font-weight: var(--pb-weight-semibold); color: var(--pb-text-primary); margin-bottom: var(--pb-s3); }
+    .fcard-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); margin-bottom: 6px; overflow: hidden; }
+    .fcard-bar-fill { height: 100%; border-radius: 3px; background: var(--pb-gradient-brand); }
+
     /* ── Stats ── */
     .stats-grid {
       display: grid;
@@ -907,8 +976,50 @@
         </div>
       </div>
 
+      <!-- Big full-bleed feature card — exactly like orizon.co's hero visual -->
+      <div class="hero-feature-card" data-entrance="fade-up" data-stagger="4" aria-hidden="true">
+        <div class="hero-feature-card-bg"></div>
+
+        <!-- Main browser frame (left, dominant) -->
+        <div class="hero-feature-main-frame">
+          <div class="browser-bar">
+            <div class="browser-dots"><span></span><span></span><span></span></div>
+            <div class="browser-url" style="flex:1;height:20px;background:rgba(255,255,255,0.05);border-radius:5px;margin:0 12px;display:flex;align-items:center;padding:0 10px;">
+              <span style="width:6px;height:6px;border-radius:50%;background:#34d399;margin-right:6px;flex-shrink:0"></span>
+              <span style="font-size:10px;color:var(--pb-text-muted);font-family:monospace">pebble-ui-taupe.vercel.app</span>
+            </div>
+          </div>
+          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=85&auto=format&fit=crop" alt="">
+        </div>
+
+        <!-- Floating card 1: progress component -->
+        <div class="hero-feature-float-1">
+          <p class="fcard-label">Pebble UI — Progress</p>
+          <p class="fcard-title">Bundle size</p>
+          <div class="fcard-bar"><div class="fcard-bar-fill" style="width:14%"></div></div>
+          <p class="fcard-title" style="margin-top:var(--pb-s3)">60fps score</p>
+          <div class="fcard-bar"><div class="fcard-bar-fill" style="width:100%"></div></div>
+          <p class="fcard-title" style="margin-top:var(--pb-s3)">Runtime deps</p>
+          <div class="fcard-bar"><div class="fcard-bar-fill" style="width:0%"></div></div>
+          <div style="margin-top:var(--pb-s4);display:flex;gap:var(--pb-s2)">
+            <span class="badge badge-success">60fps</span>
+            <span class="badge badge-accent">&lt;14kb</span>
+          </div>
+        </div>
+
+        <!-- Floating card 2: badge component -->
+        <div class="hero-feature-float-2">
+          <p class="fcard-label" style="color:rgba(255,255,255,0.5)">Components</p>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:var(--pb-s2)">
+            <span class="badge badge-success" style="align-self:flex-start">Live</span>
+            <span class="badge badge-accent" style="align-self:flex-start">Enterprise</span>
+            <span class="badge badge-warning" style="align-self:flex-start">Zero deps</span>
+          </div>
+        </div>
+      </div>
+
       <!-- Stats with animated counters -->
-      <div class="stats-grid" data-entrance="fade-up" data-stagger="4">
+      <div class="stats-grid" data-entrance="fade-up" data-stagger="5">
         <div class="pb-stat">
           <span class="pb-stat-value">0</span>
           <span class="pb-stat-label">Runtime deps</span>

@@ -6,6 +6,9 @@
   ],
   "routes": [
     { "src": "/dist/(.*)", "dest": "/dist/$1" },
+    { "src": "/contact\\.html", "dest": "/demo/contact.html" },
+    { "src": "/contact", "dest": "/demo/contact.html" },
+    { "src": "/demo/(.*)", "dest": "/demo/$1" },
     { "src": "/", "dest": "/demo/index.html" }
   ],
   "headers": [

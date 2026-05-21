@@ -246,15 +246,18 @@
     .browser-url-text { font-size: 11px; color: var(--pb-text-muted); font-family: ui-monospace, monospace; }
     .browser-chrome img { display: block; width: 100%; height: auto; max-height: 340px; object-fit: cover; object-position: top; }
 
-    /* ── Big featured video card (full-bleed) ── */
+    /* ── Big featured video card (full-bleed, outside hero) ── */
+    .hero-feature-wrap {
+      width: 100%;
+      overflow: hidden;
+    }
     .hero-feature-card {
-      width: calc(100% + var(--pb-s12));
-      margin: var(--pb-s10) calc(-1 * var(--pb-s6)) 0;
+      width: 100%;
       background: #080b18;
-      border-radius: 24px 24px 0 0;
+      border-radius: 28px 28px 0 0;
       overflow: hidden;
       position: relative;
-      min-height: 420px;
+      min-height: 460px;
       display: flex;
       align-items: flex-end;
     }
@@ -976,50 +979,8 @@
         </div>
       </div>
 
-      <!-- Big full-bleed feature card — exactly like orizon.co's hero visual -->
-      <div class="hero-feature-card" data-entrance="fade-up" data-stagger="4" aria-hidden="true">
-        <div class="hero-feature-card-bg"></div>
-
-        <!-- Main browser frame (left, dominant) -->
-        <div class="hero-feature-main-frame">
-          <div class="browser-bar">
-            <div class="browser-dots"><span></span><span></span><span></span></div>
-            <div class="browser-url" style="flex:1;height:20px;background:rgba(255,255,255,0.05);border-radius:5px;margin:0 12px;display:flex;align-items:center;padding:0 10px;">
-              <span style="width:6px;height:6px;border-radius:50%;background:#34d399;margin-right:6px;flex-shrink:0"></span>
-              <span style="font-size:10px;color:var(--pb-text-muted);font-family:monospace">pebble-ui-taupe.vercel.app</span>
-            </div>
-          </div>
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=900&q=85&auto=format&fit=crop" alt="">
-        </div>
-
-        <!-- Floating card 1: progress component -->
-        <div class="hero-feature-float-1">
-          <p class="fcard-label">Pebble UI — Progress</p>
-          <p class="fcard-title">Bundle size</p>
-          <div class="fcard-bar"><div class="fcard-bar-fill" style="width:14%"></div></div>
-          <p class="fcard-title" style="margin-top:var(--pb-s3)">60fps score</p>
-          <div class="fcard-bar"><div class="fcard-bar-fill" style="width:100%"></div></div>
-          <p class="fcard-title" style="margin-top:var(--pb-s3)">Runtime deps</p>
-          <div class="fcard-bar"><div class="fcard-bar-fill" style="width:0%"></div></div>
-          <div style="margin-top:var(--pb-s4);display:flex;gap:var(--pb-s2)">
-            <span class="badge badge-success">60fps</span>
-            <span class="badge badge-accent">&lt;14kb</span>
-          </div>
-        </div>
-
-        <!-- Floating card 2: badge component -->
-        <div class="hero-feature-float-2">
-          <p class="fcard-label" style="color:rgba(255,255,255,0.5)">Components</p>
-          <div style="display:flex;flex-direction:column;gap:6px;margin-top:var(--pb-s2)">
-            <span class="badge badge-success" style="align-self:flex-start">Live</span>
-            <span class="badge badge-accent" style="align-self:flex-start">Enterprise</span>
-            <span class="badge badge-warning" style="align-self:flex-start">Zero deps</span>
-          </div>
-        </div>
-      </div>
-
       <!-- Stats with animated counters -->
-      <div class="stats-grid" data-entrance="fade-up" data-stagger="5">
+      <div class="stats-grid" data-entrance="fade-up" data-stagger="4">
         <div class="pb-stat">
           <span class="pb-stat-value">0</span>
           <span class="pb-stat-label">Runtime deps</span>
@@ -1040,6 +1001,50 @@
     </div>
   </section>
 
+
+  <!-- ═══ BIG FEATURE CARD (full-bleed, orizon-style) ═══ -->
+  <div class="hero-feature-wrap" data-entrance="fade-up">
+    <div class="hero-feature-card" aria-hidden="true">
+      <div class="hero-feature-card-bg"></div>
+
+      <!-- Main browser chrome frame -->
+      <div class="hero-feature-main-frame">
+        <div class="browser-bar">
+          <div class="browser-dots"><span></span><span></span><span></span></div>
+          <div style="flex:1;height:20px;background:rgba(255,255,255,0.05);border-radius:5px;margin:0 12px;display:flex;align-items:center;padding:0 10px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#34d399;margin-right:6px;flex-shrink:0"></span>
+            <span style="font-size:10px;color:var(--pb-text-muted);font-family:monospace">pebble-ui-taupe.vercel.app</span>
+          </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=85&auto=format&fit=crop" alt="Pebble UI dashboard preview" loading="lazy">
+      </div>
+
+      <!-- Floating card 1 — metrics -->
+      <div class="hero-feature-float-1">
+        <p class="fcard-label">Pebble UI — Metrics</p>
+        <p class="fcard-title">Bundle size</p>
+        <div class="fcard-bar"><div class="fcard-bar-fill" style="width:14%"></div></div>
+        <p class="fcard-title" style="margin-top:var(--pb-s3)">Animation score</p>
+        <div class="fcard-bar"><div class="fcard-bar-fill" style="width:100%"></div></div>
+        <p class="fcard-title" style="margin-top:var(--pb-s3)">Runtime deps</p>
+        <div class="fcard-bar"><div class="fcard-bar-fill" style="width:0%"></div></div>
+        <div style="margin-top:var(--pb-s4);display:flex;gap:var(--pb-s2)">
+          <span class="badge badge-success">60fps</span>
+          <span class="badge badge-accent">&lt;14kb</span>
+        </div>
+      </div>
+
+      <!-- Floating card 2 — badge stack -->
+      <div class="hero-feature-float-2">
+        <p class="fcard-label" style="color:rgba(255,255,255,0.5)">Components</p>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:var(--pb-s2)">
+          <span class="badge badge-success" style="align-self:flex-start">Live</span>
+          <span class="badge badge-accent" style="align-self:flex-start">Enterprise</span>
+          <span class="badge badge-warning" style="align-self:flex-start">Zero deps</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ═══ MARQUEE ═══ -->
   <div class="marquee-section" aria-label="Compatible frameworks">

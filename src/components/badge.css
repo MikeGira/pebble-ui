@@ -1,0 +1,122 @@
+/* Pebble UI — Badges & Tags */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-s1);
+  font-size: var(--pb-text-xs);
+  font-weight: var(--pb-weight-semibold);
+  line-height: 1;
+  padding: var(--pb-s1) var(--pb-s3);
+  border-radius: var(--pb-radius-full);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition:
+    background-color var(--pb-dur-fast) var(--pb-ease-out),
+    border-color var(--pb-dur-fast) var(--pb-ease-out),
+    color var(--pb-dur-fast) var(--pb-ease-out);
+}
+
+/* ── Variants ── */
+
+.badge-default {
+  background: var(--pb-bg-elevated);
+  border-color: var(--pb-border-strong);
+  color: var(--pb-text-secondary);
+}
+
+.badge-accent {
+  background: var(--pb-accent-subtle);
+  border-color: var(--pb-border-accent);
+  color: var(--pb-accent-hover);
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #10b981;
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #f59e0b;
+}
+
+.badge-danger {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+/* ── Count badge (number on top of icon) ── */
+.badge-count {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--pb-s1);
+  border-radius: var(--pb-radius-full);
+  background: var(--pb-accent);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: var(--pb-weight-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--pb-bg-base);
+}
+
+/* ── Status dot ── */
+.badge-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-s2);
+  font-size: var(--pb-text-sm);
+  color: var(--pb-text-secondary);
+}
+
+.badge-dot::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pb-text-muted);
+  flex-shrink: 0;
+}
+
+.badge-dot-online::before {
+  background: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.badge-dot-busy::before {
+  background: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+}
+
+.badge-dot-offline::before {
+  background: var(--pb-text-muted);
+}
+
+/* ── Stat number display ── */
+.pb-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-s1);
+}
+
+.pb-stat-value {
+  font-size: var(--pb-text-3xl);
+  font-weight: var(--pb-weight-extrabold);
+  color: var(--pb-text-primary);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.pb-stat-label {
+  font-size: var(--pb-text-sm);
+  color: var(--pb-text-muted);
+  font-weight: var(--pb-weight-medium);
+}

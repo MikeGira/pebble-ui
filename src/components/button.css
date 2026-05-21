@@ -1,0 +1,174 @@
+/* Pebble UI — Buttons
+   All animations use only transform + opacity (compositor thread).
+   No layout-triggering properties animate. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--pb-s2);
+  font-family: var(--pb-font-sans);
+  font-size: var(--pb-text-sm);
+  font-weight: var(--pb-weight-semibold);
+  line-height: 1;
+  border-radius: var(--pb-radius-md);
+  border: 1.5px solid transparent;
+  padding: var(--pb-s3) var(--pb-s6);
+  transition:
+    transform var(--pb-dur-fast) var(--pb-ease-out),
+    opacity var(--pb-dur-fast) var(--pb-ease-out),
+    box-shadow var(--pb-dur-base) var(--pb-ease-out),
+    background-color var(--pb-dur-base) var(--pb-ease-out),
+    border-color var(--pb-dur-base) var(--pb-ease-out),
+    color var(--pb-dur-base) var(--pb-ease-out);
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--pb-accent);
+  outline-offset: 3px;
+}
+
+.btn:active {
+  transform: scale(0.97) !important;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.42;
+  pointer-events: none;
+}
+
+/* ── Primary ── */
+.btn-primary {
+  background: var(--pb-accent);
+  color: #ffffff;
+  border-color: var(--pb-accent);
+  box-shadow: var(--pb-shadow-btn);
+}
+
+.btn-primary:hover {
+  background: var(--pb-accent-hover);
+  border-color: var(--pb-accent-hover);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--pb-shadow-glow), var(--pb-shadow-btn);
+}
+
+/* Shimmer sweep on hover */
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity var(--pb-dur-fast) var(--pb-ease-out);
+}
+
+.btn-primary:hover::after {
+  opacity: 1;
+  animation: pb-shimmer 0.7s var(--pb-ease-out) forwards;
+}
+
+/* ── Ghost ── */
+.btn-ghost {
+  background: transparent;
+  color: var(--pb-text-primary);
+  border-color: var(--pb-border-strong);
+}
+
+.btn-ghost:hover {
+  background: var(--pb-accent-subtle);
+  border-color: var(--pb-border-accent);
+  color: var(--pb-accent-hover);
+  transform: translateY(-2px);
+}
+
+/* ── Circle arrow button ── */
+.btn-circle {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  padding: 0;
+  border-radius: var(--pb-radius-full);
+  background: var(--pb-accent);
+  color: #ffffff;
+  border-color: var(--pb-accent);
+  box-shadow: var(--pb-shadow-btn);
+  font-size: var(--pb-text-lg);
+  transition:
+    transform var(--pb-dur-base) var(--pb-ease-spring),
+    box-shadow var(--pb-dur-base) var(--pb-ease-out),
+    background-color var(--pb-dur-base) var(--pb-ease-out);
+}
+
+.btn-circle:hover {
+  background: var(--pb-accent-hover);
+  transform: scale(1.12) rotate(-5deg);
+  box-shadow: var(--pb-shadow-glow), var(--pb-shadow-btn);
+}
+
+.btn-circle svg,
+.btn-circle .pb-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  transition: transform var(--pb-dur-base) var(--pb-ease-spring);
+}
+
+.btn-circle:hover svg,
+.btn-circle:hover .pb-icon {
+  transform: translate(2px, -2px);
+}
+
+/* ── Sizes ── */
+.btn-sm {
+  padding: var(--pb-s2) var(--pb-s4);
+  font-size: var(--pb-text-xs);
+}
+
+.btn-lg {
+  padding: var(--pb-s4) var(--pb-s8);
+  font-size: var(--pb-text-base);
+  border-radius: var(--pb-radius-lg);
+}
+
+.btn-circle-sm {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+}
+
+.btn-circle-lg {
+  width: 60px;
+  height: 60px;
+  min-width: 60px;
+}
+
+/* ── Icon + label combo ── */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pb-s2);
+}
+
+.btn-icon svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transition: transform var(--pb-dur-fast) var(--pb-ease-out);
+}
+
+.btn-primary.btn-icon:hover svg,
+.btn-ghost.btn-icon:hover svg {
+  transform: translateX(3px);
+}

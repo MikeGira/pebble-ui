@@ -1,0 +1,52 @@
+/* Pebble UI — Progress Bar */
+
+.progress {
+  width: 100%;
+  height: 8px;
+  background: var(--pb-border-strong);
+  border-radius: var(--pb-radius-full);
+  overflow: hidden;
+}
+
+.progress-sm { height: 4px; }
+.progress-lg { height: 14px; }
+
+.progress-bar {
+  height: 100%;
+  min-width: 4px;
+  border-radius: var(--pb-radius-full);
+  background: var(--pb-accent);
+  position: relative;
+  overflow: hidden;
+  transition: width var(--pb-dur-slow) var(--pb-ease-out);
+}
+
+/* Shimmer sheen */
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
+  );
+  animation: pb-shimmer 1.8s var(--pb-ease-in-out) infinite;
+}
+
+/* ── Color variants ── */
+.progress-bar-success { background: #10b981; }
+.progress-bar-warning { background: #f59e0b; }
+.progress-bar-danger  { background: #ef4444; }
+
+/* ── Indeterminate ── */
+.progress-indeterminate .progress-bar {
+  width: 38% !important;
+  animation: pb-progress-slide 1.4s var(--pb-ease-in-out) infinite;
+}
+
+@keyframes pb-progress-slide {
+  0%   { transform: translateX(-160%); }
+  100% { transform: translateX(370%); }
+}

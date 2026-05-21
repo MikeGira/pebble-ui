@@ -1,0 +1,131 @@
+/* Pebble UI — Toast Notifications */
+
+.pebble-toast-container {
+  position: fixed;
+  bottom: var(--pb-s6);
+  right: var(--pb-s6);
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pb-s3);
+  pointer-events: none;
+  width: min(380px, calc(100vw - var(--pb-s8)));
+}
+
+.pebble-toast {
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pb-s3);
+  padding: var(--pb-s4) var(--pb-s5);
+  border-radius: var(--pb-radius-lg);
+  background: var(--pb-bg-elevated);
+  border: 1px solid var(--pb-border-strong);
+  box-shadow: var(--pb-shadow-elevated);
+  font-family: var(--pb-font-sans);
+  font-size: var(--pb-text-sm);
+  color: var(--pb-text-primary);
+  line-height: var(--pb-leading-normal);
+  animation: pb-toast-in var(--pb-dur-base) var(--pb-ease-out) both;
+  will-change: transform, opacity;
+}
+
+.pebble-toast--exiting {
+  animation: pb-toast-out var(--pb-dur-base) var(--pb-ease-in-out) both;
+}
+
+@keyframes pb-toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+@keyframes pb-toast-out {
+  from { opacity: 1; transform: translateY(0)   scale(1); }
+  to   { opacity: 0; transform: translateY(8px) scale(0.96); }
+}
+
+/* ── Parts ── */
+.pebble-toast-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+}
+
+.pebble-toast-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.pebble-toast-title {
+  font-weight: var(--pb-weight-semibold);
+  margin-bottom: 2px;
+}
+
+.pebble-toast-msg {
+  color: var(--pb-text-secondary);
+  font-size: var(--pb-text-xs);
+}
+
+.pebble-toast-close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--pb-radius-sm);
+  color: var(--pb-text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  margin-top: 1px;
+  transition:
+    color var(--pb-dur-fast) var(--pb-ease-out),
+    background-color var(--pb-dur-fast) var(--pb-ease-out);
+}
+
+.pebble-toast-close:hover {
+  color: var(--pb-text-primary);
+  background: var(--pb-border);
+}
+
+/* ── Variants ── */
+.pebble-toast--success { border-color: rgba(16,  185, 129, 0.3); }
+.pebble-toast--error   { border-color: rgba(239,  68,  68, 0.3); }
+.pebble-toast--warning { border-color: rgba(245, 158,  11, 0.3); }
+.pebble-toast--info    { border-color: var(--pb-border-accent); }
+
+.pebble-toast--success .pebble-toast-icon { color: #10b981; }
+.pebble-toast--error   .pebble-toast-icon { color: #ef4444; }
+.pebble-toast--warning .pebble-toast-icon { color: #f59e0b; }
+.pebble-toast--info    .pebble-toast-icon { color: var(--pb-accent-hover); }
+
+/* ── Auto-dismiss progress track ── */
+.pebble-toast-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  border-radius: 0 0 var(--pb-radius-lg) var(--pb-radius-lg);
+  opacity: 0.4;
+  transform-origin: left;
+  animation: pb-toast-progress linear both;
+}
+
+.pebble-toast--success .pebble-toast-progress { background: #10b981; }
+.pebble-toast--error   .pebble-toast-progress { background: #ef4444; }
+.pebble-toast--warning .pebble-toast-progress { background: #f59e0b; }
+.pebble-toast--info    .pebble-toast-progress { background: var(--pb-accent); }
+
+@keyframes pb-toast-progress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}

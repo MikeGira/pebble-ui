@@ -1,0 +1,160 @@
+/* Pebble UI — Cards
+   .card         — base card
+   .card-lift    — pure CSS hover lift (no JS required)
+   .card-glass   — glassmorphism variant
+   .card-tilt    — JS-enhanced 3D tilt (tilt.js binds to this class)
+   .card-accent  — left accent border */
+
+.card {
+  background: var(--pb-bg-elevated);
+  border: 1px solid var(--pb-border);
+  border-radius: var(--pb-radius-lg);
+  padding: var(--pb-s6);
+  position: relative;
+  overflow: hidden;
+  transition:
+    box-shadow var(--pb-dur-base) var(--pb-ease-out),
+    border-color var(--pb-dur-base) var(--pb-ease-out),
+    background-color var(--pb-dur-base) var(--pb-ease-out);
+}
+
+/* ── Lift — pure CSS, no JS ── */
+.card-lift {
+  transition:
+    transform var(--pb-dur-base) var(--pb-ease-out),
+    box-shadow var(--pb-dur-base) var(--pb-ease-out),
+    border-color var(--pb-dur-base) var(--pb-ease-out),
+    background-color var(--pb-dur-base) var(--pb-ease-out);
+}
+
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--pb-shadow-elevated);
+  border-color: var(--pb-border-accent);
+}
+
+/* Subtle top glow on hover */
+.card-lift::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--pb-accent),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity var(--pb-dur-base) var(--pb-ease-out);
+}
+
+.card-lift:hover::before {
+  opacity: 1;
+}
+
+/* ── Glass ── */
+.card-glass {
+  background: var(--pb-bg-glass);
+  -webkit-backdrop-filter: var(--pb-blur-glass);
+  backdrop-filter: var(--pb-blur-glass);
+  border-color: var(--pb-border-strong);
+}
+
+.card-glass:hover {
+  background: rgba(17, 24, 39, 0.75);
+  border-color: var(--pb-border-accent);
+}
+
+[data-theme="light"] .card-glass:hover {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+/* ── Tilt — JS sets perspective + rotateX/Y inline ── */
+.card-tilt {
+  transform-style: preserve-3d;
+  cursor: default;
+}
+
+/* Inner content lifts slightly in 3D space */
+.card-tilt .card-tilt-inner {
+  transform: translateZ(12px);
+  transform-style: preserve-3d;
+}
+
+/* ── Accent border variant ── */
+.card-accent {
+  border-left: 3px solid var(--pb-accent);
+  padding-left: calc(var(--pb-s6) - 2px);
+}
+
+/* ── Card anatomy helpers ── */
+.card-header {
+  margin-bottom: var(--pb-s4);
+}
+
+.card-title {
+  font-size: var(--pb-text-xl);
+  font-weight: var(--pb-weight-bold);
+  color: var(--pb-text-primary);
+  line-height: var(--pb-leading-tight);
+  margin-bottom: var(--pb-s2);
+}
+
+.card-body {
+  color: var(--pb-text-secondary);
+  font-size: var(--pb-text-sm);
+  line-height: var(--pb-leading-normal);
+}
+
+.card-footer {
+  margin-top: var(--pb-s5);
+  padding-top: var(--pb-s5);
+  border-top: 1px solid var(--pb-border);
+  display: flex;
+  align-items: center;
+  gap: var(--pb-s3);
+}
+
+/* ── Card icon ── */
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--pb-radius-md);
+  background: var(--pb-accent-subtle);
+  color: var(--pb-accent);
+  margin-bottom: var(--pb-s4);
+  flex-shrink: 0;
+  transition:
+    background-color var(--pb-dur-base) var(--pb-ease-out),
+    transform var(--pb-dur-base) var(--pb-ease-spring);
+}
+
+.card-lift:hover .card-icon,
+.card-tilt:hover .card-icon {
+  background: var(--pb-accent);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.card-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ── Shimmer loading skeleton ── */
+.card-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--pb-bg-elevated) 25%,
+    var(--pb-border-strong) 50%,
+    var(--pb-bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: pb-shimmer 1.6s var(--pb-ease-in-out) infinite;
+}

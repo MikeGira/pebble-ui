@@ -1,0 +1,118 @@
+/* Pebble UI — Design Tokens
+   All values use the pb- prefix to avoid collisions with host project styles. */
+
+:root {
+  /* ── Surfaces ── */
+  --pb-bg-base:     #0a0c14;
+  --pb-bg-elevated: #111827;
+  --pb-bg-glass:    rgba(17, 24, 39, 0.65);
+  --pb-bg-overlay:  rgba(10, 12, 20, 0.88);
+
+  /* ── Brand ── */
+  --pb-accent:        #2563eb;
+  --pb-accent-hover:  #3b82f6;
+  --pb-accent-glow:   rgba(37, 99, 235, 0.28);
+  --pb-accent-subtle: rgba(37, 99, 235, 0.12);
+
+  /* ── Text ── */
+  --pb-text-primary:   #f9fafb;
+  --pb-text-secondary: #9ca3af;
+  --pb-text-muted:     #6b7280;
+
+  /* ── Borders ── */
+  --pb-border:        rgba(255, 255, 255, 0.08);
+  --pb-border-strong: rgba(255, 255, 255, 0.16);
+  --pb-border-accent: rgba(37, 99, 235, 0.4);
+
+  /* ── Shadows ── */
+  --pb-shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.32);
+  --pb-shadow-card:     0 4px 24px rgba(0, 0, 0, 0.42);
+  --pb-shadow-elevated: 0 8px 40px rgba(0, 0, 0, 0.52);
+  --pb-shadow-glow:     0 0 32px var(--pb-accent-glow);
+  --pb-shadow-btn:      0 4px 16px rgba(37, 99, 235, 0.35);
+
+  /* ── Radius ── */
+  --pb-radius-sm:   6px;
+  --pb-radius-md:   10px;
+  --pb-radius-lg:   16px;
+  --pb-radius-xl:   24px;
+  --pb-radius-full: 9999px;
+
+  /* ── Spacing (4px base grid) ── */
+  --pb-s1:  4px;
+  --pb-s2:  8px;
+  --pb-s3:  12px;
+  --pb-s4:  16px;
+  --pb-s5:  20px;
+  --pb-s6:  24px;
+  --pb-s8:  32px;
+  --pb-s10: 40px;
+  --pb-s12: 48px;
+  --pb-s16: 64px;
+  --pb-s20: 80px;
+  --pb-s24: 96px;
+
+  /* ── Typography ── */
+  --pb-font-sans: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
+
+  --pb-text-xs:   0.75rem;
+  --pb-text-sm:   0.875rem;
+  --pb-text-base: 1rem;
+  --pb-text-lg:   1.125rem;
+  --pb-text-xl:   1.25rem;
+  --pb-text-2xl:  1.5rem;
+  --pb-text-3xl:  1.875rem;
+  --pb-text-4xl:  2.25rem;
+  --pb-text-5xl:  3rem;
+  --pb-text-6xl:  3.75rem;
+
+  --pb-leading-tight:  1.2;
+  --pb-leading-snug:   1.375;
+  --pb-leading-normal: 1.6;
+
+  --pb-weight-normal:    400;
+  --pb-weight-medium:    500;
+  --pb-weight-semibold:  600;
+  --pb-weight-bold:      700;
+  --pb-weight-extrabold: 800;
+
+  /* ── Motion ── */
+  --pb-ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --pb-ease-in-out: cubic-bezier(0.45, 0, 0.55, 1);
+  --pb-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --pb-dur-fast: 150ms;
+  --pb-dur-base: 280ms;
+  --pb-dur-slow: 480ms;
+
+  /* ── Blur ── */
+  --pb-blur-glass: blur(20px);
+  --pb-blur-sm:    blur(8px);
+}
+
+/* Light mode token overrides */
+[data-theme="light"] {
+  --pb-bg-base:     #f8fafc;
+  --pb-bg-elevated: #ffffff;
+  --pb-bg-glass:    rgba(255, 255, 255, 0.78);
+  --pb-bg-overlay:  rgba(248, 250, 252, 0.92);
+
+  --pb-accent:        #2563eb;
+  --pb-accent-hover:  #1d4ed8;
+  --pb-accent-glow:   rgba(37, 99, 235, 0.16);
+  --pb-accent-subtle: rgba(37, 99, 235, 0.08);
+
+  --pb-text-primary:   #0f172a;
+  --pb-text-secondary: #475569;
+  --pb-text-muted:     #94a3b8;
+
+  --pb-border:        rgba(0, 0, 0, 0.08);
+  --pb-border-strong: rgba(0, 0, 0, 0.14);
+  --pb-border-accent: rgba(37, 99, 235, 0.32);
+
+  --pb-shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.08);
+  --pb-shadow-card:     0 4px 24px rgba(0, 0, 0, 0.08);
+  --pb-shadow-elevated: 0 8px 40px rgba(0, 0, 0, 0.12);
+  --pb-shadow-glow:     0 0 32px var(--pb-accent-glow);
+  --pb-shadow-btn:      0 4px 16px rgba(37, 99, 235, 0.22);
+}

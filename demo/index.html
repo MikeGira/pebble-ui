@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pebble UI — Enterprise Design System</title>
+  <meta name="description" content="Pebble UI: enterprise design system with magnetic cursor, 3D card tilt, fluid dark/light mode. Zero runtime dependencies.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- FOUC prevention — must be inline, runs before paint -->
+  <script>(function(){var k='pebble-theme',d='dark',l='light';try{var s=localStorage.getItem(k);if(s===d||s===l){document.documentElement.setAttribute('data-theme',s);return;}}catch(e){}if(window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.setAttribute('data-theme',d);else document.documentElement.setAttribute('data-theme',l);})();</script>
+
+  <!-- Pebble UI system CSS -->
+  <link rel="stylesheet" href="../dist/pebble.css">
+
+  <style>
+    /* Demo-only layout — not part of the design system */
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--pb-bg-base);
+      color: var(--pb-text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Hero */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--pb-s2);
+      font-size: var(--pb-text-xs);
+      font-weight: var(--pb-weight-semibold);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--pb-accent);
+      margin-bottom: var(--pb-s5);
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--pb-accent);
+      animation: pb-pulse-ring 1.8s ease-out infinite;
+      flex-shrink: 0;
+    }
+    .hero-headline {
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: var(--pb-weight-extrabold);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: var(--pb-s5);
+    }
+    .hero-headline span { color: var(--pb-accent); }
+    .hero-sub {
+      font-size: clamp(var(--pb-text-base), 2vw, var(--pb-text-xl));
+      color: var(--pb-text-secondary);
+      max-width: 560px;
+      margin-bottom: var(--pb-s8);
+      line-height: var(--pb-leading-normal);
+    }
+    .hero-cta { display: flex; align-items: center; gap: var(--pb-s4); flex-wrap: wrap; }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: var(--pb-s6);
+      padding: var(--pb-s10) 0;
+      border-top: 1px solid var(--pb-border);
+      border-bottom: 1px solid var(--pb-border);
+      margin: var(--pb-s12) 0;
+    }
+
+    /* Section headings */
+    .section-label {
+      font-size: var(--pb-text-xs);
+      font-weight: var(--pb-weight-semibold);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--pb-accent);
+      margin-bottom: var(--pb-s3);
+    }
+    .section-title {
+      font-size: clamp(var(--pb-text-2xl), 3vw, var(--pb-text-4xl));
+      font-weight: var(--pb-weight-extrabold);
+      letter-spacing: -0.025em;
+      margin-bottom: var(--pb-s4);
+      color: var(--pb-text-primary);
+    }
+    .section-desc {
+      color: var(--pb-text-secondary);
+      max-width: 520px;
+      margin-bottom: var(--pb-s10);
+      line-height: var(--pb-leading-normal);
+    }
+
+    /* Card grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--pb-s6);
+    }
+
+    /* Button gallery */
+    .btn-gallery { display: flex; align-items: center; gap: var(--pb-s3); flex-wrap: wrap; }
+
+    /* Input demo */
+    .input-demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--pb-s6);
+    }
+
+    /* Progress demo */
+    .progress-demo {
+      display: flex;
+      flex-direction: column;
+      gap: var(--pb-s5);
+      max-width: 600px;
+    }
+    .progress-row {
+      display: flex;
+      flex-direction: column;
+      gap: var(--pb-s2);
+    }
+
+    /* Testimonial grid */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--pb-s5);
+    }
+
+    /* Avatar */
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--pb-accent-subtle);
+      border: 2px solid var(--pb-border-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--pb-weight-bold);
+      font-size: var(--pb-text-sm);
+      color: var(--pb-accent);
+      flex-shrink: 0;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: var(--pb-s20) var(--pb-s6);
+      background: linear-gradient(135deg, rgba(37,99,235,.06) 0%, transparent 60%);
+      border-top: 1px solid var(--pb-border);
+    }
+
+    footer {
+      padding: var(--pb-s8);
+      text-align: center;
+      color: var(--pb-text-muted);
+      font-size: var(--pb-text-sm);
+      border-top: 1px solid var(--pb-border);
+    }
+
+    /* Inline code */
+    .inline-code {
+      font-size: .82em;
+      background: var(--pb-accent-subtle);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--pb-accent);
+      font-family: ui-monospace, 'Cascadia Code', 'Fira Code', monospace;
+    }
+
+    @media (max-width: 768px) {
+      .pb-section { padding: var(--pb-s12) var(--pb-s5); }
+      .pb-nav      { padding: var(--pb-s4) var(--pb-s5); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav class="pb-nav" role="navigation" aria-label="Main navigation">
+    <a href="#" class="pb-nav-logo">
+      <span class="pb-nav-logo-dot" style="width:8px;height:8px;border-radius:50%;background:var(--pb-accent);display:inline-block;"></span>
+      Pebble
+    </a>
+
+    <div class="pb-nav-links">
+      <a href="#cards"    class="pb-nav-link">Cards</a>
+      <a href="#buttons"  class="pb-nav-link">Buttons</a>
+      <a href="#inputs"   class="pb-nav-link">Inputs</a>
+      <a href="#toasts"   class="pb-nav-link">Toasts</a>
+      <a href="#tooltips" class="pb-nav-link">Tooltips</a>
+    </div>
+
+    <div class="pb-nav-actions">
+      <button class="pb-theme-toggle" data-theme-toggle aria-label="Switch theme">
+        <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <a href="#install" class="btn btn-primary" data-magnetic>Get Started</a>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="pb-section" id="hero">
+    <div class="pb-container">
+      <div data-entrance="fade-up">
+        <p class="hero-eyebrow">Enterprise Design System</p>
+      </div>
+      <h1 class="hero-headline" data-entrance="fade-up" data-stagger="1">
+        Design that<br><span>thinks fast.</span><br>Feels faster.
+      </h1>
+      <p class="hero-sub" data-entrance="fade-up" data-stagger="2">
+        Magnetic cursor, 3D card tilt, fluid dark/light mode — built with zero runtime dependencies, running on the compositor thread so it never lags.
+      </p>
+      <div class="hero-cta" data-entrance="fade-up" data-stagger="3">
+        <a href="#cards" class="btn btn-primary btn-lg" data-magnetic>
+          Explore Components
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="#install" class="btn btn-ghost btn-lg">View CDN install</a>
+      </div>
+
+      <div class="stats-grid">
+        <div class="pb-stat" data-entrance="scale-in" data-stagger="1">
+          <span class="pb-stat-value">0</span>
+          <span class="pb-stat-label">Runtime deps</span>
+        </div>
+        <div class="pb-stat" data-entrance="scale-in" data-stagger="2">
+          <span class="pb-stat-value">60<small style="font-size:.5em;font-weight:600">fps</small></span>
+          <span class="pb-stat-label">All animations</span>
+        </div>
+        <div class="pb-stat" data-entrance="scale-in" data-stagger="3">
+          <span class="pb-stat-value">&lt;14<small style="font-size:.5em;font-weight:600">kb</small></span>
+          <span class="pb-stat-label">Total bundle</span>
+        </div>
+        <div class="pb-stat" data-entrance="scale-in" data-stagger="4">
+          <span class="pb-stat-value">2</span>
+          <span class="pb-stat-label">Lines to install</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CARDS ═══ -->
+  <section class="pb-section" id="cards">
+    <div class="pb-container">
+      <p class="section-label" data-entrance="fade-in">Components</p>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Cards that respond.</h2>
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
+        Hover to feel the 3D tilt. Each card tracks your pointer with smooth lerp — no jitter, no layout shifts.
+      </p>
+
+      <div class="card-grid">
+        <div class="card card-tilt" data-entrance="fade-up" data-stagger="1">
+          <div class="card-tilt-inner">
+            <div class="card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3 class="card-title">Magnetic Cursor</h3>
+            <p class="card-body">Ring follows with lag. Dot snaps to exact position. Elements with <code class="inline-code">data-magnetic</code> pull the cursor toward them.</p>
+            <div class="card-footer">
+              <span class="badge badge-accent">Pure JS</span>
+              <span class="badge badge-success">60fps</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-tilt card-glass" data-entrance="fade-up" data-stagger="2">
+          <div class="card-tilt-inner">
+            <div class="card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3 class="card-title">3D Card Tilt</h3>
+            <p class="card-body">Max ±13° rotation via pointer tracking per card. <code class="inline-code">will-change</code> set only during animation, cleared when idle.</p>
+            <div class="card-footer">
+              <span class="badge badge-accent">CSS Transform</span>
+              <span class="badge badge-default">Glassmorphism</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-tilt" data-entrance="fade-up" data-stagger="3">
+          <div class="card-tilt-inner">
+            <div class="card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+            </div>
+            <h3 class="card-title">Dark / Light Mode</h3>
+            <p class="card-body">CSS custom properties swap on <code class="inline-code">data-theme</code>. No flash — theme resolves before paint. Persists to <code class="inline-code">localStorage</code>.</p>
+            <div class="card-footer">
+              <span class="badge badge-accent">No FOUC</span>
+              <span class="badge badge-success">OS-aware</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-grid" style="margin-top:var(--pb-s6)">
+        <div class="card card-lift" data-entrance="slide-right" data-stagger="1">
+          <h3 class="card-title" style="margin-bottom:var(--pb-s3)">Scroll Entrance</h3>
+          <p class="card-body">IntersectionObserver triggers animations when elements enter the viewport. Each fires once, then the observer disconnects to free memory.</p>
+          <div class="card-footer"><span class="badge badge-default">No scroll listener</span></div>
+        </div>
+        <div class="card card-lift card-accent" data-entrance="slide-left" data-stagger="2">
+          <h3 class="card-title" style="margin-bottom:var(--pb-s3)">Reduced Motion</h3>
+          <p class="card-body">All effects respect <code class="inline-code">prefers-reduced-motion</code>. Cursor hides, animations skip, tilt disables — no JS errors, no layout jumps.</p>
+          <div class="card-footer"><span class="badge badge-success">Accessible</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pb-divider"></div>
+
+  <!-- ═══ BUTTONS ═══ -->
+  <section class="pb-section" id="buttons">
+    <div class="pb-container">
+      <p class="section-label" data-entrance="fade-in">Interactions</p>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Buttons that move.</h2>
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
+        Shimmer sweep on primary hover. Spring-physics on the circle. Ghost pulls accent on hover.
+      </p>
+
+      <div style="display:flex;flex-direction:column;gap:var(--pb-s6)">
+        <div class="btn-gallery" data-entrance="fade-up" data-stagger="1">
+          <button class="btn btn-primary btn-lg" data-magnetic>
+            Primary
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-ghost btn-lg" data-magnetic>Ghost</button>
+          <button class="btn btn-primary" data-magnetic>Default</button>
+          <button class="btn btn-ghost">Default Ghost</button>
+        </div>
+        <div class="btn-gallery" data-entrance="fade-up" data-stagger="2">
+          <button class="btn-circle" data-magnetic aria-label="Forward">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+          <button class="btn btn-primary btn-sm">Small Primary</button>
+          <button class="btn btn-ghost btn-sm">Small Ghost</button>
+          <button class="btn btn-primary" disabled aria-disabled="true">Disabled</button>
+          <span class="badge badge-accent">New</span>
+          <span class="badge badge-success">Live</span>
+          <span class="badge badge-warning">Beta</span>
+          <span class="badge badge-danger">Deprecated</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pb-divider"></div>
+
+  <!-- ═══ INPUTS ═══ -->
+  <section class="pb-section" id="inputs">
+    <div class="pb-container">
+      <p class="section-label" data-entrance="fade-in">Forms</p>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Inputs that communicate.</h2>
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
+        Focus rings, validation states, icon groups — all accessible by default. Works with any server-side or client-side form library.
+      </p>
+
+      <div class="input-demo-grid" data-entrance="fade-up" data-stagger="3">
+        <div class="form-group">
+          <label class="form-label" for="d-email">Email address</label>
+          <input class="input" id="d-email" type="email" placeholder="you@example.com">
+          <span class="form-hint">We'll never share your email.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label form-label-required" for="d-pw">Password</label>
+          <input class="input input-error" id="d-pw" type="password" value="weak">
+          <span class="form-hint form-hint-error">Password must be at least 8 characters.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="d-user">Username</label>
+          <input class="input input-success" id="d-user" type="text" value="mikebuilds">
+          <span class="form-hint form-hint-success">Username is available.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="d-search">Search</label>
+          <div class="input-group">
+            <span class="input-group-prefix" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            </span>
+            <input class="input input-has-prefix" id="d-search" type="search" placeholder="Search components...">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="d-fw">Framework</label>
+          <select class="input input-select" id="d-fw">
+            <option>Vanilla HTML</option>
+            <option>React</option>
+            <option>Next.js</option>
+            <option>SvelteKit</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="d-msg">Message</label>
+          <textarea class="input input-textarea" id="d-msg" rows="3" placeholder="Tell us about your project..."></textarea>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pb-divider"></div>
+
+  <!-- ═══ TOASTS ═══ -->
+  <section class="pb-section" id="toasts">
+    <div class="pb-container">
+      <p class="section-label" data-entrance="fade-in">Feedback</p>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Toasts that inform.</h2>
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
+        Auto-dismiss with a progress track. Click to close early. Four semantic types — one API call.
+      </p>
+
+      <div class="btn-gallery" data-entrance="fade-up" data-stagger="3">
+        <button class="btn btn-primary" onclick="window.pebble.toast({type:'success',title:'Saved',message:'Your changes have been saved successfully.'})">Success</button>
+        <button class="btn btn-ghost"   onclick="window.pebble.toast({type:'error',title:'Error',message:'Something went wrong. Please try again.'})">Error</button>
+        <button class="btn btn-ghost"   onclick="window.pebble.toast({type:'warning',title:'Warning',message:'This action cannot be undone.'})">Warning</button>
+        <button class="btn btn-ghost"   onclick="window.pebble.toast({type:'info',title:'Update available',message:'Pebble UI v1.1.0 is ready to install.'})">Info</button>
+      </div>
+
+      <div style="margin-top:var(--pb-s6);max-width:480px">
+        <pre style="background:var(--pb-bg-elevated);border:1px solid var(--pb-border-accent);border-radius:var(--pb-radius-md);padding:var(--pb-s4) var(--pb-s5);font-size:var(--pb-text-sm);color:var(--pb-text-secondary);font-family:ui-monospace,'Cascadia Code','Fira Code',monospace;overflow-x:auto"><span style="color:var(--pb-text-muted)">// one call</span>
+<span style="color:var(--pb-accent-hover)">window</span>.<span style="color:var(--pb-accent-hover)">pebble</span>.toast({
+  type: <span style="color:#10b981">'success'</span>,
+  title: <span style="color:#10b981">'Saved'</span>,
+  message: <span style="color:#10b981">'All changes saved.'</span>,
+  duration: <span style="color:#f59e0b">4000</span>
+});</pre>
+      </div>
+    </div>
+  </section>
+
+  <div class="pb-divider"></div>
+
+  <!-- ═══ PROGRESS ═══ -->
+  <section class="pb-section" id="progress">
+    <div class="pb-container">
+      <p class="section-label" data-entrance="fade-in">Status</p>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Progress at a glance.</h2>
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
+        Smooth width transitions, shimmer sheen, semantic color variants, and an indeterminate state for unknown durations.
+      </p>
+
+      <div class="progress-demo" data-entrance="fade-up" data-stagger="3">
+        <div class="progress-row">
+          <span class="form-label">Default — 72%</span>
+          <div class="progress"><div class="progress-bar" style="width:72%"></div></div>
+        </div>
+        <div class="progress-row">
+          <span class="form-label">Success — 100%</span>
+          <div class="progress"><div class="progress-bar progress-bar-success" style="width:100%"></div></div>
+        </div>
+        <div class="progress-row">
+          <span class="form-label">Warning — 45%</span>
+          <div class="progress"><div class="progress-bar progress-bar-warning" style="width:45%"></div></div>
+        </div>
+        <div class="progress-row">
+          <span class="form-label">Danger — 18%</span>
+          <div class="progress"><div class="progress-bar progress-bar-danger" style="width:18%"></div></div>
+        </div>
+        <div class="progress-row">
+          <span class="form-label">Indeterminate</span>
+          <div class="progress progress-indeterminate"><div class="progress-bar"></div></div>
+        </div>
+        <div class="progress-row">
+          <span class="form-label">Small — 60%</span>
+          <div class="progress progress-sm"><div class="progress-bar" style="width:60%"></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pb-divider"></div>
+
+  <!-- ═══ TOOLTIPS ═══ -->
+  <section class="pb-section" id="tooltips">
+    <div class="pb-container">
+      <p class="section-label" data-entrance="fade-in">Utility</p>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Tooltips, pure CSS.</h2>
+      <p class="section-desc" data-entrance="fade-up" data-stagger="2">
+        Add <code class="inline-code">data-tooltip="Text"</code> to any element — no JS, no library. Four directions via <code class="inline-code">data-tooltip-pos</code>.
+      </p>
+
+      <div class="btn-gallery" data-entrance="fade-up" data-stagger="3">
+        <button class="btn btn-ghost" data-tooltip="I appear above (default)">Top</button>
+        <button class="btn btn-ghost" data-tooltip="I appear below" data-tooltip-pos="bottom">Bottom</button>
+        <button class="btn btn-ghost" data-tooltip="I appear to the left" data-tooltip-pos="left">Left</button>
+        <button class="btn btn-ghost" data-tooltip="I appear to the right" data-tooltip-pos="right">Right</button>
+        <span class="badge badge-accent" data-tooltip="Tooltips work on any element" style="cursor:default">Hover a badge</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="pb-divider"></div>
+
+  <!-- ═══ TESTIMONIALS ═══ -->
+  <section class="pb-section" id="about">
+    <div class="pb-container">
+      <p class="section-label" data-entrance="fade-in">Testimonials</p>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1">Glassmorphism cards.</h2>
+
+      <div class="testimonial-grid">
+        <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="1">
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.7;margin-bottom:var(--pb-s4)">
+            "Finally a design system that ships performance as a first-class feature, not an afterthought. The tilt effect runs at solid 60fps even on old hardware."
+          </p>
+          <div style="display:flex;align-items:center;gap:var(--pb-s3)">
+            <div class="avatar">MT</div>
+            <div>
+              <p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">Michael T.</p>
+              <p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">AI Solutions Architect</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="2">
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.7;margin-bottom:var(--pb-s4)">
+            "Two lines of HTML and every project instantly feels enterprise-grade. The dark/light switch with zero flash is the detail that clients always notice."
+          </p>
+          <div style="display:flex;align-items:center;gap:var(--pb-s3)">
+            <div class="avatar">AK</div>
+            <div>
+              <p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">A. Kargbo</p>
+              <p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Frontend Lead</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-glass card-lift" data-entrance="scale-in" data-stagger="3">
+          <p style="font-size:var(--pb-text-sm);color:var(--pb-text-secondary);line-height:1.7;margin-bottom:var(--pb-s4)">
+            "Works in vanilla HTML, React, and Next.js without conflict. I dropped it into BridgeUp's landing page alongside Tailwind and it just worked."
+          </p>
+          <div style="display:flex;align-items:center;gap:var(--pb-s3)">
+            <div class="avatar">RN</div>
+            <div>
+              <p style="font-weight:var(--pb-weight-semibold);font-size:var(--pb-text-sm)">R. Nkemdirim</p>
+              <p style="font-size:var(--pb-text-xs);color:var(--pb-text-muted)">Full-Stack Engineer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ═══ -->
+  <section class="cta-section" id="install">
+    <div class="pb-container" style="display:flex;flex-direction:column;align-items:center;gap:var(--pb-s5)">
+      <p class="section-label" data-entrance="fade-in">Get started</p>
+      <h2 class="section-title" data-entrance="fade-up" data-stagger="1" style="text-align:center">Two lines. Any project.</h2>
+      <pre data-entrance="scale-in" data-stagger="2" style="background:var(--pb-bg-elevated);border:1px solid var(--pb-border-accent);border-radius:var(--pb-radius-lg);padding:var(--pb-s5) var(--pb-s6);font-size:var(--pb-text-sm);color:var(--pb-text-secondary);text-align:left;overflow-x:auto;max-width:600px;width:100%;font-family:ui-monospace,'Cascadia Code','Fira Code',monospace"><span style="color:var(--pb-text-muted)">&lt;!-- Add to &lt;head&gt; --&gt;</span>
+<span style="color:var(--pb-accent)">&lt;link</span> rel="stylesheet" href="https://pebble-ui.vercel.app/dist/pebble.css"<span style="color:var(--pb-accent)">&gt;</span>
+<span style="color:var(--pb-accent)">&lt;script</span> src="https://pebble-ui.vercel.app/dist/pebble.js" defer<span style="color:var(--pb-accent)">&gt;&lt;/script&gt;</span></pre>
+      <div class="btn-gallery" data-entrance="fade-up" data-stagger="3">
+        <a href="#cards" class="btn btn-primary btn-lg" data-magnetic>
+          View Components
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <button class="btn btn-ghost btn-lg" onclick="window.pebble.toast({type:'success',title:'Copied!',message:'Install snippet copied to clipboard.'})">Copy snippet</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>Pebble UI &mdash; Built by Mike Byosekumbuga &mdash; MIT License</p>
+  </footer>
+
+  <!-- Pebble UI system JS (deferred — FOUC handled by inline script above) -->
+  <script src="../dist/pebble.js" defer></script>
+
+</body>
+</html>

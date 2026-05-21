@@ -1,0 +1,121 @@
+/* Pebble UI — Keyframes & Entrance Utilities
+   Entrance classes are applied by entrance.js via IntersectionObserver.
+   Elements start hidden; .pebble-visible triggers the animation. */
+
+/* ── Keyframes ── */
+
+@keyframes pb-fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pb-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes pb-scale-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pb-slide-right {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pb-slide-left {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pb-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pb-pulse-glow {
+  0%, 100% { box-shadow: var(--pb-shadow-glow); }
+  50%       { box-shadow: 0 0 48px var(--pb-accent-glow); }
+}
+
+@keyframes pb-float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ── Entrance utility classes ── */
+
+[data-entrance] {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+[data-entrance="fade-up"] {
+  transform: translateY(24px);
+}
+
+[data-entrance="fade-in"] {
+  /* opacity only — no transform */
+}
+
+[data-entrance="scale-in"] {
+  transform: scale(0.92);
+}
+
+[data-entrance="slide-right"] {
+  transform: translateX(-24px);
+}
+
+[data-entrance="slide-left"] {
+  transform: translateX(24px);
+}
+
+/* .pebble-visible is added by entrance.js */
+.pebble-visible[data-entrance="fade-up"] {
+  animation: pb-fade-up var(--pb-dur-slow) var(--pb-ease-out) both;
+}
+
+.pebble-visible[data-entrance="fade-in"] {
+  animation: pb-fade-in var(--pb-dur-slow) var(--pb-ease-out) both;
+}
+
+.pebble-visible[data-entrance="scale-in"] {
+  animation: pb-scale-in var(--pb-dur-slow) var(--pb-ease-out) both;
+}
+
+.pebble-visible[data-entrance="slide-right"] {
+  animation: pb-slide-right var(--pb-dur-slow) var(--pb-ease-out) both;
+}
+
+.pebble-visible[data-entrance="slide-left"] {
+  animation: pb-slide-left var(--pb-dur-slow) var(--pb-ease-out) both;
+}
+
+/* Staggered children: add data-stagger="N" (N = 1..8) */
+.pebble-visible[data-stagger="1"] { animation-delay: 60ms; }
+.pebble-visible[data-stagger="2"] { animation-delay: 120ms; }
+.pebble-visible[data-stagger="3"] { animation-delay: 180ms; }
+.pebble-visible[data-stagger="4"] { animation-delay: 240ms; }
+.pebble-visible[data-stagger="5"] { animation-delay: 300ms; }
+.pebble-visible[data-stagger="6"] { animation-delay: 360ms; }
+.pebble-visible[data-stagger="7"] { animation-delay: 420ms; }
+.pebble-visible[data-stagger="8"] { animation-delay: 480ms; }
+
+/* ── Perpetual animation helpers ── */
+
+.pb-float {
+  animation: pb-float 4s var(--pb-ease-in-out) infinite;
+}
+
+.pb-pulse-glow {
+  animation: pb-pulse-glow 3s ease-in-out infinite;
+}
+
+/* ── Theme transition ── */
+
+html {
+  transition:
+    background-color var(--pb-dur-base) var(--pb-ease-out),
+    color var(--pb-dur-base) var(--pb-ease-out);
+}

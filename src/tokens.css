@@ -29,10 +29,13 @@
   --pb-text-secondary: #9ca3af;
   --pb-text-muted:     #6b7280;
 
-  /* ── Borders — more visible on pure black ── */
-  --pb-border:        rgba(255, 255, 255, 0.12);
-  --pb-border-strong: rgba(255, 255, 255, 0.22);
-  --pb-border-accent: rgba(59, 111, 245, 0.55);
+  /* ── Borders — solid, no rgba ── */
+  --pb-border:        #1e1e1e;
+  --pb-border-strong: #2d2d2d;
+  --pb-border-accent: #2a4ab5;
+
+  /* ── Input surfaces — pure, not elevated grey ── */
+  --pb-input-bg: #000000;
 
   /* ── Shadows ── */
   --pb-shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.32);
@@ -120,9 +123,11 @@
   --pb-text-secondary: #475569;
   --pb-text-muted:     #94a3b8;
 
-  --pb-border:        rgba(0, 0, 0, 0.12);
-  --pb-border-strong: rgba(0, 0, 0, 0.2);
-  --pb-border-accent: rgba(59, 111, 245, 0.45);
+  --pb-border:        #e8e8e8;
+  --pb-border-strong: #d0d0d0;
+  --pb-border-accent: #4a6ef5;
+
+  --pb-input-bg: #ffffff;
 
   --pb-shadow-sm:       0 1px 3px rgba(0, 0, 0, 0.08);
   --pb-shadow-card:     0 4px 24px rgba(0, 0, 0, 0.08);

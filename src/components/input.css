@@ -32,12 +32,12 @@
   color: #10b981;
 }
 
-/* ── Base input ── */
+/* ── Base input — pure background, solid border ── */
 .input {
   width: 100%;
-  background: var(--pb-bg-elevated);
+  background: var(--pb-input-bg);
   border: 1.5px solid var(--pb-border-strong);
-  border-radius: var(--pb-radius-md);
+  border-radius: var(--pb-radius-lg);
   padding: var(--pb-s3) var(--pb-s4);
   font-family: var(--pb-font-sans);
   font-size: var(--pb-text-sm);
@@ -46,8 +46,7 @@
   outline: none;
   transition:
     border-color var(--pb-dur-fast) var(--pb-ease-out),
-    box-shadow var(--pb-dur-fast) var(--pb-ease-out),
-    background-color var(--pb-dur-base) var(--pb-ease-out);
+    box-shadow var(--pb-dur-fast) var(--pb-ease-out);
   -webkit-appearance: none;
   appearance: none;
 }
@@ -70,23 +69,23 @@
   cursor: not-allowed;
 }
 
-/* ── Validation states ── */
+/* ── Validation states — solid colors ── */
 .input-error {
-  border-color: rgba(239, 68, 68, 0.6);
+  border-color: #ef4444;
 }
 
 .input-error:focus {
   border-color: #ef4444;
-  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
 }
 
 .input-success {
-  border-color: rgba(16, 185, 129, 0.6);
+  border-color: #10b981;
 }
 
 .input-success:focus {
   border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
 }
 
 /* ── Input group (icon prefix / suffix) ── */

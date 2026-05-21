@@ -6,3 +6,5 @@ dist/_pebble.tmp.*
 *.log
 .DS_Store
 Thumbs.db
+
+.vercel

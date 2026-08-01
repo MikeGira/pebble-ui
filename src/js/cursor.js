@@ -14,7 +14,6 @@
   var MAG_STRENGTH = 0.38;  // pull for free-floating elements (circle btn, decorative)
   var MAG_INNER    = 0.09;  // pull for btn inner content — slow, stays well within bounds
   var MAG_CAP      = 6;     // max px displacement for inner content (never touches border)
-  var MAG_RANGE    = 72;    // px radius where magnetism activates
 
   var mouseX = window.innerWidth / 2;
   var mouseY = window.innerHeight / 2;

@@ -9,6 +9,12 @@ updates:
       minor-and-patch:
         patterns: ["*"]
         update-types: ["patch", "minor"]
+    # Majors are deliberate toolchain upgrades — dist/ is published to a CDN, so a
+    # silent esbuild/lightningcss major could change shipped output. Security updates
+    # are unaffected and can still bump a major when that is the only fix.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /

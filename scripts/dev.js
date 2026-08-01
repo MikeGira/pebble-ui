@@ -25,23 +25,10 @@ fs.watch(src, { recursive: true }, function (event, filename) {
   build();
 });
 
-// Containment check, per the CodeQL js/path-injection remediation: resolve against
-// the root, then realpath to collapse symlinks, then require the result to sit under
-// the root. req.url is attacker-controlled and Node does NOT normalise it, so
-// path.join alone lets `/../../` escape the repo and serve any file on disk; and
-// resolving without realpath still lets a symlink inside the repo point outside it.
-// Returns null when the request escapes or the file does not exist.
-function safeResolve(urlPath) {
-  var resolved = path.resolve(root, '.' + urlPath);
-  var real;
-  try {
-    real = fs.realpathSync(resolved);
-  } catch (_) {
-    return null;
-  }
-  if (real !== root && real.indexOf(root + path.sep) !== 0) return null;
-  return real;
-}
+// Root with a trailing separator, so the containment test below is a prefix match on
+// a path boundary rather than on a string (which would let a sibling `pebble-ui-x/`
+// pass). Matches the shape of the ROOT constant in the CodeQL remediation example.
+const rootPrefix = root + path.sep;
 
 http.createServer(function (req, res) {
   var raw;
@@ -50,8 +37,23 @@ http.createServer(function (req, res) {
   } catch (_) {
     res.writeHead(400); res.end('Bad request'); return;
   }
-  var fp = safeResolve(raw === '/' ? '/demo/index.html' : raw);
-  if (fp === null) { res.writeHead(404); res.end('Not found'); return; }
+
+  // req.url is attacker-controlled and Node does NOT normalise it, so path.join alone
+  // lets `/../../` escape the repo and serve any file on disk; and resolving without
+  // realpath still lets a symlink inside the repo point at a target outside it.
+  // Kept inline, and using startsWith, because that is the exact remediation shape
+  // CodeQL's js/path-injection barrier guard recognises — the same check hoisted into
+  // a helper that returns the path is not detected as a sanitizer.
+  // https://codeql.github.com/codeql-query-help/javascript/js-path-injection/
+  var fp = path.resolve(root, '.' + (raw === '/' ? '/demo/index.html' : raw));
+  try {
+    fp = fs.realpathSync(fp);
+  } catch (_) {
+    res.writeHead(404); res.end('Not found'); return;
+  }
+  if (!fp.startsWith(rootPrefix)) {
+    res.writeHead(404); res.end('Not found'); return;
+  }
 
   fs.readFile(fp, function (err, data) {
     if (err) { res.writeHead(404); res.end('Not found'); return; }

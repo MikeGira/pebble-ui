@@ -4,7 +4,9 @@ const fs   = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const root = path.join(__dirname, '..');
+// realpath the root too, so the containment comparison below holds even when the
+// checkout sits behind a symlink.
+const root = fs.realpathSync(path.join(__dirname, '..'));
 const src  = path.join(root, 'src');
 
 function build() {
@@ -23,20 +25,34 @@ fs.watch(src, { recursive: true }, function (event, filename) {
   build();
 });
 
+// Containment check, per the CodeQL js/path-injection remediation: resolve against
+// the root, then realpath to collapse symlinks, then require the result to sit under
+// the root. req.url is attacker-controlled and Node does NOT normalise it, so
+// path.join alone lets `/../../` escape the repo and serve any file on disk; and
+// resolving without realpath still lets a symlink inside the repo point outside it.
+// Returns null when the request escapes or the file does not exist.
+function safeResolve(urlPath) {
+  var resolved = path.resolve(root, '.' + urlPath);
+  var real;
+  try {
+    real = fs.realpathSync(resolved);
+  } catch (_) {
+    return null;
+  }
+  if (real !== root && real.indexOf(root + path.sep) !== 0) return null;
+  return real;
+}
+
 http.createServer(function (req, res) {
-  // req.url is attacker-controlled and Node does NOT normalise it, so `path.join`
-  // alone lets `/../../` escape the repo and serve any file on disk. Decode, strip
-  // the query, resolve, then require the result to stay under root.
   var raw;
   try {
     raw = decodeURIComponent(req.url.split('?')[0]);
   } catch (_) {
     res.writeHead(400); res.end('Bad request'); return;
   }
-  var fp = path.resolve(root, '.' + (raw === '/' ? '/demo/index.html' : raw));
-  if (fp !== root && !fp.startsWith(root + path.sep)) {
-    res.writeHead(403); res.end('Forbidden'); return;
-  }
+  var fp = safeResolve(raw === '/' ? '/demo/index.html' : raw);
+  if (fp === null) { res.writeHead(404); res.end('Not found'); return; }
+
   fs.readFile(fp, function (err, data) {
     if (err) { res.writeHead(404); res.end('Not found'); return; }
     var ct = { '.html': 'text/html', '.css': 'text/css', '.js': 'application/javascript' }[path.extname(fp)] || 'text/plain';

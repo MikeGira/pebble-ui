@@ -9,7 +9,7 @@
     "preview": "npx serve demo -l 4000"
   },
   "devDependencies": {
-    "esbuild": "^0.28.1",
+    "esbuild": "^0.28.2",
     "lightningcss": "^1.33.0"
   }
 }
